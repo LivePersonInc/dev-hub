@@ -1,0 +1,29 @@
+{
+    "allOf": [{
+        "$ref": "assets/schema/infra/req.json"
+    }, {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string",
+                "default": "ms.SubscribeMessagingEvents",
+                "readonly": "true"
+            },
+            "body": {
+                "type": "object",
+                "properties": {
+                    "fromSeq": {
+                      "description": "Fetch events with sequence greater or equal to this value",  
+                      "type": "integer",
+                      "default": 0              
+                  },
+                  "dialogId": {
+                      "type": "string"
+                  }              
+              },
+              "required": ["dialogId"]
+          }
+      },
+      "required": ["body"]        
+  }]
+}

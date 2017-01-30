@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title>Login | LivePerson Technical Documentation</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<link rel="stylesheet" href="css/lavish-bootstrap.css">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/theme-blue.css">
+
+    <script src="assets/js/jsoneditor.js"></script>
+    <!-- // <script src="js/jquery-3.1.0.min.js"></script> -->
+    <!-- <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'> -->
+<!--     <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'>
+ -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="http://liveperson.comfeed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> LivePerson Technical Documentation</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- entries without drop-downs appear here -->
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+			<li><a class="email" title="Submit feedback" href="https://github.com/LivePersonInc/dev-hub/issues" ><i class="fa fa-github"></i> Issues</a><li>
+
+		
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Login">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="col-lg-12">&nbsp;</div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-md-3">
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul id="mysidebar" class="nav">
+    <li class="sidebarTitle"> </li>
+    
+        
+            
+            <li>
+                <a href="#">Common Guidelines</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Services Domains</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common_csds.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Authentication</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common-authentication.html">API Reference</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="not_yet.html">OAuth 2.0</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Agent</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Agent Workspace Widget SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-limitations.html">Limitations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-model.html">Public Model Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-properties.html">Public Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-code-examples.html">Code Examples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">LivePerson Domain API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-domain-api.html">Domain API</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Login Service API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-configuration.html">Configuration</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="active thirdlevel"><a href="agent-login-login.html">Login</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-refresh.html">Refresh</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-logout.html">Logout</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-non-authenticated-flow.html">Non Authenticated Flow</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Chat Agent API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-resources.html">Retrieve all Resources for Agent Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-current-availability.html">Retrieve Current Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-availability.html">Set Agent Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-retrieve-available-agents.html">Retrieve Available Agents</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-information.html">Retrieve Agent Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-determine-incoming.html">Determine Incoming Chat Requests</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-accept-chat.html">Accept a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-sessions.html">Retrieve Chat Sessions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-data.html">Retrieve Data for Multiple Chats</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-add-lines.html">Add Lines</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-end-chat.html">End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-name.html">Retrieve Visitor’s Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-typing-status.html">Retrieve Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-typing-status.html">Set Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-typing-status.html">Retrieve Visitor’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-skills.html">Retrieve Available Skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-transfer-chat.html">Transfer a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-survey-structure.html">Retrieve the Agent Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-samples.html">Samples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Experience</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">JavaScript Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-startchatrequestchat.html">startChat/requestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-addline.html">addLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitortyping.html">setVisitorTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitorname.html">setVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-endChat.html">endChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setcustomvariable.html">setCustomVariable</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requesttranscript.html">requestTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitexitsurvey.html">submitExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitofflinesurvey.html">submitOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getstate.html">getState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentloginname.html">getAgentLoginName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getvisitorname.html">getVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentid.html">getAgentId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getrtsessionid.html">getRtSessionId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getsessionkey.html">getSessionKey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagenttyping.html">getAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onload.html">onLoad</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninit.html">onInit</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onestimatedwaittime.html">onEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onprechatsurvey.html">onPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstart.html">onStart</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstop.html">onStop</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-ontranscript.html">onTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstate.html">onState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onagenttyping.html">onAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onexitsurvey.html">onExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onaccounttoaccounttransfer.html">onAccountToAccountTransfer</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Server Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-base-resource.html">Base Resource</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-availability.html">Retrieve Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-estimated-wait-time.html">Retrieve Estimated Wait Time</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-offline-survey.html">Retrieve an Offline Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-add-lines.html">Add Lines / End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-name.html">Retrieve the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-name.html">Set the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-agent-typing-status.html">Retrieve the Agent's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-typing-status.html">Retrieve the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-typing-status.html">Set the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-exit-survey-structure.html">Retrieve Exit Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-custom-variables.html">Set Custom Variables</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-send-transcript.html">Send a Transcript</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Real-time Interactions</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Visit Information API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-visit-information.html">Visit Information</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Interaction</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-interation-index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Tutorials</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-readaccept-events.html">Read/Accept events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-post-survey.html">Post Conversation Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-no-headers.html">Avoid ga, qasocket Headers</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Samples</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-js-sample.html">Javascript Messenger</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                        
+                            
+                                <li><a href="consumer-int-api-reference.html">API Reference</a></li>
+                            
+                        
+                    
+                </ul>
+                
+            
+            
+            
+            
+            
+            
+            
+        
+        <!-- if you aren't using the accordion, uncomment this block:
+           <p class="external">
+               <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+           </p>
+           -->
+    </li>
+</ul>
+</div>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+    <!-- Content Column -->
+    <div class="col-md-9">
+        <div class="post-header">
+   <h1 class="post-title-main">Login</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+    
+
+    
+
+    
+
+  <h2 id="request">Request</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">POST</td>
+      <td style="text-align: left">https://{domain}/api/account/73566918/login?v=1.3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Use the <a href="agent-domain-domain-api.html">LivePerson Domain API</a> to get the agent API domain using <code class="highlighter-rouge">agentVep</code> as the serviceName parameter value.</p>
+
+<p>Request example:</p>
+
+<p>http://api.liveperson.net/api/account/12345678/service/agentVep/baseURI.json?version=1.0</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">API version number</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Default Value: 1.3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Headers</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Header</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Content-Type</td>
+      <td style="text-align: left">Application/JSON</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Accept</td>
+      <td style="text-align: left">Application/JSON</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Body</strong></p>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"jwt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidW5pcXVlX25hbWUiOiJyZWVtZCJ9.cGB0LX8hlOeEWKjRIJUUtik8p5Vum8vTQXyxOVJ1FXg"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">JWT</span><span class="w"> </span><span class="err">payload</span><span class="w"> </span><span class="err">:</span><span class="w">  </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"sub"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"unique_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name@liveperson.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Note: See https://jwt.io/ for further information on JSON Web Tokens.</em></p>
+
+<p>Or (depending on configuration):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
+    </span><span class="err">“Password”</span><span class="p">:</span><span class="w"> </span><span class="err">“password”</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="response">Response</h2>
+
+<p><strong>Response Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Code</th>
+      <th style="text-align: left">Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">200</td>
+      <td style="text-align: left">OK - Successfully logged in (see note).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">400</td>
+      <td style="text-align: left">Bad request - Problem with body or query parameters.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">401</td>
+      <td style="text-align: left">Unauthorized - Bad Authentication (invalid site or agent).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">500</td>
+      <td style="text-align: left">Internal server error.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Response cookies</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Cookie</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Session_id</td>
+      <td style="text-align: left">Login session ID (should be passed to the refresh and logout methods).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Note: The Bearer can be found at the bottom of the response.</em></p>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"csrf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d5d07326cfe2240b9453e19e8092c59844921dcdc6ebb105c55fea9ed45c9d77"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"wsuk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"766900772095619056"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"loginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reemd"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3705342610"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"userPrivileges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="mi">101</span><span class="p">,</span><span class="w">
+      </span><span class="mi">102</span><span class="p">,</span><span class="w">
+      </span><span class="mi">103</span><span class="p">,</span><span class="w">
+      </span><span class="mi">104</span><span class="p">,</span><span class="w">
+      </span><span class="mi">105</span><span class="p">,</span><span class="w">
+      </span><span class="mi">106</span><span class="p">,</span><span class="w">
+      </span><span class="mi">107</span><span class="p">,</span><span class="w">
+      </span><span class="mi">110</span><span class="p">,</span><span class="w">
+      </span><span class="mi">111</span><span class="p">,</span><span class="w">
+      </span><span class="mi">112</span><span class="p">,</span><span class="w">
+      </span><span class="mi">113</span><span class="p">,</span><span class="w">
+      </span><span class="mi">114</span><span class="p">,</span><span class="w">
+      </span><span class="mi">115</span><span class="p">,</span><span class="w">
+      </span><span class="mi">116</span><span class="p">,</span><span class="w">
+      </span><span class="mi">117</span><span class="p">,</span><span class="w">
+      </span><span class="mi">118</span><span class="p">,</span><span class="w">
+      </span><span class="mi">122</span><span class="p">,</span><span class="w">
+      </span><span class="mi">130</span><span class="p">,</span><span class="w">
+      </span><span class="mi">131</span><span class="p">,</span><span class="w">
+      </span><span class="mi">132</span><span class="p">,</span><span class="w">
+      </span><span class="mi">133</span><span class="p">,</span><span class="w">
+      </span><span class="mi">134</span><span class="p">,</span><span class="w">
+      </span><span class="mi">136</span><span class="p">,</span><span class="w">
+      </span><span class="mi">137</span><span class="p">,</span><span class="w">
+      </span><span class="mi">138</span><span class="p">,</span><span class="w">
+      </span><span class="mi">139</span><span class="p">,</span><span class="w">
+      </span><span class="mi">140</span><span class="p">,</span><span class="w">
+      </span><span class="mi">141</span><span class="p">,</span><span class="w">
+      </span><span class="mi">142</span><span class="p">,</span><span class="w">
+      </span><span class="mi">146</span><span class="p">,</span><span class="w">
+      </span><span class="mi">147</span><span class="p">,</span><span class="w">
+      </span><span class="mi">148</span><span class="p">,</span><span class="w">
+      </span><span class="mi">149</span><span class="p">,</span><span class="w">
+      </span><span class="mi">150</span><span class="p">,</span><span class="w">
+      </span><span class="mi">151</span><span class="p">,</span><span class="w">
+      </span><span class="mi">152</span><span class="p">,</span><span class="w">
+      </span><span class="mi">153</span><span class="p">,</span><span class="w">
+      </span><span class="mi">154</span><span class="p">,</span><span class="w">
+      </span><span class="mi">155</span><span class="p">,</span><span class="w">
+      </span><span class="mi">156</span><span class="p">,</span><span class="w">
+      </span><span class="mi">157</span><span class="p">,</span><span class="w">
+      </span><span class="mi">158</span><span class="p">,</span><span class="w">
+      </span><span class="mi">159</span><span class="p">,</span><span class="w">
+      </span><span class="mi">160</span><span class="p">,</span><span class="w">
+      </span><span class="mi">161</span><span class="p">,</span><span class="w">
+      </span><span class="mi">162</span><span class="p">,</span><span class="w">
+      </span><span class="mi">163</span><span class="p">,</span><span class="w">
+      </span><span class="mi">164</span><span class="p">,</span><span class="w">
+      </span><span class="mi">165</span><span class="p">,</span><span class="w">
+      </span><span class="mi">166</span><span class="p">,</span><span class="w">
+      </span><span class="mi">167</span><span class="p">,</span><span class="w">
+      </span><span class="mi">168</span><span class="p">,</span><span class="w">
+      </span><span class="mi">169</span><span class="p">,</span><span class="w">
+      </span><span class="mi">170</span><span class="p">,</span><span class="w">
+      </span><span class="mi">171</span><span class="p">,</span><span class="w">
+      </span><span class="mi">172</span><span class="p">,</span><span class="w">
+      </span><span class="mi">173</span><span class="p">,</span><span class="w">
+      </span><span class="mi">174</span><span class="p">,</span><span class="w">
+      </span><span class="mi">175</span><span class="p">,</span><span class="w">
+      </span><span class="mi">176</span><span class="p">,</span><span class="w">
+      </span><span class="mi">177</span><span class="p">,</span><span class="w">
+      </span><span class="mi">178</span><span class="p">,</span><span class="w">
+      </span><span class="mi">179</span><span class="p">,</span><span class="w">
+      </span><span class="mi">180</span><span class="p">,</span><span class="w">
+      </span><span class="mi">181</span><span class="p">,</span><span class="w">
+      </span><span class="mi">182</span><span class="p">,</span><span class="w">
+      </span><span class="mi">183</span><span class="p">,</span><span class="w">
+      </span><span class="mi">184</span><span class="p">,</span><span class="w">
+      </span><span class="mi">185</span><span class="p">,</span><span class="w">
+      </span><span class="mi">186</span><span class="p">,</span><span class="w">
+      </span><span class="mi">187</span><span class="p">,</span><span class="w">
+      </span><span class="mi">188</span><span class="p">,</span><span class="w">
+      </span><span class="mi">189</span><span class="p">,</span><span class="w">
+      </span><span class="mi">190</span><span class="p">,</span><span class="w">
+      </span><span class="mi">191</span><span class="p">,</span><span class="w">
+      </span><span class="mi">192</span><span class="p">,</span><span class="w">
+      </span><span class="mi">193</span><span class="p">,</span><span class="w">
+      </span><span class="mi">194</span><span class="p">,</span><span class="w">
+      </span><span class="mi">195</span><span class="p">,</span><span class="w">
+      </span><span class="mi">196</span><span class="p">,</span><span class="w">
+      </span><span class="mi">197</span><span class="p">,</span><span class="w">
+      </span><span class="mi">198</span><span class="p">,</span><span class="w">
+      </span><span class="mi">199</span><span class="p">,</span><span class="w">
+      </span><span class="mi">200</span><span class="p">,</span><span class="w">
+      </span><span class="mi">201</span><span class="p">,</span><span class="w">
+      </span><span class="mi">202</span><span class="p">,</span><span class="w">
+      </span><span class="mi">203</span><span class="p">,</span><span class="w">
+      </span><span class="mi">204</span><span class="p">,</span><span class="w">
+      </span><span class="mi">205</span><span class="p">,</span><span class="w">
+      </span><span class="mi">206</span><span class="p">,</span><span class="w">
+      </span><span class="mi">207</span><span class="p">,</span><span class="w">
+      </span><span class="mi">208</span><span class="p">,</span><span class="w">
+      </span><span class="mi">209</span><span class="p">,</span><span class="w">
+      </span><span class="mi">210</span><span class="p">,</span><span class="w">
+      </span><span class="mi">211</span><span class="p">,</span><span class="w">
+      </span><span class="mi">212</span><span class="p">,</span><span class="w">
+      </span><span class="mi">213</span><span class="p">,</span><span class="w">
+      </span><span class="mi">214</span><span class="p">,</span><span class="w">
+      </span><span class="mi">215</span><span class="p">,</span><span class="w">
+      </span><span class="mi">216</span><span class="p">,</span><span class="w">
+      </span><span class="mi">217</span><span class="p">,</span><span class="w">
+      </span><span class="mi">218</span><span class="p">,</span><span class="w">
+      </span><span class="mi">219</span><span class="p">,</span><span class="w">
+      </span><span class="mi">220</span><span class="p">,</span><span class="w">
+      </span><span class="mi">221</span><span class="p">,</span><span class="w">
+      </span><span class="mi">222</span><span class="p">,</span><span class="w">
+      </span><span class="mi">223</span><span class="p">,</span><span class="w">
+      </span><span class="mi">224</span><span class="p">,</span><span class="w">
+      </span><span class="mi">225</span><span class="p">,</span><span class="w">
+      </span><span class="mi">226</span><span class="p">,</span><span class="w">
+      </span><span class="mi">227</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="mi">91</span><span class="p">,</span><span class="w">
+      </span><span class="mi">92</span><span class="p">,</span><span class="w">
+      </span><span class="mi">6</span><span class="p">,</span><span class="w">
+      </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1018</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1104</span><span class="p">,</span><span class="w">
+      </span><span class="mi">8</span><span class="p">,</span><span class="w">
+      </span><span class="mi">9</span><span class="p">,</span><span class="w">
+      </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="mi">11</span><span class="p">,</span><span class="w">
+      </span><span class="mi">12</span><span class="p">,</span><span class="w">
+      </span><span class="mi">13</span><span class="p">,</span><span class="w">
+      </span><span class="mi">16</span><span class="p">,</span><span class="w">
+      </span><span class="mi">17</span><span class="p">,</span><span class="w">
+      </span><span class="mi">19</span><span class="p">,</span><span class="w">
+      </span><span class="mi">20</span><span class="p">,</span><span class="w">
+      </span><span class="mi">21</span><span class="p">,</span><span class="w">
+      </span><span class="mi">22</span><span class="p">,</span><span class="w">
+      </span><span class="mi">23</span><span class="p">,</span><span class="w">
+      </span><span class="mi">24</span><span class="p">,</span><span class="w">
+      </span><span class="mi">90</span><span class="p">,</span><span class="w">
+      </span><span class="mi">25</span><span class="p">,</span><span class="w">
+      </span><span class="mi">27</span><span class="p">,</span><span class="w">
+      </span><span class="mi">88</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1001</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1013</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1060</span><span class="p">,</span><span class="w">
+      </span><span class="mi">29</span><span class="p">,</span><span class="w">
+      </span><span class="mi">31</span><span class="p">,</span><span class="w">
+      </span><span class="mi">32</span><span class="p">,</span><span class="w">
+      </span><span class="mi">33</span><span class="p">,</span><span class="w">
+      </span><span class="mi">34</span><span class="p">,</span><span class="w">
+      </span><span class="mi">35</span><span class="p">,</span><span class="w">
+      </span><span class="mi">40</span><span class="p">,</span><span class="w">
+      </span><span class="mi">41</span><span class="p">,</span><span class="w">
+      </span><span class="mi">42</span><span class="p">,</span><span class="w">
+      </span><span class="mi">45</span><span class="p">,</span><span class="w">
+      </span><span class="mi">46</span><span class="p">,</span><span class="w">
+      </span><span class="mi">47</span><span class="p">,</span><span class="w">
+      </span><span class="mi">48</span><span class="p">,</span><span class="w">
+      </span><span class="mi">49</span><span class="p">,</span><span class="w">
+      </span><span class="mi">50</span><span class="p">,</span><span class="w">
+      </span><span class="mi">52</span><span class="p">,</span><span class="w">
+      </span><span class="mi">53</span><span class="p">,</span><span class="w">
+      </span><span class="mi">55</span><span class="p">,</span><span class="w">
+      </span><span class="mi">56</span><span class="p">,</span><span class="w">
+      </span><span class="mi">57</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1114</span><span class="p">,</span><span class="w">
+      </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="mi">59</span><span class="p">,</span><span class="w">
+      </span><span class="mi">60</span><span class="p">,</span><span class="w">
+      </span><span class="mi">61</span><span class="p">,</span><span class="w">
+      </span><span class="mi">62</span><span class="p">,</span><span class="w">
+      </span><span class="mi">63</span><span class="p">,</span><span class="w">
+      </span><span class="mi">64</span><span class="p">,</span><span class="w">
+      </span><span class="mi">65</span><span class="p">,</span><span class="w">
+      </span><span class="mi">66</span><span class="p">,</span><span class="w">
+      </span><span class="mi">67</span><span class="p">,</span><span class="w">
+      </span><span class="mi">68</span><span class="p">,</span><span class="w">
+      </span><span class="mi">69</span><span class="p">,</span><span class="w">
+      </span><span class="mi">70</span><span class="p">,</span><span class="w">
+      </span><span class="mi">71</span><span class="p">,</span><span class="w">
+      </span><span class="mi">72</span><span class="p">,</span><span class="w">
+      </span><span class="mi">73</span><span class="p">,</span><span class="w">
+      </span><span class="mi">74</span><span class="p">,</span><span class="w">
+      </span><span class="mi">75</span><span class="p">,</span><span class="w">
+      </span><span class="mi">76</span><span class="p">,</span><span class="w">
+      </span><span class="mi">77</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1041</span><span class="p">,</span><span class="w">
+      </span><span class="mi">78</span><span class="p">,</span><span class="w">
+      </span><span class="mi">79</span><span class="p">,</span><span class="w">
+      </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1105</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1106</span><span class="p">,</span><span class="w">
+      </span><span class="mi">81</span><span class="p">,</span><span class="w">
+      </span><span class="mi">82</span><span class="p">,</span><span class="w">
+      </span><span class="mi">83</span><span class="p">,</span><span class="w">
+      </span><span class="mi">93</span><span class="p">,</span><span class="w">
+      </span><span class="mi">84</span><span class="p">,</span><span class="w">
+      </span><span class="mi">95</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1030</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1031</span><span class="p">,</span><span class="w">
+      </span><span class="mi">85</span><span class="p">,</span><span class="w">
+      </span><span class="mi">86</span><span class="p">,</span><span class="w">
+      </span><span class="mi">87</span><span class="p">,</span><span class="w">
+      </span><span class="mi">94</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1007</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1008</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1009</span><span class="p">,</span><span class="w">
+      </span><span class="mi">96</span><span class="p">,</span><span class="w">
+      </span><span class="mi">97</span><span class="p">,</span><span class="w">
+      </span><span class="mi">98</span><span class="p">,</span><span class="w">
+      </span><span class="mi">99</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1002</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1003</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1017</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1004</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1005</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1006</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1010</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1011</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1012</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1014</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1015</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1016</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1040</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1042</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1043</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1044</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1045</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1046</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1032</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1047</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1048</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1049</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1050</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1051</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1052</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1053</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1054</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1055</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1056</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1057</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1058</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1059</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1107</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1108</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1109</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1110</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1061</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1062</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1063</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1064</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1065</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1072</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1073</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1070</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1071</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1080</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1081</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1115</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1116</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1117</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1084</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1085</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1090</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1091</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1095</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1096</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1100</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1200</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1201</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1202</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1500</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1504</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1505</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1506</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1501</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1502</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1503</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1507</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1508</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1300</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1301</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1302</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1250</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1251</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1252</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1101</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1102</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1103</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1111</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1112</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1119</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1120</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1113</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1401</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1118</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1510</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1511</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1512</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1513</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1514</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1515</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1516</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1517</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1518</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1519</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1520</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1521</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1522</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1523</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1524</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1525</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1526</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1527</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1528</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1529</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1530</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1531</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1532</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1533</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1534</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1535</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1536</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1537</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1538</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1539</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1540</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1541</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1542</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1543</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1544</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1576</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1577</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1545</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1556</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1557</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1572</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1573</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1578</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1579</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1569</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1570</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1705</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1552</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1553</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1554</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1555</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1546</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1547</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1548</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1549</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1550</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1551</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1558</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1559</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1566</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1567</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1560</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1561</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1562</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1563</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1564</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1565</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1568</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1571</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1575</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1574</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1700</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1701</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1702</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1703</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1704</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1706</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1707</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1708</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1709</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1710</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1711</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1712</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1713</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1714</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1715</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1716</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1717</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1718</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1719</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1720</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1721</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1722</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1723</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1724</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1725</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1726</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1727</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1728</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1729</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1730</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1731</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1732</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1733</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1734</span><span class="p">,</span><span class="w">
+      </span><span class="mi">1735</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"serverCurrentTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1474549184722</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"timeDiff"</span><span class="p">:</span><span class="w"> </span><span class="mi">-25200000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serverTimeZoneName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Europe/Athens"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serverTimeGMTDiff"</span><span class="p">:</span><span class="w"> </span><span class="mi">10800000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isLPA"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isAdmin"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"accountTimeZoneId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Europe/Athens"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"csdsCollectionResponse"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"baseURIs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng163.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"predictiveDialer"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctor-wng001"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leStorage"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng046.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accountCreation"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wap49.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leBilling"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coapp.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coApp"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qatrunk.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asyncMessagingEnt"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng064.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leIntegration"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng01.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"loggos"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng011.dev.lprnd.net:9443"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"liveEngageUI"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng020.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visitorFeed"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctvr-ano041.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agentVep"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa-msg.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asyncMessaging"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hc1.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adminArea"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng022.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"engHistDomain"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wap05.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accountConfigReadWrite"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispatch.qa.look.io"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mobileVisit"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa.cobrowse.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coBrowse"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng02.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"liveEngageVep"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wto070.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pusherInt"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wto19"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leBiMstr"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tlv-chatpci2.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keyService"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"register.liveperson.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"provisionGW"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng176.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"msgHist"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"knowledge-qa.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"connectionPanel"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng02.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"conversationVep"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vssDomain"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vssDomain"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hc1.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng130.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"appKeyManagement"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng013.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leDataReporting"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng02.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"batchelor"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng137.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lpEng"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng113.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idp"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"etoolDomain.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"etool"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispatch.qa.look.io"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mobileChat"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shark-qa.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"smt"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hc1.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openPlatform"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng081.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"redirect"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wap06.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acCdnDomain"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hc1.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mTag"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tlv-le-webcontent-int.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"staticContent"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"houston.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leBackofficeInt"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wap08.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"liveEngage"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng002.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"interactionPlatform"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wap05.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accountConfigReadOnly"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shark-qa.vm.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visitManager"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wng044.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nlp"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wto023.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tokenizer"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wto070.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pusher"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qtvr-wap11.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leCdnDomain"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa21687241"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"baseURI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"objectstorage.dev.lprnd.net"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"swift"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"accountData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"agentGroupsData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main Group"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"sessionTTl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"28800000"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"bearer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9cf6ee24b6a1031e202f292a0ad20c8f52bfd9f01abc8b9489365995052c6603"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Note: Response contains csrf (should be saved and used in refresh and logout), bearer, wsuk, siteConfig, csdsCollectionResponse, accountData and sessionTTl.</em></p>
+
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2017 LivePerson. All rights reserved.<br />This documentation is subject to change without notice.<br />
+ Site last generated: Jan 30, 2017 <br />
+<p><img src="img/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+    </div>
+
+</body>
+
+</html>

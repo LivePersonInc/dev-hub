@@ -1,0 +1,17 @@
+{
+    "description": "This request is used by the consumer to request a new conversation",
+    "allOf": [{
+        "$ref": "assets/schema/infra/req.json"
+    }, {
+        "type": "object",
+        "properties": {
+            "type": {
+                "default": "cm.ConsumerRequestConversation",
+                "readonly": "true"
+            },
+            "body": {
+                "type": "object"
+            }
+        }
+    }]
+}

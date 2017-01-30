@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title>Queue Health | LivePerson Technical Documentation</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<link rel="stylesheet" href="css/lavish-bootstrap.css">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/theme-blue.css">
+
+    <script src="assets/js/jsoneditor.js"></script>
+    <!-- // <script src="js/jquery-3.1.0.min.js"></script> -->
+    <!-- <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'> -->
+<!--     <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'>
+ -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="http://liveperson.comfeed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> LivePerson Technical Documentation</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- entries without drop-downs appear here -->
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+			<li><a class="email" title="Submit feedback" href="https://github.com/LivePersonInc/dev-hub/issues" ><i class="fa fa-github"></i> Issues</a><li>
+
+		
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Queue Health">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="col-lg-12">&nbsp;</div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-md-3">
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul id="mysidebar" class="nav">
+    <li class="sidebarTitle"> </li>
+    
+        
+            
+            <li>
+                <a href="#">Common Guidelines</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Services Domains</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common_csds.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Authentication</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common-authentication.html">API Reference</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="not_yet.html">OAuth 2.0</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Agent</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Agent Workspace Widget SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-limitations.html">Limitations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-model.html">Public Model Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-properties.html">Public Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-code-examples.html">Code Examples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">LivePerson Domain API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-domain-api.html">Domain API</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Login Service API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-configuration.html">Configuration</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-login.html">Login</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-refresh.html">Refresh</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-logout.html">Logout</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-non-authenticated-flow.html">Non Authenticated Flow</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Chat Agent API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-resources.html">Retrieve all Resources for Agent Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-current-availability.html">Retrieve Current Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-availability.html">Set Agent Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-retrieve-available-agents.html">Retrieve Available Agents</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-information.html">Retrieve Agent Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-determine-incoming.html">Determine Incoming Chat Requests</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-accept-chat.html">Accept a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-sessions.html">Retrieve Chat Sessions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-data.html">Retrieve Data for Multiple Chats</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-add-lines.html">Add Lines</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-end-chat.html">End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-name.html">Retrieve Visitor’s Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-typing-status.html">Retrieve Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-typing-status.html">Set Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-typing-status.html">Retrieve Visitor’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-skills.html">Retrieve Available Skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-transfer-chat.html">Transfer a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-survey-structure.html">Retrieve the Agent Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-samples.html">Samples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Experience</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">JavaScript Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-startchatrequestchat.html">startChat/requestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-addline.html">addLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitortyping.html">setVisitorTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitorname.html">setVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-endChat.html">endChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setcustomvariable.html">setCustomVariable</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requesttranscript.html">requestTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitexitsurvey.html">submitExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitofflinesurvey.html">submitOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getstate.html">getState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentloginname.html">getAgentLoginName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getvisitorname.html">getVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentid.html">getAgentId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getrtsessionid.html">getRtSessionId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getsessionkey.html">getSessionKey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagenttyping.html">getAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onload.html">onLoad</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninit.html">onInit</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onestimatedwaittime.html">onEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onprechatsurvey.html">onPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstart.html">onStart</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstop.html">onStop</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-ontranscript.html">onTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstate.html">onState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onagenttyping.html">onAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onexitsurvey.html">onExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onaccounttoaccounttransfer.html">onAccountToAccountTransfer</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Server Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-base-resource.html">Base Resource</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-availability.html">Retrieve Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-estimated-wait-time.html">Retrieve Estimated Wait Time</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-offline-survey.html">Retrieve an Offline Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-add-lines.html">Add Lines / End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-name.html">Retrieve the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-name.html">Set the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-agent-typing-status.html">Retrieve the Agent's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-typing-status.html">Retrieve the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-typing-status.html">Set the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-exit-survey-structure.html">Retrieve Exit Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-custom-variables.html">Set Custom Variables</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-send-transcript.html">Send a Transcript</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Real-time Interactions</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Visit Information API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-visit-information.html">Visit Information</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Interaction</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-interation-index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Tutorials</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-readaccept-events.html">Read/Accept events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-post-survey.html">Post Conversation Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-no-headers.html">Avoid ga, qasocket Headers</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Samples</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-js-sample.html">Javascript Messenger</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                        
+                            
+                                <li><a href="consumer-int-api-reference.html">API Reference</a></li>
+                            
+                        
+                    
+                </ul>
+                
+            
+            
+            
+            
+            
+            
+            
+        
+        <!-- if you aren't using the accordion, uncomment this block:
+           <p class="external">
+               <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+           </p>
+           -->
+    </li>
+</ul>
+</div>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+    <!-- Content Column -->
+    <div class="col-md-9">
+        <div class="post-header">
+   <h1 class="post-title-main">Queue Health</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+    
+
+    
+
+    
+
+  <h1 id="queue-health">Queue Health</h1>
+
+<p>Retrieves queue-related metrics at the account or skill level.</p>
+
+<p><strong>Note</strong>: Queue Health is calculated using bucket-based aggregation techniques, where events are collected into 5 minute buckets. For this reason, events may be included that took place outside of the requested time frame.</p>
+
+<p><strong>Example</strong>: If the time now is 13:29 and the time frame is 7 minutes, the API will use 2 buckets: 13:25 and 13:30. In other words, in practice the time of the data is not 13:22-13:29, but 13:20-13:29.</p>
+
+<h2 id="request">Request</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/operations/api/account/{accountID}/queuehealth?timeframe=&lt;timeframe in minutes&gt;&amp;skillIds=&lt;skillIDs&gt;&amp;interval=&lt;interval size in minutes&gt;&amp;v=&lt;version&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>URL Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">timeframe</td>
+      <td style="text-align: left">The time range (in minutes) in which the data can be filtered. Where end time = current time, and start time = end time - timeframe. The maximum timeframe value is 1440 minutes (24 hours).</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">Version of API, for example, v=1.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillIds</td>
+      <td style="text-align: left">When provided, metrics on the response will be grouped by the requested skills. When not provided, metrics on the response will be calculated at the account level. You can provide one or more skillIDs. <br /> Example: skillIds=4,153. To retrieve all skills active for the time period, use skillIds=all.</td>
+      <td style="text-align: left">numeric, comma separated</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interval</td>
+      <td style="text-align: left">Interval size in minutes. When provided, the returned data will be aggregated by intervals of the requested size. The interval has to be smaller or equal to the time frame and also a divisor of the time frame. <br /> Example: <br /> timeframe=60&amp;interval=30 (correct) <br /> timeframe=60&amp;interval=61 (bad request) <br /> timeframe=60&amp;interval=31 (bad request)</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<p><strong>JSON Example</strong></p>
+
+<p>Request by skillIds=199,200 (no interval)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"199"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.4</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">1111</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">68</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">72</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueState"</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">84</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">216</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"200"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">6666</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">42</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueState"</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">42</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">175</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.4</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">8888</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">92</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">35.125</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">47</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.63</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">92</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">47</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">259</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">46</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">281</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">8</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Request by skillIds=11,21,269364510, interval=360, timeframe=720</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="nt">"metricsByIntervals"</span><span class="p">:[</span><span class="w">  
+        </span><span class="p">{</span><span class="w">  
+            </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="mi">1465286700000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"metricsData"</span><span class="p">:{</span><span class="w">  
+                </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.010390574264774098</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">40540</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">3.7610167919101958</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10779</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10779</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">112</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.0033572068039391225</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">51655</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.780550581915846</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">8936</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">8936</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.023550191345304682</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">53645</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.263958394661957</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10191</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10191</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">240</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">145840</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">29906</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">29906</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">382</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">  
+            </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="mi">1465308300000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"metricsData"</span><span class="p">:{</span><span class="w">  
+                </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">220</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.239413988657845</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">15740</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">1.4877126654064272</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10580</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">28</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10580</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">2533</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">25</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">52</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.036370384115791424</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">113009</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">10.485154945258861</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10778</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10778</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.17</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">392</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">471</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.07260261106414953</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">57671</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.416643185873955</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10647</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10647</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">26</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">773</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">18</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">743</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">41</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">186420</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">32005</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">31</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">32005</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">3698</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">48</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">  
+            </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="mi">1465329900000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"metricsData"</span><span class="p">:{</span><span class="w">  
+                </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">198</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">5073</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">396</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">46</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">134</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">38</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">424</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">365</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">396</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">424</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">26</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.07</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">14</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">1777</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">594</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">38</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">47</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">264</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">7215</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">1089</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">297</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">1321</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">60</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">297</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">73</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">99</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">132</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">5299</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.12326405070370025</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">56379</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">2.6274116879485505</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">21458</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">397</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">76</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">21458</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">83</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">2645</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">64</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">215</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">419</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.021299147024680765</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">35</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">165060</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">8.330893857568263</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">19813</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">429</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">19813</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.09</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">422</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">20</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">2257</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.053111716100683</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">111910</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.345082867650571</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">20937</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">20937</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">34</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.03</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">1112</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">66</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">189</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">7975</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.06717785493827161</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">82</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">333349</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.3586194701646095</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">62208</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">1326</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">94</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">62208</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">53</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">4179</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">150</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>Elements in the Response</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">skillsMetrics</td>
+      <td style="text-align: left">When skillIDs are provided: An array of skills with their metrics. <br /> When interval size is provided: The response will have the skillsMetrics element in each interval representing the data for the related interval. <br /> There will also be a skillsMetrics element at the end of the response, representing the data of the whole requested time frame (totals of all intervals). <br />If there is no data for a specific skill, it will not be included in the array. <br /> If there is no data for any of the skills, this member will have an empty element as value.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">metricsTotals</td>
+      <td style="text-align: left">When skillIDs are provided: The total metrics for all requested skills. <br /> When skillIDs are not provided: The site metrics. <br /> When interval is provided: Total metrics for all requested intervals.<br /> If skill/sID/s are requested and there is no data for any of them, this element will still include all of the metrics with value zero. <br /> Note: Totals may not add up due to rounding differences.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skill id</td>
+      <td style="text-align: left">When skillIDs value(/s) provided: The skill ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timestamp</td>
+      <td style="text-align: left">When interval size is provided in the request, the response will be aggregated by intervals. The timestamp is the UTC timestamp in milliseconds representing the end time of the interval. <br /> Example : Interval size: 30 min. Interval start and end time: 26/03/2014 07:30:00 - 26/03/2014 08:00:00. Timestamp: 1395820800000. <br /> Intervals are rounded up to 5 minutes. Consequently: The latest interval time stamp will be rounded up. <br /> Example: Now: 08:07. Last interval end time: 8:10. <br /> The earliest interval will include only the remainder of the requested time frame, and will contain only 5 minutes of data. <br /> Example: Now: 8:07. Request parameters: timeframe=20 and interval=10 (20 minutes in 10 minute intervals). Response from and to time: 7:45 - 8:07 –&gt; 22 minutes. <br /> Note: See Queue Health for further information about time frame rounding. <br /> Response intervals: 8:00 - 8:10 (10 minutes. actual 7 minutes because now is 8:07). 7:50 - 8:00 (10 minutes). 7:45 - 7:50 (5 minutes).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">totalTimeToAnswer</td>
+      <td style="text-align: left">The total time, in seconds, that the visitors spent in the queue before being connected to an agent.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">enteredQEng</td>
+      <td style="text-align: left">The number of visitors that entered the queue.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">avgTimeToAnswer</td>
+      <td style="text-align: left">The average time, in seconds, that a visitor spent in the queue before being connected to an agent. <br /> Calculation: totalTimeToAnswer / connectedEng.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">abandonmentRate</td>
+      <td style="text-align: left">The number of visitors that abandoned the queue out of the total visitors that started an engagement. <br /> Calculation: abandonedEng / (abandonedEng + connectedEng).</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">abandonedEng</td>
+      <td style="text-align: left">The number of visitors that abandoned the queue before being connected to an agent.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">connectedEng</td>
+      <td style="text-align: left">The number of visitors that were connected to an agent.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">totalTimeToAbandon</td>
+      <td style="text-align: left">Total time visitors spend in queue before abandon.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">avgTimeToAbandon</td>
+      <td style="text-align: left">The average time visitors spend in queue before abandon. <br /> Calculation: totalTimeToAbandon / abandonedEng.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxQueueSize</td>
+      <td style="text-align: left">The maximum queue size within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minQueueSize</td>
+      <td style="text-align: left">The minimum queue size within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">averageQueueSize</td>
+      <td style="text-align: left">The average queue size within the given time frame (rounded). Default value if no such data exists is -1. Calculated as queueSizeSum / queueSizeCount</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxAvailableSlots</td>
+      <td style="text-align: left">The maximum available slots within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxAvailableSlots</td>
+      <td style="text-align: left">The maximum available slots within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minAvailableSlots</td>
+      <td style="text-align: left">The minimum available slots within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">averageAvailableSlots</td>
+      <td style="text-align: left">The average available slots within the given time frame (rounded). Default value if no such data exists is -1. Calculated as availableSlotsSum / availableSlotsCount</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currentQueueState</td>
+      <td style="text-align: left">The current queue size. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currentAvailableSlots</td>
+      <td style="text-align: left">The current available slots. Default value if no such data exists is -1. <br /> Note: If the agent concurrency set to ‘Unlimited’, the number of current available slots for the associated skill will always be 1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">queueSizeSum</td>
+      <td style="text-align: left">Sum of all queue sizes received (queue size sum is calculated as sum of all [queue size] * [counter column value])</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">queueSizeCount</td>
+      <td style="text-align: left">Total number of queue size measures made</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">availableSlotsSum</td>
+      <td style="text-align: left">Sum of all available slots received (queue size sum is calculated as sum of all [queue size] * [counter column value])</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">availableSlotsCount</td>
+      <td style="text-align: left">Total number of available slots measures made</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
+
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2017 LivePerson. All rights reserved.<br />This documentation is subject to change without notice.<br />
+ Site last generated: Jan 30, 2017 <br />
+<p><img src="img/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+    </div>
+
+</body>
+
+</html>

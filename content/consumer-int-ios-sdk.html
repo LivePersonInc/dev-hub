@@ -1,0 +1,3573 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title>LiveEngage Enterprise In-App Messenger SDK (iOS Swift) | LivePerson Technical Documentation</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<link rel="stylesheet" href="css/lavish-bootstrap.css">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/theme-blue.css">
+
+    <script src="assets/js/jsoneditor.js"></script>
+    <!-- // <script src="js/jquery-3.1.0.min.js"></script> -->
+    <!-- <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'> -->
+<!--     <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'>
+ -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="http://liveperson.comfeed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> LivePerson Technical Documentation</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- entries without drop-downs appear here -->
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+			<li><a class="email" title="Submit feedback" href="https://github.com/LivePersonInc/dev-hub/issues" ><i class="fa fa-github"></i> Issues</a><li>
+
+		
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="LiveEngage Enterprise In-App Messenger SDK (iOS Swift)">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="col-lg-12">&nbsp;</div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-md-3">
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul id="mysidebar" class="nav">
+    <li class="sidebarTitle"> </li>
+    
+        
+            
+            <li>
+                <a href="#">Common Guidelines</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Services Domains</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common_csds.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Authentication</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common-authentication.html">API Reference</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="not_yet.html">OAuth 2.0</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Agent</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Agent Workspace Widget SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-limitations.html">Limitations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-model.html">Public Model Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-properties.html">Public Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-code-examples.html">Code Examples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">LivePerson Domain API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-domain-api.html">Domain API</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Login Service API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-configuration.html">Configuration</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-login.html">Login</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-refresh.html">Refresh</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-logout.html">Logout</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-non-authenticated-flow.html">Non Authenticated Flow</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Chat Agent API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-resources.html">Retrieve all Resources for Agent Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-current-availability.html">Retrieve Current Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-availability.html">Set Agent Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-retrieve-available-agents.html">Retrieve Available Agents</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-information.html">Retrieve Agent Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-determine-incoming.html">Determine Incoming Chat Requests</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-accept-chat.html">Accept a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-sessions.html">Retrieve Chat Sessions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-data.html">Retrieve Data for Multiple Chats</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-add-lines.html">Add Lines</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-end-chat.html">End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-name.html">Retrieve Visitor’s Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-typing-status.html">Retrieve Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-typing-status.html">Set Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-typing-status.html">Retrieve Visitor’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-skills.html">Retrieve Available Skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-transfer-chat.html">Transfer a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-survey-structure.html">Retrieve the Agent Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-samples.html">Samples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Experience</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">JavaScript Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-startchatrequestchat.html">startChat/requestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-addline.html">addLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitortyping.html">setVisitorTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitorname.html">setVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-endChat.html">endChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setcustomvariable.html">setCustomVariable</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requesttranscript.html">requestTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitexitsurvey.html">submitExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitofflinesurvey.html">submitOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getstate.html">getState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentloginname.html">getAgentLoginName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getvisitorname.html">getVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentid.html">getAgentId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getrtsessionid.html">getRtSessionId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getsessionkey.html">getSessionKey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagenttyping.html">getAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onload.html">onLoad</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninit.html">onInit</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onestimatedwaittime.html">onEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onprechatsurvey.html">onPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstart.html">onStart</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstop.html">onStop</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-ontranscript.html">onTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstate.html">onState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onagenttyping.html">onAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onexitsurvey.html">onExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onaccounttoaccounttransfer.html">onAccountToAccountTransfer</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Server Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-base-resource.html">Base Resource</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-availability.html">Retrieve Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-estimated-wait-time.html">Retrieve Estimated Wait Time</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-offline-survey.html">Retrieve an Offline Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-add-lines.html">Add Lines / End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-name.html">Retrieve the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-name.html">Set the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-agent-typing-status.html">Retrieve the Agent's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-typing-status.html">Retrieve the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-typing-status.html">Set the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-exit-survey-structure.html">Retrieve Exit Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-custom-variables.html">Set Custom Variables</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-send-transcript.html">Send a Transcript</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Real-time Interactions</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Visit Information API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-visit-information.html">Visit Information</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Interaction</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-interation-index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Tutorials</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-readaccept-events.html">Read/Accept events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-post-survey.html">Post Conversation Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-no-headers.html">Avoid ga, qasocket Headers</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Samples</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-js-sample.html">Javascript Messenger</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                        
+                            
+                                <li><a href="consumer-int-api-reference.html">API Reference</a></li>
+                            
+                        
+                    
+                </ul>
+                
+            
+            
+            
+            
+            
+            
+            
+        
+        <!-- if you aren't using the accordion, uncomment this block:
+           <p class="external">
+               <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+           </p>
+           -->
+    </li>
+</ul>
+</div>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+    <!-- Content Column -->
+    <div class="col-md-9">
+        <div class="post-header">
+   <h1 class="post-title-main">LiveEngage Enterprise In-App Messenger SDK (iOS Swift)</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+    
+
+    
+
+    
+
+  <p><em>Version 1.6</em>
+<em>January 2016</em></p>
+
+<h1 id="quick-start">Quick Start</h1>
+
+<p>The LivePerson SDK provides brands with a simple, yet enterprise-grade and secure in-app messaging solution. Through in-app messaging, brands will foster connections with their customers and increase app engagement and retention.</p>
+
+<p>This Quick Start will quickly get you up and running with a project powered by LivePerson. When you’re done, you’ll be able to send messages between an iOS device and LiveEngage. To complete this Quick Start, you will need a LiveEngage account. You can get the number and login information from the LivePerson account team.</p>
+
+<p>For information on supported operating systems and devices, refer to <a href="https://s3-eu-west-1.amazonaws.com/ce-sr/CA/Admin/Sys+req/System+requirements.pdf">System Requirements</a>.</p>
+
+<h2 id="step-1-download-and-unzip-the-sdk">Step 1: Download and unzip the SDK</h2>
+
+<p>Click <a href="https://github.com/LP-Messaging">here</a> to download the SDK package. Once downloaded, extract the ZIP file to a folder on your Mac.</p>
+
+<h2 id="step-2-configure-project-settings-to-connect-liveengage-sdk">Step 2: Configure project settings to connect LiveEngage SDK</h2>
+<ol>
+  <li>Copy the files into the project.</li>
+  <li>In project settings, navigate to the <strong>General</strong> tab, and add all Framework files to the <strong>Embedded Binaries</strong> section.
+ <img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/embeddedbinaries.png" alt="Embedded Binaries" /></li>
+  <li>If you are using Xcode 8 with iOS 10 (or later): In order to use LiveEngage SDK on an iOS 10 simulator, you must have at least one Project Capability enabled, such as Keychain Sharing or even Push Notifications. 
+To enable Capabilities:  In project setting, navigate to <strong>Capabilities</strong> and enable <strong>Keychain Sharing</strong>. LiveEngage iOS SDK uses keychain to store sensitive settings and data. This step is a workaround for an open Apple bug that fails to use keychain store in Xcode 8 and iOS 10: https://openradar.appspot.com/27422249.</li>
+  <li>
+    <p>In project settings, navigate to the <strong>Build Phases</strong> tab, and click the + button to add a <strong>New Run Script Phase</strong>. Add the script below in order to loop through the frameworks embedded in the application and remove unused architectures (used for simulator). This step is a workaround for a known iOS issue http://www.openradar.me/radar?id=6409498411401216 and is necessary for archiving your app before publishing it to the App Store.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> bash "\${BUILT_PRODUCTS\_DIR}/${FRAMEWORKS_FOLDER_PATH}/LPInfra.framework/frameworks-strip.sh"
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="step-3-initialization">Step 3: Initialization</h2>
+
+<p>Now that you have the configuration file for your project, you’re ready to begin implementing. 
+To initialize the SDK, you must have a LivePerson account number.</p>
+
+<p>Inside <strong>AppDelegate</strong>, add:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import LPMessagingSDK
+import LPInfra
+import LPAMS
+</code></pre>
+</div>
+
+<ol>
+  <li>
+    <p>Initialization
+Inside <strong>AppDelegate</strong>, under <strong>didFinishLaunchingWithOptions</strong>, add the following code:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> do {
+ try LPMessagingSDK.instance.initialize(“Your Account ID”)
+ } catch {
+ // SDK has an initialization error...
+ return
+ }
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Set up and call the conversation view. You’ll need to provide your LivePerson account number and a container view controller.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> let conversationQuery = 
+ LPMessagingSDK.instance.getConversationBrandQuery(accountNumber)
+ LPMessagingSDK.instance.showConversation(conversationQuery, authenticationCode:  
+ accountNumber, containerViewController: self)
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>In order to remove the conversation view when your container is deallocated, run the following code:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> let conversationQuery =LPMessagingSDK.instance.getConversationBrandQuery(accountNumber)
+ LPMessagingSDK.instance.removeConversation(conversationQuery)
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>In the <strong>General</strong> tab, make sure that the framework files are under <strong>Embedded Libraries</strong>.</p>
+  </li>
+  <li>
+    <p>In Build settings make sure <strong>Embedded content contains Swift code</strong> is set to <strong>YES</strong>.</p>
+  </li>
+</ol>
+
+<h1 id="advanced-configurations">Advanced Configurations</h1>
+
+<h2 id="sdk-initialization-and-lifecycle">SDK Initialization and Lifecycle</h2>
+
+<p>In order to get started and initialize the In-App Messaging SDK, utilize the following functions:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func initialize(brandID: String? = nil) throws  
+2. public func showConversation(conversationQuery: ConversationParamProtocol, authenticationCode: String? = nil, containerViewController: UIViewController? = nil)  
+3. public func removeConversation(conversationQuery: ConversationParamProtocol)  
+4. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConnectionStateChanged(isReady:  Bool, brandID: String)
+5. &lt;LPMessagingSDKdelegate&gt;   func LPMessagingSDKError(error: NSError)
+6. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKHasConnectionError(error: String?)
+</code></pre>
+</div>
+
+<h4 id="supporting-functions">Supporting functions:</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func getConversationBrandQuery(brandID: String) -&gt; ConversationParamProtocol  
+2. public func getConversationBrandAndSkillQuery(brandID: String, skillID: String) -&gt;   ConversationParamProtocol  
+3. public func getConversationConsumerQuery(consumerID: String?, brandID: String, agentToken: String) -&gt; ConversationParamProtocol  
+4. public func isBrandReady(brandID: String) -&gt; Bool  
+</code></pre>
+</div>
+
+<h2 id="sdk-delegates">SDK delegates</h2>
+
+<p>The SDK uses 2 delegates: 
+1. <a href="#lpmessagingsdkdelegate-methods">LPMessagingSDKdelegate</a> - for lifecycle and connectivity events.
+2. <a href="#lpmessagingsdknotificationdelegate-methods">LPMessagingSDKNotificationDelegate</a> - for handling push and in app notifications.</p>
+
+<p>You should implement and set the delegate for the above in order to receive notification from the SDK.</p>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>For users of OAuth 2.0 for customer authentication, the following functions apply:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func reconnect(conversationQuery: ConversationParamProtocol, authenticationCode: String)  
+2. &lt;LPMessagingSDKdelegate&gt; func LPMessagingSDKAuthenticationFailed(error: NSError)
+3. &lt;LPMessagingSDKdelegate&gt;   func LPMessagingSDKTokenExpired(brandID: String)
+</code></pre>
+</div>
+
+<h2 id="ui">UI</h2>
+
+<p>To determine the layout of messaging within the app, you can utilize various actions to control the behavior and UI such as menus, custom buttons, typing indication, etc.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func toggleChatActions(accountID: String, sender: UIBarButtonItem? = nil)
+2. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKActionsMenuToggled(toggled: Bool)
+3. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKCustomButtonTapped()
+4. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKAgentIsTypingStateChanged(isTyping: Bool)
+5. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKOffHoursStateChanged(isOffHours: Bool, brandID: String)
+6. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConversationViewControllerDidDismiss()
+</code></pre>
+</div>
+
+<h2 id="conversation-lifecycle">Conversation Lifecycle</h2>
+
+<p>During the course of the conversation, consumers can take several actions such as Mark as urgent to receive a faster service, or Resolve conversation to let your agents know they have received their answers.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConversationStarted(conversationID: String?)
+2. &lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConversationEnded(conversationID: String?)
+3. public func checkActiveConversation(conversationQuery: ConversationParamProtocol) -&gt; Bool  
+4. public func markAsUrgent(conversationQuery: ConversationParamProtocol)  
+5. public func isUrgent(conversationQuery: ConversationParamProtocol) -&gt; Bool  
+6. public func dismissUrgent(conversationQuery: ConversationParamProtocol)  
+7. public func resolveConversation(conversationQuery: ConversationParamProtocol)  
+8. &lt;LPMessagingSDKdelegate&gt;  optional func LPMessagingSDKConversationCSATDismissedOnSubmittion(conversationID: String?)
+9. &lt;LPMessagingSDKdelegate&gt;  optional func LPMessagingSDKCSATScoreSubmissionDidFinish(brandID: String, rating: Int)
+10. public func clearHistory(conversationQuery: ConversationParamProtocol) throws  
+11. public func logout()
+12. public func destruct()
+</code></pre>
+</div>
+
+<h2 id="notifications">Notifications</h2>
+
+<p>Push and local notifications are a key factor that make the experience better for consumers - they 
+never have to stay in your app or keep the window open as they will get a proactive notification as soon as a reply or notice is available.</p>
+
+<p><strong>Note</strong>: In order to enable push notifications, you must also configure them within the LiveEngage UI.  <a href="#liveengage-configuration">See instructions</a>.*</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func handlePush(userInfo: [NSObject : AnyObject])  
+2. public func registerPushNotifications(token token: NSData, notificationDelegate: LPMessagingSDKNotificationDelegate? = nil, alternateBundleID: String? = nil)  
+3. &lt;LPMessagingSDKNotificationDelegate&gt; optional func LPMessagingSDKNotification (didReceivePushNotification notification: LPNotification)
+4. &lt;LPMessagingSDKNotificationDelegate&gt;  optional func LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -&gt; Bool
+5. &lt;LPMessagingSDKNotificationDelegate&gt;   optional func LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -&gt; UIView
+6. &lt;LPMessagingSDKNotificationDelegate&gt;   optional func LPMessagingSDKNotification(notificationTapped notification: LPNotification)
+</code></pre>
+</div>
+
+<h2 id="user-data">User Data</h2>
+
+<p>Pass and display consumer information to agents, and agent information to consumers.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func setUserProfile(lpuser: LPUser, brandID: String)  
+2. public func getAssignedAgent(conversationQuery: ConversationParamProtocol) -&gt; LPUser?  
+3. &lt;LPMessagingSDKdelegate&gt;  optional func LPMessagingSDKAgentDetails(agent: LPUser?)
+</code></pre>
+</div>
+
+<h2 id="logs-and-info">Logs and Info</h2>
+
+<p>Send logs from LiveEngage to your app. Logs include different severity levels of errors and warnings.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. public func subscribeLogEvents(logLevel: LogLevel)  
+2. &lt;LPMessagingSDKdelegate&gt;  func LPMessagingSDKObseleteVersion(error: NSError) 
+3. public func logInvoked(text: String?, logLevel: LogLevel?, timestamp: String?, className: String?, funcName: String?)  
+4. &lt;LPMessagingSDKdelegate&gt; optional func L
+5. public func getSDKVersion() -&gt; String? 
+</code></pre>
+</div>
+
+<h1 id="api-methods">API Methods</h1>
+
+<p>Detailed below are the LivePerson API methods that shall be called by the developer, and demonstrated on the sample app.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">API Name</th>
+      <th style="text-align: left">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="#initialization">Initialization</a></td>
+      <td style="text-align: left">Initialize the resources required by the SDK.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#showconversation">showConversation</a></td>
+      <td style="text-align: left">Open the conversation screen.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#removeconversation">removeConversation</a></td>
+      <td style="text-align: left">Remove the SDK UI and clean the service or network operation that was running.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#reconnect">reconnect</a></td>
+      <td style="text-align: left">Reconnect with new authentication key.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#togglechatactions">toggleChatActions</a></td>
+      <td style="text-align: left">Open or close the SDK menu.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#checkcctiveconversations">checkActiveConversations</a></td>
+      <td style="text-align: left">Check whether there is an active conversation.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#markasurgent">markAsUrgent</a></td>
+      <td style="text-align: left">Mark the current conversation as urgent.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#isurgent">isUrgent</a></td>
+      <td style="text-align: left">Check whether the current conversation is marked as urgent.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#dismissurgent">dismissUrgent</a></td>
+      <td style="text-align: left">Cancel the markAsUrgent API.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#resolveconversation">resolveConversation</a></td>
+      <td style="text-align: left">Resolve the current conversation.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#clearhistory">clearHistory</a></td>
+      <td style="text-align: left">Clear all conversations from device.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#logout">logOut</a></td>
+      <td style="text-align: left">Logout from the SDK - when all user data should be removed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#destruct">destruct</a></td>
+      <td style="text-align: left">Close all active connections and remove conversation view.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#handlepush">handlePush</a></td>
+      <td style="text-align: left">Receive all incoming push messages in a single function.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#registerpushnotifications">registerPushNotifications</a></td>
+      <td style="text-align: left">Register to LPMessagingSDK push notifications.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#setuserprofile">setUserProfile</a></td>
+      <td style="text-align: left">Take custom parameters about the consumer as an input, set them for the messaging agent, and attach them to the transcript.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#getassignedagent">getAssignedAgent</a></td>
+      <td style="text-align: left">Get assigned agent details of last / current conversation.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#suscribelogevents">suscribeLogEvents</a></td>
+      <td style="text-align: left">Subscribe to log events.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#loginvoked">logInvoked</a></td>
+      <td style="text-align: left">Invoked when subscribed to LogsManager.instance.subscribeLogEvents.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="#getsdkversion">getSDKVersion</a></td>
+      <td style="text-align: left">Get current SDK version string.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="initialization">Initialization</h2>
+
+<p>The SDK initialization is done only once, inside <code class="highlighter-rouge">appdelegate</code>. This function checks that the SDK has all mandatory preconditions. For example, it is able to find the bundle file, verify that all the pre-defined configurations are valid, and more. If any of the preconditions are not met, an exception is thrown. Once an exception is thrown, you must not do any other call to the SDK.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>do {
+try LPMessagingSDK.instance.initialize(“Your Account ID”)
+} catch {
+// SDK has an initialization error...
+return
+}
+</code></pre>
+</div>
+
+<h2 id="showconversation">showConversation</h2>
+
+<p>This method is used to open the conversation screen. It accepts 3 parameters:</p>
+
+<ul>
+  <li>Conversation Query</li>
+</ul>
+
+<p>The conversation query represents a ‘filter’ for the conversation screen, determining which of the conversations will be displayed in the following screens. The default conversationQuery sorts the conversations by account number. 
+See <a href="#supporting-functions">helpers methods</a> above for how to generate a conversation query.</p>
+
+<ul>
+  <li>Authentication code</li>
+</ul>
+
+<p>The SDK can enable code-flow SSO. If your account uses SSO, pass the auth-code here. Otherwise, skip this parameter.</p>
+
+<ul>
+  <li>Container View Controller</li>
+</ul>
+
+<p>The SDK needs a container view controller. This can be done in two ways:</p>
+
+<h4 id="a-view-controller-mode">a. View Controller mode</h4>
+<p>If you provide a container viewController, the SDK will put itself inside as a child viewController. This mode allows you to keep your own navigation bar intact. Using this method, you can use the provided callbacks to retrieve data from the SDK and show it in the navigation bar (users profile data, avatar URL, calling menu items, etc.)</p>
+
+<h4 id="b-window-mode">b. Window mode</h4>
+<p>If you don’t provide a container view controller, the SDK places its UI components on top of the app UI, including the navigation bar.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.showConversation(conversationQuery,
+authenticationCode: accountNumber, containerViewController: self)
+</code></pre>
+</div>
+
+<h2 id="removeconversation">removeConversation</h2>
+
+<p>When navigating out of the conversation screen, remove the view controller from its container. This is done by calling remove conversation API. The method will remove the SDK UI and clean the service or network operation that was running.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.removeConversation(conversationQuery)
+</code></pre>
+</div>
+
+<h2 id="reconnect">reconnect</h2>
+
+<p>When using SSO in an authenticated connection, an auth-code is passed to the SDK (see showConversation API). The session in this case might have an expiration date (see LPMessagingSDKTokenExpired). To reconnect with a new token, use the following ‘reconnect’ API and pass the new token.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.reconnect(query, authenticationCode: "Authentication code")
+</code></pre>
+</div>
+
+<h2 id="togglechatactions">toggleChatActions</h2>
+
+<p>This API call is used to open or close the SDK menu. 
+If you’re using <a href="#b-window-mode">window mode</a>, you won’t need to utilize this method as the SDK will have a dedicated button in the navigation bar to toggle the menu. 
+If you are using <a href="#a-view-controller-mode">view controller mode</a>, you may call this API to open the SDK menu, or use other APIs to build your own menu.</p>
+
+<h2 id="checkactiveconversation">checkActiveConversation</h2>
+
+<p>Check if there is an active conversation by passing a conversation query.</p>
+
+<ul>
+  <li>Note that conversation query defines a filter that fetches conversations which match certain conditions. Each query can have one active conversation at most.</li>
+  <li>Conversation is said to be active the moment an ‘ack’ is received from the server. It may not yet have an assigned agent.</li>
+  <li>
+    <p>You may call this API only if you are sure that the SDK is in sync with the server, meaning LPMessagingSDKConnectionStateChanged was invoked and isReady is set to true.</p>
+
+    <p>LPMessagingSDK.instance.checkActiveConversation(conversationQuery)</p>
+  </li>
+</ul>
+
+<h2 id="markasurgent">markAsUrgent</h2>
+
+<p>A consumer can mark a conversation as urgent in order to request a faster response from the agent. You can call the API only if there’s an active conversation, otherwise an alert will be triggered. The conversation is marked as urgent only after an ACK is received from the server.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.markAsUrgent(conversationQuery)
+</code></pre>
+</div>
+
+<h2 id="isurgent">isUrgent</h2>
+
+<p>Checks if the active conversation (if existing) is marked as urgent. Otherwise returns false. 
+Note that you must check that the SDK is in <a href="#sdk-delegates">ready state</a> before calling this method.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let isMarkedAsUrgent = LPMessagingSDK.instance.isUrgent(conversationQuery)
+</code></pre>
+</div>
+
+<h2 id="dismissurgent">dismissUrgent</h2>
+
+<p>This API is used to cancel the <a href="markasurgent">markAsUrgent</a> API. It will reset the SLA for the agent response back to default.  This API can be called only for open conversations.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.dismissUrgent(conversationQuery)
+</code></pre>
+</div>
+
+<h2 id="resolveconversation">resolveConversation</h2>
+
+<p>This API enables a conversation to be resolved. The API will request the server to mark the active conversation as resolved. If there is no active conversation, an alert will be displayed.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.resolveConversation(conversationQuery)
+</code></pre>
+</div>
+
+<h2 id="clearhistory">clearHistory</h2>
+
+<p>This API may be used only when there is no active conversation. This API clears the local database. The history is still available on the server, but won’t be retrieved from the specific device unless a fresh installation Is made.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>do {
+try LPMessagingSDK.instance.clearHistory(conversationQuery)
+} catch {
+ // Clear history error...    
+}
+</code></pre>
+</div>
+
+<h2 id="logout">Logout</h2>
+
+<p>This method is a destructive method that is typically used to clean a user’s data before a second user logs into the same device. This method conducts the following:</p>
+
+<ul>
+  <li>Unregisters from the push notification service.</li>
+  <li>Clears all SDK persistent data.</li>
+  <li>
+    <p>Cleans running operations (see <a href="#destruct">destruct</a>).</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> LPMessagingSDK.instance.logout()
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h2 id="destruct">Destruct</h2>
+
+<p>This method is used to clean running operations of the SDK. Note that this method closes all active connections and removes conversation views.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	LPMessagingSDK.instance.destruct()
+</code></pre>
+</div>
+
+<h2 id="handlepush">handlePush</h2>
+
+<p>In order to receive all incoming push notifications in a single function and handle them, add the following method. This method cooperates with two other API methods:</p>
+
+<ul>
+  <li>This method calls the <a href="#shouldshowpushnotification">shouldShowPushNotification</a> method. If the host app returns false, the SDK will not show anything to the UI.</li>
+  <li>
+    <p>Otherwise, the SDK will ask the host app to provide a view as an in-app notification. If the host app doesn’t implement this method, the SDK will use its own implementation.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject :     AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -&gt; Void) {
+    
+     LPMessagingSDK.instance.handlePush(userInfo)
+         
+ }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h2 id="registerpushnotifications">registerPushNotifications</h2>
+
+<p>Register to LPMessagingSDK push notifications with the following code in AppDelegate:</p>
+
+<ul>
+  <li>LivePerson push service uses the bundle ID to identify your app.
+    <ul>
+      <li>“alternateBundleID” is an optional value that can be used so that the LivePerson pusher service identifies your app with this identifier.</li>
+      <li>In debug mode, the SDK appends “-dev” string to the bundle ID.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Note that push notifications must be pre-configured, and an APN certificate has to be uploaded to the LiveEngage platform. See more info on <a href="#push-notifications">how to configure push notifications</a>.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> func application(application: UIApplication, idRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+	
+ LPMessagingSDK.instance.registerPushNotifications(token: deviceToken, notificationDelegate: self, alternateBundleID: “__alternateBundleID__”)
+
+ }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h2 id="setuserprofile">setUserProfile</h2>
+
+<p>Add custom parameters about the user and set them for the messaging agent. 
+Passed object is an instance of LPUser (a subclass of NSObject) with the following properties:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	var firstName: String?
+	var lastName: String?
+	var profileImageURL: String?
+	var phoneNumber: String?
+	var employeeID: String?
+	var uid: String?
+</code></pre>
+</div>
+
+<!-- -->
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	let user = LPUser(firstName: “John”, lastName: “Doe”, profileImageURL: “URL of image”, phoneNumber: “555-555555”)
+	LPMessagingSDK.instance.setUserProfile(user)
+</code></pre>
+</div>
+
+<h2 id="getassignedagent">getAssignedAgent</h2>
+
+<p>Get assigned agent details of the last or current conversation - depending on retrieveAssignedAgentFromLastClosedConversation in the LPConfig defaultConfiguration. 
+You must check that the <a href="#sdk-delegates">SDK is ready</a> before calling this method.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	let agent = LPMessagingSDK.instance.getAssignedAgent(conversationQuery)
+</code></pre>
+</div>
+
+<h2 id="subscribelogevents">subscribeLogEvents</h2>
+
+<p>Subscribe to log events (Trace, Debug, Info, Warning, Error). Each time a log event with the passed log level occurs, the callback will be invoked with the log object.
+Passed object is an instance of LPLog (a subclass of NSObject) with the following properties:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var timestamp: String?
+var className: String?
+var funcName: String?
+var text: String?
+var logLevel: LogLevel?
+</code></pre>
+</div>
+
+<p>LogLevel enum:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>case TRACE
+case DEBUG
+case INFO
+case WARNING
+case ERROR
+case OFF
+public var description: String { get }
+public init(string: String)
+</code></pre>
+</div>
+
+<!-- -->
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.subscribeLogEvents(LogLevel.INFO) { (log) -&gt; () in
+NSLog(log.text)
+}
+</code></pre>
+</div>
+
+<h2 id="loginvoked">logInvoked</h2>
+
+<p>After subscribing to log events, you will get the logs inside this method.</p>
+
+<h2 id="getsdkversion">getSDKVersion</h2>
+
+<p>Get current SDK version string.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let sdkVersionString = LPMessagingSDK.instance.getSDKVersion()
+</code></pre>
+</div>
+
+<h1 id="callbacks-index">Callbacks index</h1>
+
+<p>The SDK uses 2 delegates:</p>
+
+<ol>
+  <li>LPMessagingSDKdelegate - for lifecycle and connectivity events</li>
+  <li>LPMessagingSDKNotificationDelegate - for handling push and in app notifications</li>
+</ol>
+
+<h2 id="lpmessagingsdkdelegate-methods">LPMessagingSDKdelegate Methods</h2>
+
+<h3 id="lpmessagingsdkconnectionstatechanged">LPMessagingSDKConnectionStateChanged</h3>
+
+<p>Invoked when the connection state is changed.</p>
+
+<ul>
+  <li>isReady: Bool - Set to true when the SDK is connected and in sync with the server.</li>
+  <li>brandID: String - Brand account number</li>
+</ul>
+
+<h3 id="func-lpmessagingsdkerrorerror-nserror">func LPMessagingSDKError(error: NSError)</h3>
+
+<p>Called when the SDK has a general error. 
+If there is an SDK initialization error, the SDK can not proceed, and you should not call any other SDK API.
+There are also other possible errors such as send message error.</p>
+
+<h3 id="lpmessagingsdkhasconnectionerrorerror-string">LPMessagingSDKHasConnectionError(error: String?)</h3>
+
+<p>Called whenever the SDK receives a connection error from the socket.</p>
+
+<h3 id="lpmessagingsdkauthenticationfailederror-nserror">LPMessagingSDKAuthenticationFailed(error: NSError)</h3>
+
+<p>Called when the current session fails due to an authentication error.</p>
+
+<h3 id="lpmessagingsdktokenexpired">LPMessagingSDKTokenExpired</h3>
+
+<p>Called when the current session fails due to an authentication error.</p>
+
+<h3 id="lpmessagingsdkactionsmenutoggledtoggled-bool">LPMessagingSDKActionsMenuToggled(toggled: Bool)</h3>
+
+<p>Called when the action menu is toggled.</p>
+
+<h3 id="lpmessagingsdkcustombuttontapped">LPMessagingSDKCustomButtonTapped</h3>
+
+<p>In <a href="#b-window-mode">window mode</a> only, the app can place a custom button in the SDK UI. When the button is tapped, the following delegate method is invoked:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	LPMessagingSDK.instance.delegate = self
+</code></pre>
+</div>
+
+<p><strong>When this button is pressed, it will call the following delegate:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func LPMessagingSDKCustomButtonTapped() {
+UIApplication.sharedApplication().openURL(NSURL(string: "tel://55555555")!)
+}
+</code></pre>
+</div>
+
+<h3 id="lpmessagingsdkagentistypingstatechangedistyping-bool">LPMessagingSDKAgentIsTypingStateChanged(isTyping: Bool)</h3>
+
+<p>Called when the typing state of the agent is changed.</p>
+
+<h3 id="lpmessagingsdkoffhoursstatechangedisoffhours-bool-brandid-string">LPMessagingSDKOffHoursStateChanged(isOffHours: Bool, brandID: String)</h3>
+
+<p>Delegate which is called when an off hours state changes.</p>
+
+<h3 id="lpmessagingsdkconversationviewcontrollerdiddismiss">LPMessagingSDKConversationViewControllerDidDismiss()</h3>
+
+<p>Delegate which is called when the conversation viewcontroller is dismissed (both for window mode and viewController mode).</p>
+
+<h3 id="lpmessagingsdkconversationstartedconversationid-string">LPMessagingSDKConversationStarted(conversationID: String?)</h3>
+
+<p>Called when a new conversation is started.</p>
+
+<h3 id="lpmessagingsdkconversationendedconversationid-string">LPMessagingSDKConversationEnded(conversationID: String?)</h3>
+
+<p>Called when an open conversation is ended by the consumer or by the agent.</p>
+
+<h3 id="lpmessagingsdkconversationcsatdismissedonsubmittionconversationid-string">LPMessagingSDKConversationCSATDismissedOnSubmittion(conversationID: String?)</h3>
+
+<p>Called after CSAT screen is dismissed by clicking Submit.</p>
+
+<h3 id="lpmessagingsdkcsatscoresubmissiondidfinishbrandid-string-rating-int">LPMessagingSDKCSATScoreSubmissionDidFinish(brandID: String, rating: Int)</h3>
+
+<p>When a conversation is resolved, a feedback page is presented (CSAT - Customer Satisfaction). 
+This delegate method is invoked after the CSAT is submitted. If the user chooses to skip the CSAT, the delegate method is called with score=0.</p>
+
+<h3 id="lpmessagingsdkagentdetailsagent-lpuser">LPMessagingSDKAgentDetails(agent: LPUser?)</h3>
+
+<p>Called when agent details are received or updated. For every message, the SDK checks for agent details in order to determine whether the assigned agent was changed. If there is no assigned agent, agent will be nil, for instance, when the consumer is returned to queue.</p>
+
+<h3 id="lpmessagingsdkobseleteversionerror-nserror">LPMessagingSDKObseleteVersion(error: NSError)</h3>
+
+<p>Called when the SDK version is obsolete and needs to be updated.</p>
+
+<h2 id="lpmessagingsdknotificationdelegate-methods">LPMessagingSDKNotificationDelegate Methods</h2>
+
+<h3 id="lpmessagingsdknotificationdidreceivepushnotification-notification-lpnotification">LPMessagingSDKNotification(didReceivePushNotification notification: LPNotification)</h3>
+
+<p>Called when handling the push notifications, the SDK will form up a struct: LPNotification, 
+which will then be passed to the host app.</p>
+
+<h3 id="lpmessagingsdknotificationshouldshowpushnotification-notification-lpnotification---bool">LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -&gt; Bool</h3>
+
+<p>Called after calling <a href="#handlepush">handlePush</a>, the SDK will ask the host app if it should display an in-app notification in the UI. (See <a href="#handlepush">handlePush</a> for the full description).</p>
+
+<h3 id="lpmessagingsdknotificationcustomlocalpushnotificationview-notification-lpnotification---uiview">LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -&gt; UIView</h3>
+
+<p>If shouldShowPushNotification is not implemented, or it returns yes, the app can implement this method for showing an in-app notification in the UI. In case the method is not implemented, the SDK will provide and show its own view.</p>
+
+<h3 id="lpmessagingsdknotificationnotificationtapped-notification-lpnotification">LPMessagingSDKNotification(notificationTapped notification: LPNotification)</h3>
+
+<p>Called when tapping a local notification message bar when a remote push notification received. You should implement this delegate method if you wish to navigate and show the conversation screen.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func LPMessagingSDKNotification(notificationTapped notification: LPNotification) {
+ // Navigate to a desired view controller
+  }
+</code></pre>
+</div>
+
+<h1 id="config-index">Config index</h1>
+
+<p>The SDK allows you to configure the look and feel of your app using LPConfig object. To apply a custom look and feel, create your own configuration instance and assign the attributes you want to customize.</p>
+
+<p><strong>The most suitable time to customize configuration is right after the SDK initialization and before calling showConversation().</strong></p>
+
+<p>To get the default configuration:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let configuration = LPConfig.defaultConfiguration
+</code></pre>
+</div>
+
+<p>To print all configurable attributes and their default values call:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPConfig.printAllConfigurations()
+</code></pre>
+</div>
+
+<p>To customize an attribute, follow this example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>configuration.remoteUserBubbleBackgroundColor = UIColor.purpleColor()
+configuration.brandName = “Brand Name”
+configuration.remoteUserBubbleBorderWidth = 0.5
+</code></pre>
+</div>
+
+<h1 id="updating-an-existing-version-of-the-sdk">Updating an existing version of the SDK</h1>
+
+<h2 id="attributes">Attributes</h2>
+
+<p>The table below lists the available attributes which can be used to personalize your app. The Notes column is for you to add your own branding.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Attribute name</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Example</th>
+      <th style="text-align: left">Default</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>Consumer bubble</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserBubbleBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the background of the remote user bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteuserbubblebackgroundcolor.png" alt="remoteuserbubblebackgroundcolor" /></td>
+      <td style="text-align: left">#0362AC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserBubbleBorderColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the outline color.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteuserbubblebordercolor.png" alt="remoteuserbubblebordercolor" /></td>
+      <td style="text-align: left">#0362AC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserBubbleLinkColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for links in the text of the remote user bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteuserbubblelinkcolor.png" alt="remoteuserbubblelinkcolor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserBubbleTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the text of the remote user bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteuserbubbletextcolor.png" alt="remoteuserbubbletextcolor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserBubbleBorderWidth</td>
+      <td style="text-align: left">Double</td>
+      <td style="text-align: left">Double number for the outline width.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteuserbubbleborderwidth.png" alt="remoteuserbubbleborderwidth" /></td>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserBubbleTimestampColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the timestamp of the remote user bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteuserbubbletimestampcolor.png" alt="remoteuserbubbletimestampcolor" /></td>
+      <td style="text-align: left">#AAAAAA</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserTypingTintColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color of the remote user typing bubbles animation.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/remoteusertypingtintcolor.png" alt="remoteusertypingtintcolor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userBubbleBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the background of the visitor bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/userbubblebackgroundcolor.png" alt="userbubblebackgroundcolor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userBubbleBorderColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the outline color.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/userbubblebordercolor.png" alt="userbubblebordercolor" /></td>
+      <td style="text-align: left">#BEBEBE</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userBubbleLinkColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for links in the text of the visitor bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/userbubblelinkcolor.png" alt="userbubblelinkcolor" /></td>
+      <td style="text-align: left">#0000ee</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userBubbleTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the text of the visitor bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/userbubbletextcolor.png" alt="userbubbletextcolor" /></td>
+      <td style="text-align: left">#7C7C7C</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userBubbleBorderWidth</td>
+      <td style="text-align: left">Double</td>
+      <td style="text-align: left">Double number for the outline width.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/userbubbleborderwidth.png" alt="userbubbleborderwidth" /></td>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userBubbleTimestampColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the timestamp of the visitor bubble.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/userbubbletimestampcolor.png" alt="userbubbletimestampcolor" /></td>
+      <td style="text-align: left">#AAAAAA</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>System messages</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">systemBubbleTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the text of the system messages.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/systembubbletextcolor.png" alt="systembubbletextcolor" /></td>
+      <td style="text-align: left">#000000</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Window mode</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customButtonImage</td>
+      <td style="text-align: left">UIImage</td>
+      <td style="text-align: left">In <a href="#b-window-mode">window mode</a> only: Custom button icon image. This will be displayed on the navigation bar. When the button is pressed, a dedicated callback will be invoked. (See LPMessagingSDKCustomButtonTapped for more information).</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/custombuttonimage.png" alt="custombuttonimage" /></td>
+      <td style="text-align: left">nil</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Delivery notifications</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">checkmarkVisibility</td>
+      <td style="text-align: left">CheckmarksState (Integer Enum)</td>
+      <td style="text-align: left">Checkmark visibility of the following options (type CheckmarksState): SentOnly - Show checkmarks for only Sent messages. SentAndAccepted - Show checkmarks for only Sent and Accepted messages. All - Show checkmarks for Sent, Accepted and Read messages.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">CheckmarksState. All</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">checkmarkReadColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color of checkmark indication signs of Read messages.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/checkmarkreadcolor.png" alt="checkmarkreadcolor" /></td>
+      <td style="text-align: left">#004dc9</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">checkmarkDistributedColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color of checkmark indication signs of Distributed messages.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/checkmarkdistributedcolor.png" alt="checkmarkdistributedcolor" /></td>
+      <td style="text-align: left">#808080</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">checkmarkSentColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color of checkmark indication signs of Sent messages.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/checkmarksentcolor.png" alt="checkmarksentcolor" /></td>
+      <td style="text-align: left">#808080</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isReadReceiptTextMode</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Two options for read indication: (1) Read Receipt with Text Mode (2) Read Receipt with Icon Mode. If the parameter set as true the mode will be Text. If the parameter set as false the mode will be Icon. Default value is true.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/isreadreceipttextmode.png" alt="isreadreceipttextmode" /></td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Submit / Rating / Resolution buttons</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatSubmitButtonCornerRadius</td>
+      <td style="text-align: left">Double</td>
+      <td style="text-align: left">Corner radius of the Submit button.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatsubmitbuttoncornerradius.png" alt="csatsubmitbuttoncornerradius" /></td>
+      <td style="text-align: left">30</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatSubmitButtonBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Background color code of the Submit button.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatsubmitbuttonbackgroundcolor.png" alt="csatsubmitbuttonbackgroundcolor" /></td>
+      <td style="text-align: left">#229A49</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatSubmitButtonTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Text color code of the Submit button</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatsubmitbuttontextcolor.png" alt="csatSubmitButtonTextColor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatRatingButtonSelectedColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Background Color code of the rating buttons.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatratingbuttonselectedcolor.png" alt="csatRatingButtonSelectedColor" /></td>
+      <td style="text-align: left">#229A49</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatResolutionButtonSelectedColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the resolution confirmation buttons (YES/NO) when selected.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatresolutionbuttonselectedcolor.png" alt="csatResolutionButtonSelectedColor" /></td>
+      <td style="text-align: left">#229A49</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>CSAT</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatAllTitlesTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Title text color for all labels.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatalltitlestextcolor.png" alt="csatAllTitlesTextColor" /></td>
+      <td style="text-align: left">#000000</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatResolutionHidden</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Hides the yes/no question.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatresolutionhidden.png" alt="csatResolutionHidden" /></td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatAgentViewHidden</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Hides the view of agent avatar and name.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatagentviewhidden.png" alt="csatAgentViewHidden" /></td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatThankYouScreenHidden</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Hides the Thank You screen after tapping Submit button.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatthankyouscreenhidden.png" alt="csatThankYouScreenHidden" /></td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatNavigationBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Background color of the navigation of the survey.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatnavigationbackgroundcolor.png" alt="csatNavigationBackgroundColor" /></td>
+      <td style="text-align: left">#229A49</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatNavigationTitleColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Text color of the title in the survey navigation.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatSkipButtonColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Skip survey button color.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#000000</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatUIStatusBarStyleLightContent</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Allow the UI status bar to take the color of the survey navigation bar color.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatShowSurveyView</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Hides the whole survey view and disables it.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Conversations</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxPreviousConversationToPresent</td>
+      <td style="text-align: left">UInt</td>
+      <td style="text-align: left">Number of conversations to show in advance.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">deleteClosedConversationOlderThanMonths</td>
+      <td style="text-align: left">UInt</td>
+      <td style="text-align: left">Upon SDK initialization, all closed conversations with an end date older than X months will be deleted from the database. Setting 0 will delete all closed conversations.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">13</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Localization</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">country</td>
+      <td style="text-align: left">string?</td>
+      <td style="text-align: left">Country code: When it is not nil, it will be combined with ‘language’ (“language_country”, for example: en_US) and used instead of device default locale when formatting date and time. If no value is provided, the SDK will use the country according to the device’s locale.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">nil</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">language</td>
+      <td style="text-align: left">LPLanguage</td>
+      <td style="text-align: left">Language that will be used instead of default device language. Its type is LPLanguage enum that contains all the languages that are supported by MessagingSDK. It will affect the following areas:     1. Will be used when getting localized strings 2. Will be combined with ‘country’ (“language_country”, for example: en_US) and used instead of default device locale when formatting time and date. If no value is provided, the SDK will use the device’s language as default.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">DeviceLanguage</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Brand</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">brandName</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">The brand name will be shown as a title on toolbar when there is no active conversation.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">“BrandName”</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for the entire view background.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Date separator</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dateSeparatorTitleBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for date separator title background color.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/dateseparatortitlebackgroundcolor.png" alt="dateSeparatorTitleBackgroundColor" /></td>
+      <td style="text-align: left">#BEBEBE</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dateSeparatorTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for date separator text color.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/dateseparatortextcolor.png" alt="dateSeparatorTextColor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dateSeparatorLineBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for date separator line background color.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/dateseparatorlinebackgroundcolor.png" alt="dateSeparatorLineBackgroundColor" /></td>
+      <td style="text-align: left">#DCDCDC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dateSeparatorBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for date separator background color.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/dateseparatorbackgroundcolor.png" alt="dateSeparatorBackgroundColor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Send button</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendButtonDisabledTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for Send button title in disabled mode.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#AAAAAA</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendButtonEnabledTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for Send button title in enabled mode.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#0362AC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Underline background</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">editTextUnderlineColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color code for underline background in ‘edit’ view.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/dateseparatorbackgroundcolor.png" alt="editTextUnderlineColor" /></td>
+      <td style="text-align: left">#C4C4C4</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Agent assignment</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">retrieveAssignedAgentFromLastClosedConversation</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">When using “getAssignedAgent” method, this option lets you decide whether to get assigned agents from active conversations only, or also from the last closed conversation in case there is no active conversation. If not assigned agent is available this method will return nil.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Duration of local notifications</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">notificationShowDurationInSeconds</td>
+      <td style="text-align: left">Double</td>
+      <td style="text-align: left">Display duration of the local notification in seconds. Examples: TimeToRespond notification, local notification, etc. Note: this parameter will be extended to 60 sec when in VoiceOver mode.</td>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Response time and Off hours</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrShowShiftBanner</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Ability to enable/disable shift toaster (‘An agent will respond…’)</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrFirstTimeDelay</td>
+      <td style="text-align: left">Double</td>
+      <td style="text-align: left">TTR - Time To Respond. Number of seconds before the first TTR notification appears.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">10</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrShouldShowTimestamp</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">TTR - Time To Respond. Enable: Displays a time stamp in the TTR notification. Disable: Displays: “An agent will respond shortly”.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/ttrshouldshowtimestamp.png" alt="ttrShouldShowTimestamp" /></td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrShowFrequencyInSeconds</td>
+      <td style="text-align: left">UInt</td>
+      <td style="text-align: left">Controls the TTR frequency: Don’t show the TTR more than once in X seconds.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">8</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">showUrgentButtonInTTRNotification</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">TTR - Time To Respond. Enable presentation of Urgent button in the TTR notification.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/showurgentbuttoninttrnotification.png" alt="showUrgentButtonInTTRNotification" /></td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">showOffHoursBanner</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Ability to disable/enable the off-hours toaster.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/showoffhoursbanner.png" alt="showOffHoursBanner" /></td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrBannerBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Color of background for banner.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/ttrbannerbackgroundcolor.png" alt="ttrBannerBackgroundColor" /></td>
+      <td style="text-align: left">#52A742</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrBannerTextColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Text color of the banner.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/ttrbannertextcolor.png" alt="ttrBannerTextColor" /></td>
+      <td style="text-align: left">#52A742</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrBannerOpacityAlpha</td>
+      <td style="text-align: left">Double</td>
+      <td style="text-align: left">Opacity level of the banner background (values: 0.0 - 1.0).</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/ttrbanneropacityalpha.png" alt="ttrBannerOpacityAlpha" /></td>
+      <td style="text-align: left">0.8</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">offHoursTimeZoneName</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Off Hours time zone name string based on <code class="highlighter-rouge">NSTimeZone knownTimeZoneNames</code>. If sending empty string, the local timezone will be used (Server sends UTC time).</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">””</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Date and Time</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lpDateFormat</td>
+      <td style="text-align: left">String?</td>
+      <td style="text-align: left">Custom formatting for date string (day, year..), for example: ‘d MMM’. If not defined, one of the default styles will be used (see <a href="#timestamps-formatting">timestamps formatting</a>).</td>
+      <td style="text-align: left">nil</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lpTimeFormat</td>
+      <td style="text-align: left">String?</td>
+      <td style="text-align: left">Custom formatting for time string (hours, lpDateTimeFormat minutes..), for example: ‘hh:mm a’. If not defined, one of the default styles will be used (see <a href="#timestamps-formatting">timestamps formatting</a>).</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">nil</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lpDateTimeFormat</td>
+      <td style="text-align: left">String?</td>
+      <td style="text-align: left">Custom formatting for date and time string, for example: ‘EEEE MM/dd/YY hh:mm a’. If not defined, one of the default styles will be used (see <a href="#timestamps-formatting">timestamps formatting</a>).</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">nil</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Toast notifications</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">toastNotificationsEnabled</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Used for local system notifications such as ‘no network’. True: Enable toast notifications such as offline notifications.False: Disable toast notifications.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csdsDomain</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">CSDS Domain URL. For brands that need to control the URL that is the gateway for LivePerson services, use this key to set a URL of your choice.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">“https://adminlogin.liveperson.net/csdr/account/%@/service/baseURI.json?version=1.0”</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>User avatar</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserAvatarBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Background color of the remote user’s avatar.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">remoteUserAvatarIconColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Icon color of default remoteUser avatar.</td>
+      <td style="text-align: left">#0362AC</td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">brandAvatarImage</td>
+      <td style="text-align: left">UIImage?</td>
+      <td style="text-align: left">Set avatar image for brand. This is an optional UIImage that if is set to nil a default avatar will be presented. Image ratio should be 1:1 (square) and at least 50x50 pixels.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">nil</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatAgentAvatarBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Background color of agent’s default avatar in CSAT.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatagentavatarbackgroundcolor.png" alt="csatAgentAvatarBackgroundColor" /></td>
+      <td style="text-align: left">#0362AC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatAgentAvatariconcolor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Icon color of agent’s default avatar in CSAT.</td>
+      <td style="text-align: left"><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/csatagentavatariconcolor.png" alt="csatagentavatariconcolor" /></td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Data masking</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">enableClientOnlyMasking</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Determines whether to enable using regular expression to control which part of the text to mask, all masked data will appear as asterisks, will be saved to local db masked and will be sent to the server unmasked.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">enableRealTimeMasking</td>
+      <td style="text-align: left">Bool</td>
+      <td style="text-align: left">Determines whether to enable using regular expression to control which part of the text to mask, all masked data will appear as asterisks, will be saved to local db masked and sent to the server masked.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">clientOnlyMaskingRegex</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Regular expression string to control which part of the text to mask, all masked data will appear as asterisks, will be saved to local db masked and will be sent to the server unmasked. Default is empty, meaning no regex. The regular expression patterns and behavior are based on Perl’s regular expressions. See [Apple Reference] (https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSRegularExpression_Class/index.html).</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">””</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">realTimeMaskingRegex</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Regular expression string to control which part of the text to mask. All masked data will appear as asterisks, will be saved to local db masked, and will be sent to the server unmasked. Default is empty, meaning no regex. The regular expression patterns and behavior are based on Perl’s regular expressions. See [Apple Reference] (https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSRegularExpression_Class/index.html).</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">””</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Navigation</strong></td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationNavigationBackgroundColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Background color of navigation bar in conversation screen.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#0362AC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationNavigationTitleColor</td>
+      <td style="text-align: left">UIColor</td>
+      <td style="text-align: left">Navigation title color in conversation screen.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">#FFFFFF</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationStatusBarStyle</td>
+      <td style="text-align: left">UIStatusBarStyle</td>
+      <td style="text-align: left">Status bar style in conversation screen.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">.LightContent</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="deprecated-attributes">Deprecated Attributes</h2>
+
+<p>Listed below are attributes that have been deprecated. These keys should no longer be used as LPConfig files, but rather as Localised strings keys. The names of these keys in the Localisation files remain the same as in the LPConfig files.</p>
+
+<p>In order to configure different string for this key, see <a href="#string-localization-in-sdk">String localization in SDK</a>.</p>
+
+<p><strong>Note</strong>: By default, these keys are configured with Localization keys values, and are sensitive to any language changes.  These keys must be reconfigured each time a language is changed.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Attribute name</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">customButtonDescription</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Accessibility voiceover string for the custom button.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextDistributed</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Text for distributed indication.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatResolutionFeedbackText</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Text for the feedback label.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csatResolutionQuestionText</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Text for the resolution confirmation question.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextSent</td>
+      <td style="text-align: left">String</td>
+      <td style="text-align: left">Text for sent indication.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextRead</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Text for read indication.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="string-localization-in-sdk">String Localization in SDK</h1>
+
+<p>The SDK contains language folders for each language supported. For a list of supported languages, see <a href="https://s3-eu-west-1.amazonaws.com/ce-sr/CA/Admin/Sys+req/System+requirements.pdf">LiveEngage System Requirements and Language Support</a>. Each folder contains LPLocalizable.strings file, where all strings are located for a specific language.</p>
+
+<p>The example below contains four language folders:
+- en.lproj: strings in English. Used in case the host app/device language is not supported by us.
+- fr.lproj: strings in French.
+- pt.lproj: strings in Portuguese.
+- pt-PT.lproj: strings in Portuguese (Portugal).</p>
+
+<p>The SDK allows you to override the string localization of any supported language in LiveEngage.
+To apply a custom localization files with your own strings, create LPLocalizable.strings files for relevant languages inside your app, which will include the keys you would like to override.</p>
+
+<p>Example: Overriding the SDK string of ‘send’ in English:</p>
+
+<ol>
+  <li>Create a new localization Base file in your app called LPLocalizable.strings which will include your supported language: ‘New file…’ -&gt; ‘Strings file’ -&gt; ‘Create’</li>
+  <li>Add new key: “send” = “<ANY NEW="" VALUE="">”;</ANY></li>
+  <li>Mark this LPLocalizable.strings file as localized: Tap on LPLocalizable.strings file -&gt; Open the file inspector -&gt; Go to ‘Localization’ section -&gt; Tap ‘Localize…’</li>
+  <li>Adding a new language support
+    <ul>
+      <li>Open project settings</li>
+      <li>Info tab</li>
+      <li>Under Localizations, press ‘+’ sign</li>
+      <li>Choose the new language you would like to support.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Attach a Strings file to existing supported languages: 
+	- Choose the desired strings file
+	- Open the file inspector
+	- Under localizations, choose the relevant languages.</p>
+
+<p>Your ‘send’ string implementation will override the localization in English in the SDK.</p>
+
+<p>In order to print all localized keys with a default English value in the SDK, call the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.printAllLocalizedKeys()
+</code></pre>
+</div>
+
+<p>In order to get or print all localized supported languages in the SDK, call the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.printSupportedLanguages()
+</code></pre>
+</div>
+
+<p>In order to get all supported languages by key-value (key is locale key and value is language description), call the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.getAllSupportedLanguages()
+</code></pre>
+</div>
+
+<p><strong>Note</strong>: The SDK uses native iOS control for the Copy/Paste menu. The language of the menu control is defined by the current device language if the host app is localized for this language. If the host app does not have this language, the last menu control language will be used.</p>
+
+<h2 id="localization-keys">Localization Keys</h2>
+
+<p>Listed below are all localized keys with the English localization string.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Attribute name</th>
+      <th style="text-align: left">String Localization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">customButtonAccessibilityDescription</td>
+      <td style="text-align: left">“Call”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextDistributed</td>
+      <td style="text-align: left">“Distributed”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationEndedByAgent</td>
+      <td style="text-align: left">“Conversation resolved by %@ \n %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationEndedByAgentWithoutName</td>
+      <td style="text-align: left">“Conversation resolved by Agent \n %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationEndedByYou</td>
+      <td style="text-align: left">“Conversation resolved by You \n %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cancel</td>
+      <td style="text-align: left">“Cancel”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">hiMessage</td>
+      <td style="text-align: left">“How can I help you today?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentMessageErrorTitle</td>
+      <td style="text-align: left">“Message was not sent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">retry</td>
+      <td style="text-align: left">“Retry”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentMailErrorTitle</td>
+      <td style="text-align: left">“Mail not sent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentMailErrorMessage</td>
+      <td style="text-align: left">“Email could not be sent. Please try again later.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">callTo</td>
+      <td style="text-align: left">“Call %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendMessage</td>
+      <td style="text-align: left">“Send Message”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">facetimeAudio</td>
+      <td style="text-align: left">“FaceTime Audio”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendEmailTitle</td>
+      <td style="text-align: left">“Send Email”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendEmailMessage</td>
+      <td style="text-align: left">“Would you like to send an email to %@?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">notNow</td>
+      <td style="text-align: left">“Not now”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">yes</td>
+      <td style="text-align: left">“Yes”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">feedbackYesButtonTitle</td>
+      <td style="text-align: left">“Yes”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">feedbackNoButtonTitle</td>
+      <td style="text-align: left">“No”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cantSendMail</td>
+      <td style="text-align: left">“Can’t send email”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">noEmailOnDeviceError</td>
+      <td style="text-align: left">“No email is defined on this device”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dismissUrgent</td>
+      <td style="text-align: left">“Dismiss urgency”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dismissUrgentConfirmation</td>
+      <td style="text-align: left">“Are you sure you want to mark this conversation as not urgent?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dismiss</td>
+      <td style="text-align: left">“Dismiss”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">markAsUrgent</td>
+      <td style="text-align: left">“Mark as urgent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">markAsUrgentConfirmation</td>
+      <td style="text-align: left">“Are you sure you want to mark this conversation as urgent?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">urgent</td>
+      <td style="text-align: left">“Urgent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">noInternetConnection</td>
+      <td style="text-align: left">“No Internet Connection”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ok</td>
+      <td style="text-align: left">“OK”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">markAsEndedConfirmation</td>
+      <td style="text-align: left">“Are you sure this topic is resolved?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">endTheConversation</td>
+      <td style="text-align: left">“Resolve the conversation”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrResponseMessage</td>
+      <td style="text-align: left">“An agent will respond within the next %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rateConnectionWithAgent</td>
+      <td style="text-align: left">“How would you rate your\nconnection with our agent?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rateConnectionWithName</td>
+      <td style="text-align: left">“How would you rate your\nconnection with %@?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">veryDissatisfied</td>
+      <td style="text-align: left">“Very Dissatisfied”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dissatisfied</td>
+      <td style="text-align: left">Dissatisfied</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">neither</td>
+      <td style="text-align: left">“Neither”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">satisfied</td>
+      <td style="text-align: left">“Satisfied”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">verySatisfied</td>
+      <td style="text-align: left">“Very Satisfied”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">writeMessage</td>
+      <td style="text-align: left">“Write a message”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">olderMessages</td>
+      <td style="text-align: left">“Older messages”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numberOfDays</td>
+      <td style="text-align: left">“%d days”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">day</td>
+      <td style="text-align: left">“1 day”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numberOfHours</td>
+      <td style="text-align: left">“%d hours”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">oneHour</td>
+      <td style="text-align: left">“1 hour”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">oneMinute</td>
+      <td style="text-align: left">“1 minute”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numberOfMinutes</td>
+      <td style="text-align: left">“%d minutes”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minutesAgo</td>
+      <td style="text-align: left">“%d min ago”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">send</td>
+      <td style="text-align: left">“Send”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">submit</td>
+      <td style="text-align: left">“Submit”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">today</td>
+      <td style="text-align: left">“Today”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">noSocketConnectivity</td>
+      <td style="text-align: left">“No connectivity to server\nPlease try again”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationAlreadyEnded</td>
+      <td style="text-align: left">“This conversation has already been resolved.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">loadingHistoryMessages</td>
+      <td style="text-align: left">“Loading…”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">and</td>
+      <td style="text-align: left">“and”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">anAgentWillRespondShortly</td>
+      <td style="text-align: left">“An agent will respond shortly”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">nowTimestamp</td>
+      <td style="text-align: left">“Now”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surveySubmittedSuccessfullyThankYou</td>
+      <td style="text-align: left">“Survey submitted successfully.\nThank you!”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrOffHoursResponseMessageToday</td>
+      <td style="text-align: left">“Thanks for your message. We will be back online Today at %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrOffHoursResponseMessageTomorrow</td>
+      <td style="text-align: left">“Thanks for your message. We will be back online Tomorrow at %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrOffHoursResponseMessageDate</td>
+      <td style="text-align: left">“Thanks for your message. We will be back online %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maskedMessageResendError</td>
+      <td style="text-align: left">“Message failed to send. Please re-enter message and send again.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">systemMessageRealTimeMasked</td>
+      <td style="text-align: left">“Your personal data has been masked to protect your security and cannot be read by the agent.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">systemMessageClientOnlyMasked</td>
+      <td style="text-align: left">“Your personal data has been masked to protect your security. Only the agent can read it.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">offlineNotification</td>
+      <td style="text-align: left">“Offline. Check your internet connection.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">resolve</td>
+      <td style="text-align: left">“Resolve”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityAgentDefaultAvatar</td>
+      <td style="text-align: left">“Agent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityAgentIsTyping</td>
+      <td style="text-align: left">”%@ is typing”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityAgentWithoutNameIsTyping</td>
+      <td style="text-align: left">“Agent is typing”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageFromAgentWithName</td>
+      <td style="text-align: left">“Agent %@: %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageFromAgentWithoutName</td>
+      <td style="text-align: left">“Agent: %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageFromUser</td>
+      <td style="text-align: left">“You: %@”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>More information regarding strings with parameters can be found in <a href="#appendix-a:-localization-strings">Appendix A: Localization Strings</a>.</p>
+
+<h2 id="locale---timestamps-formatting">Locale - Timestamps Formatting</h2>
+
+<h3 id="timedate-styles">Time/Date Styles</h3>
+
+<p>The iOS platform provides four different default types of date and time styles:
+<a href="https://developer.android.com/reference/java/text/DateFormat.html#SHORT">SHORT</a> is completely numeric.
+<a href="https://developer.android.com/reference/java/text/DateFormat.html#MEDIUM">MEDIUM</a> is longer and contains the first 3 letters of the month.
+<a href="https://developer.android.com/reference/java/text/DateFormat.html#LONG">LONG</a> is longer and contains the full month name.
+<a href="https://developer.android.com/reference/java/text/DateFormat.html#FULL">FULL</a> specifies the complete time and date.</p>
+
+<p><em>iOS examples</em>:
+SHORT  12/13/52 or 3:30 PM
+MEDIUM  Jan 12, 1952
+LONG January 12, 1952 or 3:30:32 PM
+FULL Tuesday, April 12, 1952 AD or 3:30:42 PM PST.</p>
+
+<p>The LPMessagingSDK uses default styles. Each feature has its own style. The style is flexible and adapts the ‘locale’ configuration of the device. 
+Example: US locale SHORT date is displayed as “9/25/16”, whereas Japanese locale SHORT date is displayed as “2016/9/25”.</p>
+
+<p>A specific ‘locale’ which is different from the device locale can be set through the language and country configurations.
+Example: country: String?,  language: String?</p>
+
+<h3 id="timedate-formats">Time/Date Formats</h3>
+
+<p>It is also possible to configure a specific format for time and date instead of style.
+If the host app has configured its own formatting, this formatting will be used instead of style (and therefore will not be affected by ‘locale’).</p>
+
+<p>To configure the formatting by the host app, three configurable formatting resources have been added:</p>
+
+<ol>
+  <li>
+    <p>For date only (separator):
+lpDateFormat: String?</p>
+  </li>
+  <li>
+    <p>For time only (bubble’s timestamp &amp; off hours time in case of today/tomorrow):
+lpTimeFormat: String?</p>
+  </li>
+  <li>
+    <p>For date &amp; time together (resolve message &amp; off hours time in case of other date):
+lpDateTimeFormat: String?</p>
+  </li>
+</ol>
+
+<h3 id="off-hours">Off Hours</h3>
+
+<p><strong>Date &amp; Time</strong></p>
+
+<ul>
+  <li>The Today and tomorrow off hours message uses the default SHORT time without date according to the locale (default or custom).</li>
+</ul>
+
+<p>If the device is set to 12 hour format :
+	 “Thanks for your message. We will be back online today/tomorrow at 3:30 PM”
+If the device is set to 24 hour format :
+	“Thanks for your message. We will be back online today/tomorrow at 15:30”</p>
+
+<p>To use a different time format, you can use <code class="highlighter-rouge">lpTimeFormat: String?</code> with any time format. 
+Example: “hh:mm a”, “HH:mm”, etc.</p>
+
+<ul>
+  <li>The Date off hours message (not today/tomorrow) uses default LONG date and SHORT time according to the locale (default or custom).</li>
+</ul>
+
+<p>If the device is set to 12 hour format :
+	“Thanks for your message. We will be back online <em>January 12, 2017</em> at <em>3:30 PM</em>” 
+If the device is set to 24 hour format :
+	“Thanks for your message. We will be back online <em>January 12, 2017</em> at <em>15:30</em>”</p>
+
+<p>To use a different date/hour format, you can use <code class="highlighter-rouge">lpDateFormat: String?</code> with any date &amp; time format. 
+Example: “MMM d, yyyy hh:mm a”, “EEEE dd/mm/yy HH:mm” etc.</p>
+
+<p><strong>Timezone</strong></p>
+
+<p>Off hours can appear in different time zones with this resource ID :</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>offHoursTimeZoneName: String = ""
+</code></pre>
+</div>
+
+<p>A list of timezone IDs can be found <a href="https://garygregory.wordpress.com/2013/06/18/what-are-the-java-timezone-ids/">here</a>. 
+Example: ”US/Pacific”, “Europe/Berlin”.</p>
+
+<h3 id="bubble-timestamp">Bubble timestamp</h3>
+
+<p>The Bubble timestamp contains the time only in the <a href="https://developer.android.com/reference/java/text/DateFormat.html#SHORT">SHORT</a> time format, according to the locale (default or custom) and to the device setting.</p>
+
+<p>If the device is set to 12 hours format : “3:30 PM”
+If the device is set to 24 hours format : ”15:30”</p>
+
+<p>If you want to configure this time format, override the resource ID <code class="highlighter-rouge">lpTimeFormat: String?</code> with any time format. 
+Example: “hh:mm a”, “HH:mm” etc.</p>
+
+<p><strong>Note</strong>: This applies to all bubble timestamps.</p>
+
+<h3 id="separator-timestamp">Separator timestamp</h3>
+
+<p>The Separator timestamp contains the date only in the <a href="https://developer.android.com/reference/java/text/DateFormat.html#SHORT">SHORT</a> date format, according to the locale (default or custom) and to device setting. 
+“9/25/16” for US locale / “2016/9/25” for JP locale</p>
+
+<p>If you want to configure this time format, override the resource ID <code class="highlighter-rouge">lpDateFormat: String?</code> with any date format. 
+Example: “MMM d, yyyy”, “EEEE dd/mm/yy” etc.</p>
+
+<h3 id="resolve-message">Resolve message</h3>
+
+<p>The Resolve message uses the default SHORT date and SHORT time according to the locale (default or custom) and to the device setting.</p>
+
+<p>If the device is set to 12 hour format (US locale):
+	“Conversation resolved by [agent name] \n 9/25/16, 3:30 PM”
+If the device is set to 24 hour format (US locale):
+	“Conversation resolved by [agent name] \n 9/25/16, 15:30”</p>
+
+<p>To use a different date/hour format, you can use <code class="highlighter-rouge">lpDateTimeFormat: String?</code> with any date &amp; time format. 
+Example: “MMM d, yyyy hh:mm a”, “EEEE dd/mm/yy HH:mm” etc.</p>
+
+<p><strong>Limitation</strong>: If the formatting is changed after the Resolve messages already appears, this change will take no effect. This will be fixed in future versions.</p>
+
+<h1 id="os-certificate-creation">OS Certificate Creation</h1>
+
+<p>In order for the push notification to work, you will need two .pem files:</p>
+
+<ol>
+  <li>A certificate file stored using a pem format.</li>
+  <li>A Key file stored using a pem format without a password.</li>
+</ol>
+
+<h2 id="creating-a-certificate-signing-request-file">Creating a Certificate Signing Request file</h2>
+
+<p>With this file, we will create both a .p12 file and a .crt file.</p>
+
+<p>To manually generate a Certificate, you need a Certificate Signing Request (CSR) file from your Mac. To create a CSR file, follow the instructions below to create one using Keychain Access.</p>
+
+<ol>
+  <li>In the Applications folder on your Mac, open the Utilities folder, and launch Keychain Access.
+Within the Keychain Access dropdown menu, select <strong>Keychain Access &gt; Certificate Assistant &gt; Request a Certificate from a Certificate Authority</strong>.</li>
+  <li>In the Certificate Information window, enter the following information:
+    <ul>
+      <li>In the User Email Address field, enter your email address.</li>
+      <li>In the Common Name field, create a name for your private key, for example,John Doe Dev Key.</li>
+      <li>The CA Email Address field should be left empty.</li>
+      <li>In the Request is group, select the Saved to disk option.</li>
+    </ul>
+  </li>
+  <li>In Keychain Access, click <strong>Continue</strong> to complete the CSR generating process.</li>
+  <li>Download and run the certificate. The certificate is now added to your Keychain, paired with a private key:</li>
+</ol>
+
+<p>Creating a Certificate Signing Request file</p>
+
+<p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/Creatingacertificatesigningrequestfile.png" alt="CreatingaCertificateSigningRequestfile" /></p>
+
+<h2 id="creating-a-key-p12-file">Creating a key .p12 file</h2>
+
+<p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/Creatingakey.p12file.png" alt="Creatingakey.p12file" /></p>
+
+<ol>
+  <li>Right-click on your new push certificate and choose <strong>Export</strong>.</li>
+</ol>
+
+<p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/Export.png" alt="Export" /></p>
+
+<ol>
+  <li>Save the certificate as pushNotification.p12 as a .p12 file.</li>
+  <li>You will be prompted to enter a password for the p12. You can either leave this blank or enter a password of your choosing.</li>
+</ol>
+
+<h2 id="creating-a-push-notification-certificate-der-format-crt-file">Creating a push notification certificate. (der format .crt file)</h2>
+
+<ol>
+  <li>
+    <p>In the iOS member area, go to your app area.</p>
+
+    <p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/PushNotification.png" alt="Push Notification" /></p>
+  </li>
+  <li>
+    <p>Under Push Notification service SSL Certificates, select Create Certificate (Developer or Production).</p>
+
+    <p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/UploadCSRFile.png" alt="Upload CSR File" /></p>
+  </li>
+  <li>
+    <p>Choose the .csr file that you created in the previous stage.</p>
+
+    <p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/DownloadInstallBackup.png" alt="Download Install Backup" /></p>
+  </li>
+  <li>
+    <p>Download the file.This file will be used to create the .pem format certificate.</p>
+  </li>
+</ol>
+
+<h2 id="creating-both-keypem-file-and-certpem-file">Creating both key.pem file and cert.pem file</h2>
+
+<p><strong>Note</strong>: This is used when configuring LiveEngage Push Notification.</p>
+
+<ol>
+  <li>
+    <p>Open the terminal and locate the folder in which you would like to save the file.</p>
+  </li>
+  <li>
+    <p>Create cert pem:
+<strong>openssl x509 -in aps_development.cer -inform der -out cert.pem</strong></p>
+  </li>
+  <li>
+    <p>Convert the private keys .p12 file into a .pem file:
+<strong>openssl pkcs12 -nocerts -out keyWithPassword.pem -in key.p12</strong>
+You will be prompted to enter a passphrase for this file. Enter any password and remember it for the next step.</p>
+  </li>
+  <li>
+    <p>RSA .pem key (no password) 
+<strong>openssl rsa -in hostkey.pem -out hostkey.pem</strong>
+You will be prompted to enter a passphrase. Enter the same passphrase you used in the previous step.</p>
+  </li>
+</ol>
+
+<h1 id="liveengage-configuration">LiveEngage Configuration</h1>
+
+<h2 id="push-notifications">Push Notifications</h2>
+
+<p>Follow the instructions below to set up your app key to enable push notifications.</p>
+
+<p><strong>Note</strong>: Before you begin the setup, you must ensure your LiveEngage account is configured and connected to the SDK.</p>
+
+<ol>
+  <li>Enter your LiveEngage account through this <a href="https://authentication.liveperson.net/login.html?lpservice=liveEngage&amp;servicepath=a%2F~~accountid~~%2F%23%2C~~ssokey~~">Login URL</a>.
+You will need the following info from your LivePerson account team:
+    <ul>
+      <li>LiveEngage account number</li>
+      <li>User ID (must be an administrator user)</li>
+      <li>Password</li>
+    </ul>
+  </li>
+  <li>
+    <p>Within LiveEngage, navigate to <strong>Campaigns</strong>.</p>
+
+    <p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/campaigns.png" alt="Campaigns" /></p>
+  </li>
+  <li>
+    <p>Click <strong>Data Sources</strong>, and then select <strong>App</strong>.</p>
+
+    <p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/app.png" alt="App" /></p>
+  </li>
+  <li>
+    <p>Click <strong>Configure</strong>.</p>
+
+    <p><img src="https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/Configure.png" alt="Configure" /></p>
+  </li>
+  <li>
+    <p>Click <strong>Add new</strong> to associate your app with the LiveEngage account.</p>
+  </li>
+  <li>Select your platform as iOS, enter your app’s name, and click <strong>Create app</strong>. Then, upload your app certificate and key file in the appropriate locations.</li>
+</ol>
+
+<p><strong>Note</strong>: If you are using a development certificate you should uncheck the Production checkbox and add Dev postfix to the Mobile app name.For example, if your app bundle ID is AppId, your mobile app name should be “AppId-Dev”. If you are using a production certificate you should leave the production checkbox checked and insert to the Mobile App name your App bundle ID as it is.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>![Note](https://lpgithub.dev.lprnd.net/abigailn/apidoctest/blob/gh-pages/img/Note.png) 7. Click Close to complete the process.
+</code></pre>
+</div>
+
+<h1 id="open-source-list">Open Source List</h1>
+
+<p>The following open source code is used within the LiveEngage SDK.  Licensing terms for use of this code require you to mention the list of these sources in the end customer product or documentation.  No additional fees or costs are associated with use of these sources.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">License</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="https://developer.apple.com/library/ios/samplecode/Reachability/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007324-Intro-DontLinkElementID_2">Reachability</a></td>
+      <td style="text-align: left"><a href="https://developer.apple.com/library/ios/samplecode/Reachability/Listings/LICENSE_txt.html#//apple_ref/doc/uid/DTS40007324-LICENSE_txt-DontLinkElementID_3">Apple inc</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/facebook/SocketRocket">SocketRocket</a></td>
+      <td style="text-align: left"><a href="https://github.com/facebook/SocketRocket/blob/master/LICENSE">BSD</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/danielgindi/UIRefreshControl-UITableView">UIRefreshControl+UITableView</a></td>
+      <td style="text-align: left"><a href="https://github.com/danielgindi/UIRefreshControl-UITableView/blob/master/LICENSE">MIT</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/irccloud/ios/tree/master/TTTAttributedLabel">TTTAttributedLabel</a></td>
+      <td style="text-align: left"><a href="https://github.com/irccloud/ios/blob/master/LICENSE.txt">Apache</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/kevinlawler/NSDate-TimeAgo/blob/master/NSDate%2BExtension.swift">NSDate+Extension</a></td>
+      <td style="text-align: left"><a href="https://github.com/kevinlawler/NSDate-TimeAgo/blob/master/LICENSE">License</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="security">Security</h1>
+
+<p>Security is a top priority and key for enabling trusted, meaningful engagements.
+LivePerson’s comprehensive security model and practices were developed based on years of experience in SaaS operations, close relationships with Enterprise customers’ security teams, frequent assessments with independent auditors, and active involvement in the security community.</p>
+
+<p>LivePerson has a comprehensive security compliance program to help ensure adherence to internationally recognized standards and exceed market expectations. Among the standards LivePerson complies with are: SSAE16 SOC2, ISO27001, PCI-DSS via Secure Widget, Japan’s FISC, SafeHarbor, SOX, and more.</p>
+
+<p>Our applications are developed under a strict and controlled Secure Development Life-Cycle: Developers undergo secure development training, and security architects are involved in all major projects and influence the design process. Static and Dynamic Code Analysis is an inherent part of the development process and, upon maturity, the application is tested for vulnerabilities by an independent penetration testing vendor. On average, LivePerson undergoes 30 penetration tests each year.</p>
+
+<h1 id="appendix-a-localization-strings">Appendix A: Localization Strings</h1>
+
+<h2 id="strings-with-parameters">Strings with parameters</h2>
+
+<p><strong>“ttrResponseMessage”</strong>
+“The associate should respond within the next %@”;</p>
+
+<ul>
+  <li>Message which appears inside the toast when sending first message.</li>
+  <li>Parameter container will be filled with the date which is combined from the following string keys:
+“numberOfDays” = “%d days”;
+“day” = “day”;
+“numberOfHours” = “%d hours”;
+“oneHour” = “1 hour”;
+“oneMinute” = “1 minute”;
+“numberOfMinutes” = “%d minutes”;
+“and” = “and”;</li>
+</ul>
+
+<p><em>Examples:</em> 
+<em>“The associate should respond within the next 9 hours and 30 minutes”.</em>
+<em>“The associate should respond within the next 2 days 2 hours and 30 minutes”.</em>
+<em>“The associate should respond within the next 2 hours”.</em>
+<em>“The associate should respond within the next day 1 hour and 1 minute”.</em></p>
+
+<p><strong>“ttrOffHoursResponseMessageToday”</strong>
+“Thanks for your message. We will be back online Today at %@”;</p>
+
+<ul>
+  <li>Message which appears inside the toast when agents are in off hours.</li>
+  <li>Parameter container will be filled with the time according to device/custom formatting.</li>
+</ul>
+
+<p><em>Example: “Thanks for your message. We will be back online Today at 2:48 PM”.</em></p>
+
+<p><strong>“ttrOffHoursResponseMessageTomorrow”</strong>
+“Thanks for your message. We will be back online Tomorrow at %@”;</p>
+
+<ul>
+  <li>Message which appears inside the toast when agents are in off hours.</li>
+  <li>Parameter container will be filled with the time according to device/custom formatting.</li>
+</ul>
+
+<p><em>Example: “Thanks for your message. We will be back online Tomorrow at 05:48 PM”.</em></p>
+
+<p><strong>“ttrOffHoursResponseMessageDate”</strong>
+“Thanks for your message. We will be back online %@”;</p>
+
+<ul>
+  <li>Message which appears inside the toast when agents are in off hours.</li>
+  <li>Parameter container will be filled with the date and time according to device/custom formatting.</li>
+</ul>
+
+<p><em>Example: “Thanks for your message. We will be back online September 21, 2016 at 2:48 PM”.</em></p>
+
+<p><strong>“conversationEndedByAgent”</strong>
+“Conversation ended by %@ \n %@”;</p>
+
+<ul>
+  <li>System message which is created when the conversation was resolved and includes two lines of text.</li>
+  <li>First parameter: Agent’s name as received from server.</li>
+  <li>Second parameter: Date and time according to device/custom formatting.</li>
+</ul>
+
+<p><em>Example: “Conversation ended by Elina \n 9/12/16, 5:05 PM”.</em></p>
+
+<p><strong>“conversationEndedByYou”</strong>
+“Conversation ended by You \n %@”;
+- The same as ‘conversationEndedByAgent’, except the conversation was resolved by the user and not by the agent.</p>
+
+<p><strong>“conversationEndedByAgentWithoutName”</strong>
+“Conversation ended by Agent \n %@”;</p>
+
+<ul>
+  <li>System message which is created when the conversation was resolved and includes two lines of text, but the name of the agent is not available.</li>
+  <li>Parameter: Date and time according to device/custom formatting.</li>
+</ul>
+
+<p><em>Example: “Conversation ended by Agent \n 9/12/16, 5:05 PM”.</em></p>
+
+<p><strong>“callTo”</strong>
+“Call %@”;</p>
+
+<ul>
+  <li>Parameter: Phone number.</li>
+</ul>
+
+<p><strong>“sendEmailMessage”</strong>
+“Would you like to send an email to %@?”;</p>
+
+<p>-Parameter: Email address.</p>
+
+<p><strong>“rateConnectionWithName”</strong>
+“How would you rate\nthe connection with %@?”;</p>
+
+<ul>
+  <li>Message which appears in CSAT and includes two lines of text.</li>
+  <li>Parameter: Agent’s name as received from the server.</li>
+</ul>
+
+<p><strong>“minutesAgo”</strong>
+“%d min ago”;</p>
+
+<ul>
+  <li>Text which appears under the user’s message bubble and was posted less than an hour previously.</li>
+  <li>Parameter: Number of minutes.</li>
+</ul>
+
+<p><em>Example: “3 min ago”</em></p>
+
+<p><strong>“accessibilityAgentIsTyping”</strong>
+ “%@ is typing”;</p>
+
+<ul>
+  <li>Accessibility text of the IsTyping bubble</li>
+  <li>Parameter - Agent’s name</li>
+</ul>
+
+<p><strong>“accessibilityMessageFromAgentWithName”</strong>
+“Agent %@: %@”;</p>
+
+<ul>
+  <li>Parameter 1: agent’s nickname</li>
+  <li>Parameter 2: message content</li>
+</ul>
+
+<p><strong>“accessibilityMessageFromAgentWithoutName”</strong>
+“Agent: %@”;</p>
+
+<ul>
+  <li>Parameter - message content</li>
+</ul>
+
+<p><strong>“accessibilityMessageFromUser”</strong>
+“You: %@”;</p>
+
+<ul>
+  <li>Parameter - message content</li>
+</ul>
+
+<p>###Strings without parameters</p>
+
+<p><strong>“nowTimestamp”</strong>
+“Now”;</p>
+
+<p><strong>“readReceiptTextSent”</strong>
+“Sent”;</p>
+
+<ul>
+  <li>Text which appears in the label under the user’s message bubble if it is configured to display as text and not as a UI checkmark.</li>
+  <li>If the message was sent less than one minute previously, this label will be near the label which includes text from the key “nowTimestamp”. 
+<em>Example: ‘Sent Now’.</em></li>
+  <li>If the message was sent less than one hour previously, this label will be near the label which includes text from the key “minutesAgo”. 
+<em>Example: ‘Sent 5 min ago’.</em></li>
+</ul>
+
+<p><strong>“readReceiptTextDistributed”</strong>
+“Distributed”;</p>
+
+<ul>
+  <li>Same logic as “readReceiptTextSent”.</li>
+</ul>
+
+<p><strong>“readReceiptTextRead”</strong>
+“Read”;</p>
+
+<ul>
+  <li>Same logic as “readReceiptTextSent”.</li>
+</ul>
+
+<p>.</p>
+
+
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2017 LivePerson. All rights reserved.<br />This documentation is subject to change without notice.<br />
+ Site last generated: Jan 30, 2017 <br />
+<p><img src="img/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+    </div>
+
+</body>
+
+</html>

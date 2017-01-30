@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title>Set Agent’s Typing Status | LivePerson Technical Documentation</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<link rel="stylesheet" href="css/lavish-bootstrap.css">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/theme-blue.css">
+
+    <script src="assets/js/jsoneditor.js"></script>
+    <!-- // <script src="js/jquery-3.1.0.min.js"></script> -->
+    <!-- <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'> -->
+<!--     <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'>
+ -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="http://liveperson.comfeed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> LivePerson Technical Documentation</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- entries without drop-downs appear here -->
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+			<li><a class="email" title="Submit feedback" href="https://github.com/LivePersonInc/dev-hub/issues" ><i class="fa fa-github"></i> Issues</a><li>
+
+		
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Set Agent’s Typing Status">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="col-lg-12">&nbsp;</div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-md-3">
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul id="mysidebar" class="nav">
+    <li class="sidebarTitle"> </li>
+    
+        
+            
+            <li>
+                <a href="#">Common Guidelines</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Services Domains</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common_csds.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Authentication</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="common-authentication.html">API Reference</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="not_yet.html">OAuth 2.0</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Agent</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Agent Workspace Widget SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-limitations.html">Limitations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-model.html">Public Model Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-properties.html">Public Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-code-examples.html">Code Examples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">LivePerson Domain API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-domain-api.html">Domain API</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Login Service API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-configuration.html">Configuration</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-login.html">Login</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-refresh.html">Refresh</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-logout.html">Logout</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-non-authenticated-flow.html">Non Authenticated Flow</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Chat Agent API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-resources.html">Retrieve all Resources for Agent Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-current-availability.html">Retrieve Current Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-set-agent-availability.html">Set Agent Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-retrieve-available-agents.html">Retrieve Available Agents</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-information.html">Retrieve Agent Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-determine-incoming.html">Determine Incoming Chat Requests</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-accept-chat.html">Accept a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-sessions.html">Retrieve Chat Sessions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-data.html">Retrieve Data for Multiple Chats</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-add-lines.html">Add Lines</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-end-chat.html">End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-name.html">Retrieve Visitor’s Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-agent-typing-status.html">Retrieve Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="active thirdlevel"><a href="agent-chat-agent-set-agent-typing-status.html">Set Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-visitor-typing-status.html">Retrieve Visitor’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-available-skills.html">Retrieve Available Skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-transfer-chat.html">Transfer a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-survey-structure.html">Retrieve the Agent Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-samples.html">Samples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Experience</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">JavaScript Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-startchatrequestchat.html">startChat/requestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-addline.html">addLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitortyping.html">setVisitorTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitorname.html">setVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-endChat.html">endChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setcustomvariable.html">setCustomVariable</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requesttranscript.html">requestTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitexitsurvey.html">submitExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitofflinesurvey.html">submitOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getstate.html">getState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentloginname.html">getAgentLoginName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getvisitorname.html">getVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentid.html">getAgentId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getrtsessionid.html">getRtSessionId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getsessionkey.html">getSessionKey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagenttyping.html">getAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onload.html">onLoad</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninit.html">onInit</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onestimatedwaittime.html">onEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onprechatsurvey.html">onPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstart.html">onStart</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstop.html">onStop</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-ontranscript.html">onTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstate.html">onState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onagenttyping.html">onAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onexitsurvey.html">onExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onaccounttoaccounttransfer.html">onAccountToAccountTransfer</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Server Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-base-resource.html">Base Resource</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-availability.html">Retrieve Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-estimated-wait-time.html">Retrieve Estimated Wait Time</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-offline-survey.html">Retrieve an Offline Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-add-lines.html">Add Lines / End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-name.html">Retrieve the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-name.html">Set the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-agent-typing-status.html">Retrieve the Agent's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-typing-status.html">Retrieve the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-typing-status.html">Set the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-exit-survey-structure.html">Retrieve Exit Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-custom-variables.html">Set Custom Variables</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-send-transcript.html">Send a Transcript</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Real-time Interactions</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Visit Information API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-visit-information.html">Visit Information</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Interaction</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-interation-index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Tutorials</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-readaccept-events.html">Read/Accept events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-post-survey.html">Post Conversation Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-no-headers.html">Avoid ga, qasocket Headers</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Samples</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-js-sample.html">Javascript Messenger</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                        
+                            
+                                <li><a href="consumer-int-api-reference.html">API Reference</a></li>
+                            
+                        
+                    
+                </ul>
+                
+            
+            
+            
+            
+            
+            
+            
+        
+        <!-- if you aren't using the accordion, uncomment this block:
+           <p class="external">
+               <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+           </p>
+           -->
+    </li>
+</ul>
+</div>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+    <!-- Content Column -->
+    <div class="col-md-9">
+        <div class="post-header">
+   <h1 class="post-title-main">Set Agent’s Typing Status</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+    
+
+    
+
+    
+
+  <p>This method sets the agent’s typing status.</p>
+
+<h2 id="request">Request</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">PUT</td>
+      <td style="text-align: left">Accessed from agent-typing link from the Chat Information GET request. <br /> <em>Note: Currently PUT is supported using a POST method with the “X-HTTP-Method-Override:PUT” header.</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Formats</strong></p>
+
+<p>The body media type must have one of the following formats:</p>
+
+<ul>
+  <li>XML</li>
+  <li>JSON</li>
+</ul>
+
+<h2 id="response">Response</h2>
+
+<p><strong>Elements in the response</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">agentTyping</td>
+      <td style="text-align: left">Indicates if the agent is currently typing a response.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Default values: “typing”, “not-typing”, “unknown”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Response Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Code</th>
+      <th style="text-align: left">Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">201</td>
+      <td style="text-align: left">Created</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Response example for XML:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;agentTyping&gt;typing&lt;/agentTyping&gt;
+</code></pre>
+</div>
+
+<p>Response example for JSON:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"agentTyping"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"typing"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2017 LivePerson. All rights reserved.<br />This documentation is subject to change without notice.<br />
+ Site last generated: Jan 30, 2017 <br />
+<p><img src="img/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+    </div>
+
+</body>
+
+</html>
