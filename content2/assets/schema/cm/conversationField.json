@@ -1,0 +1,26 @@
+{
+	"type": "object",
+    "oneOf": [ 
+		{
+		    "title":"State",
+		    "type" : "object",
+		    "properties" : {
+		        "field" : {
+		            "type" : "string",
+		            "enum" : ["ConversationStateField"],
+		            "default" : "ConversationStateField",
+		            "readonly" : true
+		        },
+		        "conversationState" : {
+		            "type" : "string",
+		            "enum" : ["CLOSE"]
+		        }
+		    },
+		    "required": ["field","conversationState"]
+		},
+		{
+		    "title":"CSAT",
+	        "$ref":"assets/schema/types/csat.json"
+		}
+	]
+}

@@ -1,0 +1,30 @@
+{
+    "allOf": [{
+        "$ref": "assets/schema/infra/req.json"
+    }, {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string",
+                "default": "ms.PublishEvent",
+                "readonly": "true"
+            },
+            "body": {
+                "type": "object",
+                "properties": {
+                    "dialogId": {
+                        "type": "string"
+                    },
+                    "eventId": {
+                        "type": "string"
+                    },
+                    "event": {
+                        "$ref": "assets/schema/ms/AbstractMessagingEvent.json"
+                    }
+                },
+                "required": ["dialogId", "event"]
+            }
+        },
+        "required": ["body"]        
+    }]
+}
