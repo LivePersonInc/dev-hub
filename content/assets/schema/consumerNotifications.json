@@ -1,9 +1,0 @@
-{
-    "anyOf": [{
-        "title":"MessagingEventNotification",
-        "$ref": "assets/schema/ms/messagingEventNotification.json"
-    }, {
-        "title":"ExConversationChangeNotification",
-        "$ref": "assets/schema/aam/subscribeExConversationsNotification.json"
-    }]
-}
