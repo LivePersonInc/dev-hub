@@ -1,0 +1,49 @@
+{
+	"title": "ContentValue",
+	"type": "object",
+	"oneOf": [{
+		"title": "TextPlain",
+		"type": "object",
+		"properties": {
+			"contentType": {
+				"type": "string",
+				"default": "text/plain",
+				"readonly": "true"
+			},
+			"message": {
+				"type": "string"
+			}
+		},
+		"required": ["contentType", "message"]
+	}, {
+		"title": "HostedFile",
+		"type": "object",
+		"properties": {
+			"contentType": {
+				"type": "string",
+				"default": "HostedFile",
+				"readonly": "true"
+			},
+			"message": {
+				"type": "object",
+				"properties": {
+					"caption": {
+						"type": "string"
+					},
+					"relativePath": {
+						"type": "string"
+					},
+					"fileType": {
+						"type": "string",
+						"enum": ["IMG", "JPG", "PNG", "GIF", "TXT", "PDF"]
+					},
+					"preview": {
+						"type": "any"
+					}
+				},
+				"required": ["caption", "relativePath", "fileType"]
+			}
+		},
+		"required": ["contentType", "message"]
+	}]
+}

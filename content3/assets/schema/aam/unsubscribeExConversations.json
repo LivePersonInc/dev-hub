@@ -1,0 +1,25 @@
+{
+    "description": "Unsubcribes the consumer from getting notifications on conversation metadata changes.",
+    "allOf": [{
+        "$ref": "assets/schema/infra/req.json"
+    }, {
+        "type": "object",
+        "properties": {
+            "type": {
+                "default": "cqm.UnsubscribeExConversations",
+                "readonly": "true"
+            },
+            "body": {
+                "type": "object",
+                "properties" : {
+                    "subscriptionId": {
+                        "type":"string",
+                        "minLength":1,
+                        "maxLength":64
+                    }
+                },
+                "required": ["subscriptionId"]
+            }
+        }
+    }]
+}
