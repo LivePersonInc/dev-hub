@@ -1,0 +1,27 @@
+{
+    "description": "Updates conversation metadata like: state, CSAT, TimeToRespond police etc... Consumer and agent might have different permissions.",
+    "type": "object",
+    "properties": {
+        "conversationId": {
+            "type": "string"
+        },
+        "conversationField": {
+            "type": "object",
+            "oneOf": [ 
+                {
+                    "$ref": "types/StateChange.json"
+                },
+                {
+                    "$ref": "types/ParticipantsChange.json"
+                },
+                {
+                    "$ref": "types/SkillChange.json"
+                },
+                {
+                    "$ref": "types/CsatChange.json"
+                }
+            ]
+        }
+    },
+    "required": ["conversationId", "conversationField"]
+}

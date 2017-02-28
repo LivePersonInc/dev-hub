@@ -1,0 +1,37 @@
+{
+    "anyOf": [{
+            "title": "RequestConversationResponse",
+            "$ref": "../cm/consumerRequestConversationResp.json"
+        }, {
+            "title": "StringResp",
+            "$ref": "../infra/stringResp.json"
+        }, {
+            "title": "PublishEventResponse",
+            "$ref": "../ms/PublishEventSuccess.json"
+        }, {
+            "title": "GenericSubscribeResponse",
+            "$ref": "../types/genericSubscribeResp.json"
+        }, {
+            "title": "GetUserProfileResponse",
+            "description": "Gets customer and personal info for the given consumerId.",
+            "allOf": [{
+                    "$ref": "../infra/resp.json"
+                }, {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "enum":["up.GetUserProfile$Response"],
+                            "default": "up.GetUserProfile$Response",
+                            "readonly": "true"
+                        },
+                        "body": {
+                            "$ref": "../userprofile/getUserProfileResp.json"
+                        }
+                    },
+                    "required": ["body"]
+                }]
+        }, {
+            "title": "SubscribeExConversationsResponse",
+            "$ref": "../aam/subscribeExConversationsResp.json"
+        }]
+}
