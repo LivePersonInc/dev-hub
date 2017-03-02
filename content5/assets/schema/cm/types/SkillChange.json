@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "properties": {
+        "field": {
+            "type": "string",
+            "enum": ["Skill"],
+            "default": "Skill",
+            "readonly": true
+        },
+        "type": {
+            "type": "string",
+            "default": "UPDATE",
+            "enum": ["UPDATE"]
+        },
+        "skill": {
+            "type": "string"
+        }
+    },
+    "required": ["field", "type", "skill"]
+}

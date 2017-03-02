@@ -1,0 +1,16 @@
+{
+    "title": "StateChange",
+    "type": "object",
+    "properties": {
+        "field": {
+            "enum": ["ConversationStateField"],
+            "default": "ConversationStateField",
+            "readonly": true
+        },
+        "conversationState": {
+            "type": "string",
+            "enum": ["CLOSE"]
+        }
+    },
+    "required": ["field", "conversationState"]
+}
