@@ -1,0 +1,20 @@
+{
+    "description": "General response message with string description.",
+    "allOf": [{
+        "$ref": "../infra/resp.json"
+    }, {
+        "type": "object",
+        "properties": {
+            "type": {
+                "default": ".ReqBody$StringResp",
+                "readonly": "true"
+            },
+            "body": {
+                "type":"string",
+                "description": "Optional text description for the response",
+                "default": "Some description",
+                "maxLength": 128
+            }
+        }
+    }]
+}
