@@ -1,0 +1,14 @@
+- title: Rich Content (YouTube)
+      output: ga, qa
+      folderitems:
+      - title: Overview
+        url: /products-youtube-overview.html
+        output: ga, qa 
+      - title: Sample Implementation Flow
+        url: /products-youtube-flow.html
+        output: ga, qa 
+      - title: Prerequisites
+        url: /products-youtube-prerequisites.html
+        output: ga, qa 
+      - title: 
+ 
