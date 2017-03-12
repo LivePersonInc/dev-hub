@@ -1,0 +1,26 @@
+{
+    "allOf": [{
+        "$ref": "../infra/resp.json"
+    }, {
+        "type": "object",
+        "properties": {
+            "type": {
+                "default": "cqm.SubscribeExConversationsResponse",
+                "readonly": "true"
+            },
+            "body": {
+                "type": "object",
+                "properties": {
+                    "subscriptionId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 64
+                    }
+                },
+                "required": [
+                    "subscriptionId"
+                ]
+            }
+        }
+    }]
+}
