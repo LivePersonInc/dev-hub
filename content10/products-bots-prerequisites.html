@@ -1,0 +1,2815 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title>Prerequisites | LivePerson Technical Documentation</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+
+<link rel="stylesheet" type="text/css" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<link rel="stylesheet" href="css/lavish-bootstrap.css">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/theme-blue.css">
+
+<!-- <script src="assets/js/jsoneditor.js"></script> -->
+<script src="assets/js/jquery-3.1.0.min.js"></script>
+<!-- <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'> -->
+<!--     <link rel='stylesheet' id='theme_stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'>
+ -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
+<script src="assets/js/jquery.cookie-1.4.1.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<script src="assets/js/bootstrap-3.3.4.min.js"></script>
+<script src="assets/js/anchor-2.0.0.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="http://0.0.0.0:4005feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> LivePerson Technical Documentation</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- entries without drop-downs appear here -->
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+			<li><a class="email" title="Submit feedback" href="https://github.com/LivePersonInc/dev-hub/issues" ><i class="fa fa-github"></i> Issues</a><li>
+
+		
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Prerequisites">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="col-lg-12">&nbsp;</div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-md-3">
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul id="mysidebar" class="nav">
+    <li class="sidebarTitle"> </li>
+    
+        
+            
+            <li>
+                <a href="#">Common Guidelines</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="getting-started.html">Getting Started with LiveEngage APIs</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Guides</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="guides-customizedchat.html">Customized Chat Windows</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                            
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Account Configuration</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Predefined Content API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-get-items.html">Get Predefined Content Items</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-get-by-id.html">Get Predefined Content by ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-query-delta.html">Predefined Content Query Delta</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-create-content.html">Create Predefined Content</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-update-content.html">Update Predefined Content</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-update-content-items.html">Update Predefined Content Items</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-delete-content.html">Delete Predefined Content</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-delete-content-items.html">Delete Predefined Content Items</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-get-default-items.html">Get Default Predefined Content Items</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-get-default-items-by-id.html">Get Default Predefined Content by ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-predefined-content-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Automatic Messages API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-automatic-messages-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-automatic-messages-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-automatic-messages-get-automatic-messages.html">Get Automatic Messages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-automatic-messages-get-automatic-message-by-id.html">Get Automatic Message by ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-automatic-messages-update-an-automatic-message.html">Update an Automatic Message</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="account-configuration-automatic-messages-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Administration</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Users API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-users-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-users-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-all-users.html">Get all users</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-user-by-id.html">Get user by ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-create-users.html">Create users</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-update-users.html">Update users</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-update-user.html">Update user</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-delete-users.html">Delete users</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-delete-user.html">Delete user</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-change-users-password.html">Change user's password</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-reset-users-password.html">Reset user's password</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-user-query-delta.html">User query delta</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-users-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Skills API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-skills-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-skills-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-all-skills.html">Get all skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-skill-by-id.html">Get skill by ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-create-skills.html">Create skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration.update-skills.html">Update skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-update-skill.html">Update skill</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-delete-skills.html">Delete skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-delete-skill.html">Delete skill</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-skills-query-delta.html">Skills Query Delta</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-skills-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Agent Groups API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-agent-groups-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-agent-groups-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-all-agent-groups.html">Get all agent groups</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-agent-groups-by-id.html">Get agent group by ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-create-agent-groups.html">Create agent groups</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-update-agent-groups.html">Update agent groups</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-update-agent-group.html">Update agent group</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-delete-agent-groups.html">Delete agent groups</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-delete-agent-group.html">Delete agent group</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-get-subgroups-and-members.html">Get subgroups and members of an agent group</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="administration-agent-groups-query-delta.html">Agent Groups Query Delta</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Consumer Experience</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">JavaScript Chat SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getengagement.html">getEngagement</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requestchat.html">requestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-addline.html">addLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitortyping.html">setVisitorTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-setvisitorname.html">setVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-endchat.html">endChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requesttranscript.html">requestTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitexitsurvey.html">submitExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-submitofflinesurvey.html">submitOfflineSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getstate.html">getState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentloginname.html">getAgentLoginName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getvisitorname.html">getVisitorName</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagentid.html">getAgentId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getrtsessionid.html">getRtSessionId</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getsessionkey.html">getSessionKey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getagenttyping.html">getAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onload.html">onLoad</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninit.html">onInit</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onestimatedwaittime.html">onEstimatedWaitTime</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onengagement.html">onEngagement</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onprechatsurvey.html">onPreChatSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstart.html">onStart</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstop.html">onStop</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-ontranscript.html">onTranscript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onstate.html">onState</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onagenttyping.html">onAgentTyping</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onexitsurvey.html">onExitSurvey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onaccounttoaccounttransfer.html">onAccountToAccountTransfer</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-example.html">Engagement Attributes Body Example</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-demo.html">Demo App</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Server Chat API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-availability.html">Retrieve Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-estimated-wait-time.html">Retrieve Estimated Wait Time</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-offline-survey.html">Retrieve an Offline Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-add-lines.html">Add Lines / End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-chat-information.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-name.html">Retrieve the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-name.html">Set the Visitor's Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-agent-typing-status.html">Retrieve the Agent's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-visitor-typing-status.html">Retrieve the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-set-visitor-typing-status.html">Set the Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-retrieve-exit-survey-structure.html">Retrieve Exit Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-submit-survey-data.html">Submit Survey Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-send-transcript.html">Send a Transcript</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-sample.html">Sample Postman Collection</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Push Service API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="push-service-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="push-service-tls-html">TLS Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="push-service-codes-html">HTTP Response Codes</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="push-service-configuration-html">Configuration of Push Proxy</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">In-App Messaging SDK iOS (2.0)</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-quick-start.html">Quick Start</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-advanced-configurations.html">Advanced Configurations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-initialize.html">initialize</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-showconversation.html">showConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-removeconversation.html">removeConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-reconnect.html">reconnect</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-togglechatactions.html">toggleChatActions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-checkactiveconversation.html">checkActiveConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-markasurgent.html">markAsUrgent</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-isurgent.html">isUrgent</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-dismissurgent.html">dismissUrgent</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-resolveconversation.html">resolveConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-clearhistory.html">clearHistory</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-logout.html">logout</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-destruct.html">destruct</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-handlepush.html">handlePush</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-registerpushnotifications.html">registerPushNotifications</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-setuserprofile.html">setUserProfile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-getassignedagent.html">getAssignedAgent</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-subscribelogevents.html">subscribeLogEvents</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-getsdkversion.html">getSDKVersion</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-printalllocalizedkeys.html">printAllLocalizedKeys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-printsupportedlanguages.html">printSupportedLanguages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-getallsupportedlanguages.html">getAllSupportedLanguages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-interfacedefinitions.html">Interface and Class Definitions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-callbacks-index.html">Callbacks index</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-configuring-the-sdk.html">Configuring the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-attributes.html">Attributes</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-deprecated-attributes.html">Deprecated Attributes</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-stringlocalization.html">String localization in SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-localizationkeys.html">Localization Keys</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-timestamps.html">Timestamps Formatting</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-createcertificate.html">OS Certificate Creation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-advanced-csat.html">CSAT UI Content</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-photosharing.html">Photo Sharing (Beta)</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-pushnotifications.html">Configuring Push Notifications</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-opensource.html">Open Source List</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-security.html">Security</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">In-App Messaging SDK Android (2.0)</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-prerequisites.html">Prerequisites</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-download-and-unzip.html">Step 1: Download and Unzip the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-configure-project-settings.html">Step 2: Configure project settings to connect LiveEngage SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-code-integration.html">Step 3: Code integration for basic deployment</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-initialization.html">SDK Initialization and Lifecycle</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-authentication.html">Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-conversations-lifecycle.html">Conversations Lifecycle</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-callbacks-interface.html">LivePerson Callbacks Interface</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-notifications.html">Notifications</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-user-data.html">User Data</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-logs.html">Logs and Info</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-initializedeprecated.html">initialize (Deprecated)</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-initializeproperties.html">initialize (with SDK properties object)</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-showconversation.html">showConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-showconversationauth.html">showConversation (with authentication support)</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-hideconversation.html">hideConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-getconversationfrag.html">getConversationFragment</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-getconversationfragauth.html">getConversationFragment with authentication support</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-reconnect.html">reconnect</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-setuserprofile.html">setUserProfile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-setuserprofiledeprecated.html">setUserProfile (Deprecated)</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-registerlppusher.html">registerLPPusher</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-unregisterlppusher.html">unregisterLPPusher</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-handlepush.html">handlePush</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-getsdkversion.html">getSDKVersion</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-setcallback.html">setCallback</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-removecallback.html">removeCallBack</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-checkactiveconversation.html">checkActiveConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-checkagentid.html">checkAgentID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-markurgent.html">markConversationAsUrgent</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-marknormal.html">markConversationAsNormal</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-checkurgent.html">checkConversationIsMarkedAsUrgent</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-resolveconversation.html">resolveConversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-shutdown.html">shutDown</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-shutdowndeprecated.html">shutDown (Deprecated)</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-clearhistory.html">clearHistory</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-logout.html">logOut</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-callbacks-index.html">Callbacks Index</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-configuring-sdk.html">Configuring the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-attributes.html">Attributes</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-configuring-edittext.html">Configuring the message’s EditText</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-proguard.html">Proguard Configuration</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-modifying-string.html">Modifying Strings</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-modifying-resources.html">Modifying Resources</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-plural-string.html">Plural String Resource Example</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-timestamps.html">Timestamps Formatting</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-off-hours.html">Date and Time</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-bubble.html">Bubble Timestamp</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-separator.html">Separator Timestamp</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-resolve.html">Resolve Message</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-csat.html">CSAT Behavior</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-photo-sharing.html">Photo Sharing - Beta</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-push-notifications.html">Enable Push Notifications</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="android-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Real-time Interactions</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Visit Information API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-visit-information-visit-information.html">Visit Information</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">App Engagement API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-app-engagement-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-app-engagement-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-create-session.html">Create Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-update-session.html">Update Session</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Engagement Attributes</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-engagement-attributes-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-engagement-attributes-engagement-attributes.html">Engagement Attributes</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">IVR Engagement API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-ivr-engagement-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-ivr-engagement-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-ivr-engagement-external engagement.html">External Engagement</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Validate Engagement</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-validate-engagement-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-validate-engagement-validate-engagement.html">Validate Engagement API</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Engagement Trigger API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="trigger-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="trigger-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="trigger-click.html">Click</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="trigger-getinfo.html">getEngagementInfo</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="trigger-getstate.html">getEngagementState</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Engagement Window Widget SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-limitations.html">Limitations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-configuration.html">Configuration</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-code-examples.html">Code Examples</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-event-structure.html">Event Structure</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Agent</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Agent Workspace Widget SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-limitations.html">Limitations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-model.html">Public Model Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-public-properties.html">Public Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-workspace-sdk-code-examples.html">Code Examples</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">LivePerson Domain API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-domain-domain-api.html">Domain API</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Login Service API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="login-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-login.html">Login</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-refresh.html">Refresh</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-refresh.html">Logout</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Chat Agent API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="chat-agent-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-start-agent-session.html">Start Agent Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-current-availability.html">Retrieve Current Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-set-agent-availability.html">Set Agent Availability</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-available-agents.html">Retrieve Available Agents</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-available-slots.html">Retrieve Available Slots</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-agent-information.html">Retrieve Agent Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-determine-incoming.html">Determine Incoming Chat Requests</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-accept-chat.html">Accept a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-chat-sessions.html">Retrieve Chat Sessions</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-chat-resources.html">Retrieve Chat Resources, Events and Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-data.html">Retrieve Data for Multiple Chats</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-chat-events.html">Retrieve Chat Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-add-lines.html">Add Lines</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-end-chat.html">End Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-chat-info.html">Retrieve Chat Information</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="">Retrieve Visitor’s Name</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-agent-typing.html">Retrieve Agent's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-set-agent-typing.html">Set Agent’s Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-visitor-typing.html">Retrieve Visitor's Typing Status</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-chat-agent-retrieve-skills.html">Retrieve Available Skills</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-transfer-chat.html">Transfer a Chat</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="agent-retrieve-survey-structure.html">Retrieve Agent Survey Structure</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Messaging Agent SDK</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="messaging-agent-sdk-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Data</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Data Access API (Beta)</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-architecture.html">Architecture</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-base-resource.html">Base Resource</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-agent-activity.html">Agent Activity</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-web-session.html">Web Session</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-engagement.html">Engagement</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-survey.html">Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-schema.html">Schema</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Messaging Operations API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-operations-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-operations-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-operations-messaging-conversation.html">Messaging Conversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-operations-messaging-csat-distribution.html">Messaging CSAT Distribution</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-operations-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Messaging Interactions API (Beta)</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-conversations.html">Conversations</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-get-conversation-by-conversation-id.html">Get conversation by conversation ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-get-conversations-by-consumer-id.html">Get Conversations by Consumer ID</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-sample-code.html">Sample Code</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-messaging-interactions-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Engagement History API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-data-access-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-engagement-history-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-engagement-history-retrieve-engagement-list-by-criteria.html">Retrieve Engagement List by Criteria</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-engagement-history-sample-code.html">Sample Code</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-engagement-history-appendix.html">Appendix</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Operational Real-time API</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-methods.html">Methods</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-queue-health.html">Queue Health</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-engagement-activity.html">Engagement Activity</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-agent-activity.html">Agent Activity</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-current-queue-state.html">Current Queue State</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-sla-histogram.html">SLA Histogram</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="data-operational-realtime-sample-code.html">Sample Code</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">LiveEngage Tag</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">LE Tag Events</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="lp-tag-tag-events-overview.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="lp-tag-tag-events-how.html">How to use these Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="lp-tag-tag-events-events.html">Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="lp-tag-visitor-flow.html">Visitor Flow Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="lp-tag-engagement.html">Engagement Events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="lp-tag-engagement-window.html">Engagement Window Events</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            <li>
+                <a href="#">Messaging Window API</a>
+                <ul>
+
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Introduction</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-interation-index.html">Home</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Tutorials</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-readaccept-events.html">Read/Accept events</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-post-survey.html">Post Conversation Survey</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-no-headers.html">Avoid Webqasocket Headers</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">Samples</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-js-sample.html">JavaScript Messenger</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+                                
+                                    <li class="subfolders">
+                                        <a href="#">API Reference</a>
+                                        <ul>
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-api-reference.html">Overview</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-reqs.html">Request Builder</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-resps.html">Response Builder</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-notifications.html">Notification Builder</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-req-conv.html">New Conversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-close-conv.html">Close Conversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-conv-ttr.html">Urgent Conversation</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-csat-conv.html">Update CSAT</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-sub-conv.html">Subscribe Conversations Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-unsub-conv.html">Unsubscribe Conversations Metadata</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-text-cont.html">Publish Content</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-sub-events.html">Subscribe Conversation Content</a></li>
+                                                    
+                                                
+                                            
+                                                
+                                                    
+                                                        <li class="thirdlevel"><a href="consumer-int-msg-init-con.html">Browser Init Connection</a></li>
+                                                    
+                                                
+                                            
+                                        </ul>
+                                    </li>
+                                
+                            
+
+
+
+
+
+
+
+                    
+                </ul>
+                
+            
+            
+            
+            
+            
+        
+        <!-- if you aren't using the accordion, uncomment this block:
+           <p class="external">
+               <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+           </p>
+           -->
+    </li>
+</ul>
+</div>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+    <!-- Content Column -->
+    <div class="col-md-9">
+        <div class="post-header">
+   <h1 class="post-title-main">Prerequisites</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+    
+
+    
+
+    
+
+  <p>The following prerequisites are required:</p>
+
+<ul>
+  <li>LiveEngage account</li>
+  <li>Dedicated user for the bot created in LiveEngage</li>
+</ul>
+
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2017 LivePerson. All rights reserved.<br />This documentation is subject to change without notice.<br />
+ Site last generated: Mar 13, 2017 <br />
+<p><img src="img/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+    </div>
+
+</body>
+
+</html>
