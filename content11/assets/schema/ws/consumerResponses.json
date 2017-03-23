@@ -1,0 +1,18 @@
+{
+    "anyOf": [{
+        "title":"RequestConversationResponse",
+        "$ref": "../cm/consumerRequestConversationResp.json"
+    }, {
+        "title":"StringResp",
+        "$ref": "../infra/stringResp.json"
+    }, {
+        "title":"PublishEventResponse",
+        "$ref": "../ms/PublishEventSuccess.json"
+    }, {
+        "title":"GenericSubscribeResponse",
+        "$ref": "../types/genericSubscribeResp.json"
+    }, {
+        "title":"SubscribeExConversationsResponse",
+        "$ref": "../aam/subscribeExConversationsResp.json"
+    }]
+}
