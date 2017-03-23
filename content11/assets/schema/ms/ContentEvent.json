@@ -1,0 +1,18 @@
+{
+    "allOf": [
+        {
+            "type" : "object",
+            "properties" : {
+                "type": {
+                    "type":"string",
+                    "default": "ContentEvent",
+                    "readonly": "true"
+                }
+            },
+            "required": ["type"]
+        },
+        {
+           "$ref": "ContentValue.json"
+        }
+    ]
+}
