@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Protocol Overview | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Protocol Overview">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2548,7 +2548,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-protocol-overview.html">Protocol Overview</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Protocol Overview</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,169 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <h2 id="api-endpoints">API Endpoints</h2>
+<p>The API consists of two types of calls:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li>Peripheral APIs - Domains Discovery, Token creation, Agent Profile, etc. In most cases these calls are done using REST.</li>
+  <li>Messaging API - In this API, the WebSocket connection should be established.</li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<h2 id="messaging-api-websocket-connection">Messaging API WebSocket Connection</h2>
+
+<h3 id="establishment">Establishment</h3>
+<p>Refer to the <a href="consumer-int-getting-started.html">Getting Started</a> section to see an example of how to establish this connection.</p>
+
+<h3 id="keep-alive">Keep Alive</h3>
+<p>The server will close any idle connection. In order to keep the connection open, the client should send a message every 60 seconds. For this purpose, the client can use one of the following:</p>
+
+<ul>
+  <li>Websocket Ping/Pong Mechanism</li>
+  <li>For clients that cannot send Ping messages (such as browsers): Utilize the applicative <code class="highlighter-rouge">.GetClock</code> request: <code class="highlighter-rouge"><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">".GetClock"</span><span class="p">}</span></code>.</li>
+</ul>
+
+<h3 id="error-handling">Error Handling</h3>
+<p>Upon disconnection, the client will receive a standard status code as defined by <a href="https://tools.ietf.org/html/rfc6455#section-7.4">rfc6455</a>. Two custom status codes are used by the API:</p>
+
+<ul>
+  <li><strong>4401</strong> - A fresh token is required from the customer. When an authenticated connection is used, this code states that the request does not contain the required autorization token, or contains an expired token. This response asks the client to supply a new token from the customer.</li>
+  <li><strong>4407</strong> - For unauthenticated identities, this status code states that the client should ask the LivePerson IDP service to extend the validity of the current identity.</li>
+</ul>
+
+<p>For any other status code, the client should wait a short period of time and then try to reconnect.</p>
+
+<h2 id="message-format">Message Format</h2>
+<p>Every message sent by the client or by the server should be serialized to JSON format.</p>
+
+<h3 id="requests-responses-and-notifications">Requests, Responses and Notifications</h3>
+
+<p>Each API message can be one of the following kinds:</p>
+
+<ul>
+  <li><strong>Request</strong> - A message sent from the client. The server will reply with a response message.</li>
+  <li><strong>Response</strong> - A message sent by the server in response to a client request message.</li>
+  <li><strong>Notification</strong> - A message sent from the server to the client, triggered by a server decision. The trigger can be based on a prior <code class="highlighter-rouge">Subscription</code> request made by the client, or on an implicit subscription made by the server.</li>
+</ul>
+
+<p>The kind of message is denoted by the <code class="highlighter-rouge">kind</code> property in the top level of the JSON object, and can be any of the following: <code class="highlighter-rouge">req</code>, <code class="highlighter-rouge">resp</code>, <code class="highlighter-rouge">notification</code>. Below is an example of a request message:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"kind"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"req"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"cm.AgentRequestConversation"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hsjshka8162s"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"body"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"ttrDefName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NORMAL"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h3 id="message-types">Message Types</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p>Every message has a type. The structure of the body of the message can be changed for different types. The type of message is denoted by the <code class="highlighter-rouge">type</code> property in the top level of the JSON object. Below is an example of a message with the type of<code class="highlighter-rouge">cm.MyRequest</code>:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"req"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"cm.MyRequest"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hsjshka8162s"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"ttrDefName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NORMAL"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h3 id="responses">Responses</h3>
+<p>Responses should be sent with some kind of correlation to the request that they are answering. For this purpose, every request message must state the <code class="highlighter-rouge">id</code> string for the request. The server will reply with the same <code class="highlighter-rouge">id</code> in the response message as the value of the <code class="highlighter-rouge">reqId</code> field in the top level JSON object of the response message. Below is an example of a response message to the request from the above section:</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"resp"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"reqId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hsjshka8162s"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"cm.MyRequestResponse"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"code"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"conversationId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hdjsdhksh2"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The response message will also contain a <code class="highlighter-rouge">code</code> field. This field will be populated with the status code of the request. The values of this field will be taken from the <a href="https://tools.ietf.org/html/rfc7231">HTTP Semantics</a>.</p>
+
+<h3 id="subscriptions">Subscriptions</h3>
+
+<p>In this pattern the client has to send some kind of request message to the server. In response, it will receive a response message with a success indication and a subscription ID. Following this, the server will start sending notifications with the subscription ID.</p>
+
+<h2 id="api-client-requirements">API Client Requirements</h2>
+
+<h3 id="client-future-compatibility">Client Future Compatibility</h3>
+
+<p>In order for the client to be compatible with future API changes, it should:</p>
+
+<ul>
+  <li>Ignore any field that is not documented in the <a href="consumer-int-api-reference.html">API reference</a>. This includes existing fields that are not documented (for deprecation reasons), as well as new fields that will be added to the messages in newer versions.</li>
+  <li>Ignore any enum fields that contain undocumented values.</li>
+</ul>
+
+<h3 id="single-element-arrays">Single Element Arrays</h3>
+
+<p>An array containing a single element may be sent using the element itself instead of the array.</p>
+
+<h2 id="typical-frontend-api-session">Typical Frontend API Session</h2>
+
+<p>In this section we will provide an example API session.</p>
+
+<h3 id="initiation">Initiation</h3>
+
+<p>The consumer initiates the messaging application on their device. At this point, the client should do the following:</p>
+
+<ol>
+  <li>Use the Authentication API to pass the external token and get an API token (JWT).</li>
+  <li>Open a WebSocket connection to the Interaction API.</li>
+  <li>Subscribe itself to the conversations metadata (in order to get the conversations list). This list may contain previously closed conversations along with existing active conversations. The list may be presented to the consumer.</li>
+</ol>
+
+<p>The user may now want to <a href="#continue-an-existing-conversation">continue an existing conversation</a> or <a href="#start-a-new-conversation">start a new conversation</a>.</p>
+
+<h3 id="continue-an-existing-conversation">Continue an existing conversation</h3>
+
+<p>In the initation process, the client got the conversation list, including the existing conversation (with <code class="highlighter-rouge">OPEN</code> state). To enable the consumer to continue this conversation, the client should do the following:</p>
+
+<ol>
+  <li>Subscribe to the conversation messaging events. If the client already has some of the messages of this conversation in its memory, it may want to subscribe only to the last messages sequence. This is to avoid sending over the network all the messages it already has.</li>
+  <li>Receive notifications about the events of this conversation from the server.
+    <ol>
+      <li>Text messages should be added to the presentation, ordered by their sequence.</li>
+      <li>Read/Accept events should add a graphical indication next to the text message they are referring to.</li>
+    </ol>
+  </li>
+  <li>Keep receiving notifications from the server about new events currently being published by the other side.</li>
+  <li>Publish an <code class="highlighter-rouge">accept</code> event when a new text message is received to let other agents know that the message has been successfully delivered to the consumer device. When the message is presented to the consumer, the client should publish a <code class="highlighter-rouge">read</code> receipt.</li>
+  <li>Publish text messages when the consumer wants to send their own text.</li>
+  <li>Publish a <code class="highlighter-rouge">chat state</code> event when the consumer is typing, watching, or stops watching the conversation.</li>
+</ol>
+
+<h3 id="start-a-new-conversation">Start a new conversation</h3>
+
+<p>In order to create a new conversation, the client should do the following:</p>
+
+<ol>
+  <li>Send a request to create a new conversation.</li>
+  <li>Get a notification about the new conversation.</li>
+</ol>
+
+<p>The client should continue as described above for an <a href="#continue-an-existing-conversation">existing conversation</a>.</p>
+
+<h3 id="finish-a-conversation">Finish a conversation</h3>
+
+<p>The conversation can be closed either by the agent or by the consumer.</p>
+
+<p>If the consumer wants to close the conversation by themselves, the client must send a request to update the conversation metadata and set the <code class="highlighter-rouge">state</code> to <code class="highlighter-rouge">close</code>. This can also be done by the agent.</p>
+
+<p>The client will get a notification about this conversation with a <code class="highlighter-rouge">state</code> property set to <code class="highlighter-rouge">close</code>.</p>
+
+<p>The client can present a CSAT survey to the consumer and send an <code class="highlighter-rouge">update conversation metadata</code> request with the CSAT information.</p>
+
+<h3 id="handle-disconnection">Handle disconnection</h3>
+
+<p>When the API token expires, the WebSocket connection will be closed with <code class="highlighter-rouge">4401/4407</code> closereason. The client should return to the <a href="#initiation">initation</a> step, issue a fresh token, and reestablish the connection.</p>
+
+<p>For any other <code class="highlighter-rouge">closeReason</code>, the client should wait a few seconds and then try reconnecting.</p>
+
 
 
     <div class="tags">

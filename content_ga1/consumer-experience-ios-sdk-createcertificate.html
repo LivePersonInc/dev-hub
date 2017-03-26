@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>OS Certificate Creation | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="OS Certificate Creation">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1267,7 +1267,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-createcertificate.html">OS Certificate Creation</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-createcertificate.html">OS Certificate Creation</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">OS Certificate Creation</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,117 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>In order for the push notification to work, you will need two .pem files:</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<ol>
+  <li>A certificate file stored using a pem format.</li>
+  <li>A Key file stored using a pem format without a password.</li>
+</ol>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="creating-a-certificate-signing-request-file">Creating a Certificate Signing Request file</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p>With this file, we will create both a .p12 file and a .crt file.</p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>To manually generate a Certificate, you need a Certificate Signing Request (CSR) file from your Mac. To create a CSR file, follow the instructions below to create one using Keychain Access.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>Step 1</strong></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<ul>
+  <li>In the Applications folder on your Mac, open the Utilities folder, and launch Keychain Access.</li>
+  <li>Within the Keychain Access dropdown menu, select <strong>Keychain Access</strong> &gt; <strong>Certificate Assistant</strong> &gt; <strong>Request a Certificate from a Certificate Authority</strong>.</li>
+</ul>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p><strong>Step 2</strong></p>
+
+<ul>
+  <li>In the Certificate Information window, enter the following information:
+    <ul>
+      <li>In the User Email Address field, enter your email address.</li>
+      <li>In the Common Name field, create a name for your private key, for example,John Doe Dev Key.</li>
+      <li>The CA Email Address field should be left empty.</li>
+      <li>In the Request is group, select the Saved to disk option.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Step 3</strong></p>
+
+<p>In Keychain Access, click <strong>Continue</strong> to complete the CSR generating process.</p>
+
+<p><strong>Step 4</strong></p>
+
+<p>Download and run the certificate. The certificate is now added to your Keychain, paired with a private key:</p>
+
+<p><img src="img/messaging-sdk-ios/download-certificate.png" alt="certificate " /></p>
+
+<h2 id="creating-a-key-p12-file">Creating a key .p12 file</h2>
+
+<p><img src="img/messaging-sdk-ios/createkey.png" alt="create-key " /></p>
+
+<ul>
+  <li>Right-click on your new push certificate and choose <strong>Export</strong>.</li>
+</ul>
+
+<p><img src="img/messaging-sdk-ios/createkey2.png" alt="create-key2 " /></p>
+
+<ul>
+  <li>
+    <p>Save the certificate as pushNotification.p12 as a .p12 file.</p>
+  </li>
+  <li>
+    <p>You will be prompted to enter a password for the p12. You can either leave this blank or enter a password of your choosing.</p>
+  </li>
+</ul>
+
+<h2 id="creating-a-push-notification-certificate-der-format-crt-file">Creating a push notification certificate. (der format .crt file)</h2>
+
+<ul>
+  <li>In the iOS member area, go to your app area.</li>
+</ul>
+
+<p><img src="img/messaging-sdk-ios/createpush.png" alt="createpush" /></p>
+
+<ul>
+  <li>Under Push Notification service SSL Certificates, select <strong>Create Certificate</strong> (Developer or Production).</li>
+</ul>
+
+<p><img src="img/messaging-sdk-ios/uploadcsrfile.png" alt="uploadcsrfile" /></p>
+
+<ul>
+  <li>Choose the .csr file that you created in the previous stage.</li>
+</ul>
+
+<p><img src="img/messaging-sdk-ios/downloadinstall.png" alt="downloadinstall" /></p>
+
+<ul>
+  <li>Download the file. This file will be used to create the .pem format certificate.</li>
+</ul>
+
+<h2 id="creating-both-keypem-file-and-certpem-file">Creating both key.pem file and cert.pem file</h2>
+
+<p><em>Note: This is used when configuring LiveEngage Push Notification.</em></p>
+
+<ul>
+  <li>
+    <p>Open the terminal and locate the folder in which you would like to save the file.</p>
+  </li>
+  <li>
+    <p>Create cert pem:
+<strong>openssl x509 -in aps_development.cer -inform der -out cert.pem</strong></p>
+  </li>
+  <li>
+    <p>Convert the private keys .p12 file into a .pem file:
+<strong>openssl pkcs12 -nocerts -out keyWithPassword.pem -in key.p12</strong>
+You will be prompted to enter a passphrase for this file. Enter any password and remember it for the next step.</p>
+  </li>
+  <li>
+    <p>RSA .pem key (no password) 
+  <strong>openssl rsa -in hostkey.pem -out hostkey.pem</strong></p>
+
+    <p>You will be prompted to enter a passphrase. Enter the same passphrase you used in the previous step.</p>
+  </li>
+</ul>
+
 
 
     <div class="tags">

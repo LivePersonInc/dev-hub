@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Callbacks Index | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Callbacks Index">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1225,7 +1225,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-callbacks-index.html">Callbacks index</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-callbacks-index.html">Callbacks index</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Callbacks Index</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,163 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>The SDK uses 2 delegates:</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<ul>
+  <li><a href="#lpmessagingsdkdelegate">LPMessagingSDKDelegate</a>: For lifecycle and connectivity events</li>
+  <li><a href="#lpmessagingsdknotificationdelegate">LPMessagingSDKNotificationDelegate</a>: For handling push and in app notifications</li>
+</ul>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="lpmessagingsdkdelegate">LPMessagingSDKDelegate</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>protocol LPMessagingSDKdelegate {
+    optional func LPMessagingSDKCustomButtonTapped()
+    optional func LPMessagingSDKAgentDetails(_ agent: LPUser?)
+    optional func LPMessagingSDKAgentAvatarTapped(_ agent: LPUser?)
+    optional func LPMessagingSDKActionsMenuToggled(_ toggled: Bool)
+    optional func LPMessagingSDKHasConnectionError(_ error: String?)
+    optional func LPMessagingSDKCSATScoreSubmissionDidFinish(_ brandID: String, rating: Int)
+    optional func LPMessagingSDKCSATCustomTitleView(_ brandID: String) -&gt; UIView
+   
+func LPMessagingSDKObseleteVersion(_ error: NSError)
+func LPMessagingSDKAuthenticationFailed(_ error: NSError)
+func LPMessagingSDKTokenExpired(_ brandID: String)
+func LPMessagingSDKError(_ error: NSError)
+
+optional func LPMessagingSDKAgentIsTypingStateChanged(_ isTyping: Bool)
+optional func LPMessagingSDKConversationStarted(_ conversationID: String?)
+optional func LPMessagingSDKConversationEnded(_ conversationID: String?)
+optional func LPMessagingSDKConversationCSATDismissedOnSubmittion(_ conversationID: String?)
+optional func LPMessagingSDKConnectionStateChanged(_ isReady: Bool, brandID: String)
+optional func LPMessagingSDKOffHoursStateChanged(_ isOffHours: Bool, brandID: String)
+optional func LPMessagingSDKConversationViewControllerDidDismiss() }
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h3 id="lpmessagingsdkcustombuttontapped">LPMessagingSDKCustomButtonTapped</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<p>In <a href="consumer-experience-ios-sdk-showconversation.html">window mode only</a>, the app can place a custom button in the SDK UI. When the button is tapped, the following delegate method is invoked:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.delegate = self
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>When this button is pressed, it will call the following delegate:</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>func LPMessagingSDKCustomButtonTapped() {
+    UIApplication.sharedApplication().openURL(NSURL(string: "tel://55555555")!)
+}
+</code></pre>
+</div>
+
+<h3 id="lpmessagingsdkagentdetailsagent-lpuser">LPMessagingSDKAgentDetails(agent: LPUser?)</h3>
+
+<p>Called when agent details are received or updated. For every message, the SDK checks for agent details in order to determine whether the assigned agent was changed. If there is no assigned agent, agent will be nil, for instance, when the consumer is returned to queue.</p>
+
+<h3 id="lpmessagingsdkagentavatartapped_-agent-lpuser">LPMessagingSDKAgentAvatarTapped(_ agent: LPUser?)</h3>
+
+<p>Called when the user tapped on the agent’s avatar in the conversation and also in the navigation bar within window mode.</p>
+
+<h3 id="lpmessagingsdkactionsmenutoggledtoggled-bool">LPMessagingSDKActionsMenuToggled(toggled: Bool)</h3>
+
+<p>Called when the action menu is toggled.</p>
+
+<h3 id="lpmessagingsdkhasconnectionerrorerror-string">LPMessagingSDKHasConnectionError(error: String?)</h3>
+
+<p>Called whenever the SDK receives a connection error from the socket.</p>
+
+<h3 id="lpmessagingsdkcsatscoresubmissiondidfinishbrandid-string-rating-int">LPMessagingSDKCSATScoreSubmissionDidFinish(brandID: String, rating: Int)</h3>
+
+<p>When a conversation is resolved, a feedback page is presented (CSAT - Customer Satisfaction). 
+This delegate method is invoked after the CSAT is submitted. If the user chooses to skip the CSAT, the delegate method is called with score=0.</p>
+
+<h3 id="lpmessagingsdkcsatcustomtitleview_-brandid-string---uiview">LPMessagingSDKCSATCustomTitleView(_ brandID: String) -&gt; UIView</h3>
+
+<p>Custom Title view for to display in the CSAT survey view.</p>
+
+<h3 id="lpmessagingsdkobseleteversionerror-nserror">LPMessagingSDKObseleteVersion(error: NSError)</h3>
+
+<p>Called when the SDK version is obsolete and needs to be updated.</p>
+
+<h3 id="lpmessagingsdkauthenticationfailederror-nserror">LPMessagingSDKAuthenticationFailed(error: NSError)</h3>
+
+<p>Called when the current session fails due to an authentication error.</p>
+
+<h3 id="lpmessagingsdktokenexpired">LPMessagingSDKTokenExpired</h3>
+
+<p>Called when the current session fails due to an authentication error.</p>
+
+<h3 id="lpmessagingsdkerrorerror-nserror">LPMessagingSDKError(error: NSError)</h3>
+
+<p>Called when the SDK has a general error. 
+If there is an SDK initialization error, the SDK can not proceed, and you should not call any other SDK API.
+There are also other possible errors such as send message error.</p>
+
+<h3 id="lpmessagingsdkagentistypingstatechangedistyping-bool">LPMessagingSDKAgentIsTypingStateChanged(isTyping: Bool)</h3>
+
+<p>Called when the typing state of the agent is changed.</p>
+
+<h3 id="lpmessagingsdkconversationstartedconversationid-string">LPMessagingSDKConversationStarted(conversationID: String?)</h3>
+
+<p>Called when a new conversation is started.</p>
+
+<h3 id="lpmessagingsdkconversationendedconversationid-string">LPMessagingSDKConversationEnded(conversationID: String?)</h3>
+
+<p>Called when an open conversation is ended by the consumer or by the agent.</p>
+
+<h3 id="lpmessagingsdkconversationcsatdismissedonsubmittionconversationid-string">LPMessagingSDKConversationCSATDismissedOnSubmittion(conversationID: String?)</h3>
+
+<p>Called after CSAT screen is dismissed by clicking Submit.</p>
+
+<h3 id="lpmessagingsdkconnectionstatechanged">LPMessagingSDKConnectionStateChanged</h3>
+
+<p>Invoked when the connection state is changed.</p>
+
+<ul>
+  <li>isReady: Bool - Set to true when the SDK is connected and in sync with the server.</li>
+  <li>brandID: String - Brand account number</li>
+</ul>
+
+<h3 id="lpmessagingsdkoffhoursstatechangedisoffhours-bool-brandid-string">LPMessagingSDKOffHoursStateChanged(isOffHours: Bool, brandID: String)</h3>
+
+<p>Delegate which is called when an off hours state changes.</p>
+
+<h3 id="lpmessagingsdkconversationviewcontrollerdiddismiss">LPMessagingSDKConversationViewControllerDidDismiss()</h3>
+<p>Delegate which is called when the conversation viewcontroller is dismissed (both for window mode and viewController mode).</p>
+
+<h2 id="lpmessagingsdknotificationdelegate">LPMessagingSDKNotificationDelegate</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>protocol LPMessagingSDKNotificationDelegate {
+    optional func LPMessagingSDKNotification(didReceivePushNotification notification: LPNotification)
+    optional func LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -&gt; Bool
+    optional func LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -&gt; UIView
+    optional func LPMessagingSDKNotification(notificationTapped notification: LPNotification)
+}
+</code></pre>
+</div>
+
+<h3 id="lpmessagingsdknotificationdidreceivepushnotification-notification-lpnotification">LPMessagingSDKNotification(didReceivePushNotification notification: LPNotification)</h3>
+
+<p>Called when handling the push notifications, the SDK will form up a struct: LPNotification, 
+which will then be passed to the host app.</p>
+
+<h3 id="lpmessagingsdknotificationshouldshowpushnotification-notification-lpnotification---bool">LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -&gt; Bool</h3>
+
+<p>Called after calling <a href="consumer-experience-ios-sdk-handlepush.html">handlePush</a>, the SDK will ask the host app if it should display an in-app notification in the UI. (See <a href="consumer-experience-ios-sdk-handlepush.html">handlePush</a> for the full description).</p>
+
+<h3 id="lpmessagingsdknotificationcustomlocalpushnotificationview-notification-lpnotification---uiview">LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -&gt; UIView</h3>
+
+<p>If shouldShowPushNotification is not implemented, or it returns yes, the app can implement this method for showing an in-app notification in the UI. In case the method is not implemented, the SDK will provide and show its own view.</p>
+
+<h3 id="lpmessagingsdknotificationnotificationtapped-notification-lpnotification">LPMessagingSDKNotification(notificationTapped notification: LPNotification)</h3>
+<p>Called when tapping a local notification message bar when a remote push notification received. You should implement this delegate method if you wish to navigate and show the conversation screen.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> func LPMessagingSDKNotification(notificationTapped notification: LPNotification) {
+     // Navigate to a desired view controller
+  }
+</code></pre>
+</div>
+
 
 
     <div class="tags">

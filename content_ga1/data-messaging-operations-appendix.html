@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Appendix | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Appendix">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2301,7 +2301,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-messaging-operations-appendix.html">Appendix</a></li>
+                                                        <li class="active thirdlevel"><a href="data-messaging-operations-appendix.html">Appendix</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Appendix</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,48 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This section contains API details that are common to every API’s resource and action.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><strong>Request Headers</strong></p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Header</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Authorization</td>
+      <td style="text-align: left">Contains token string to allow request authentication and authorization.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">If-Match</td>
+      <td style="text-align: left">Contains data revision as known by the client. Allows to optimize the backend, networking and client resources utilization.</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>Path Parameters</strong></p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">accountId</td>
+      <td style="text-align: left">LP site ID</td>
+      <td style="text-align: left">String ^[a-zA-Z0-9_]{1,20}$</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

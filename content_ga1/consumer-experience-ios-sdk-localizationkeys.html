@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Localization Keys | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Localization Keys">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1255,7 +1255,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-localizationkeys.html">Localization Keys</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-localizationkeys.html">Localization Keys</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Localization Keys</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,470 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Listed below are all localized keys with the English localization string.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
-
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Attribute name</th>
+      <th style="text-align: left">String Localization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">customButtonAccessibilityDescription</td>
+      <td style="text-align: left">“Call”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextDistributed</td>
+      <td style="text-align: left">“Distributed”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationEndedByAgent</td>
+      <td style="text-align: left">“Conversation resolved by %@ \n %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationEndedByAgentWithoutName</td>
+      <td style="text-align: left">“Conversation resolved by Agent \n %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationEndedByYou</td>
+      <td style="text-align: left">“Conversation resolved by You \n %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cancel</td>
+      <td style="text-align: left">“Cancel”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">hiMessage</td>
+      <td style="text-align: left">“How can I help you today?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentMessageErrorTitle</td>
+      <td style="text-align: left">“Message was not sent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">retry</td>
+      <td style="text-align: left">“Retry”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentMailErrorTitle</td>
+      <td style="text-align: left">“Mail not sent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentMailErrorMessage</td>
+      <td style="text-align: left">“Email could not be sent. Please try again later.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">callTo</td>
+      <td style="text-align: left">“Call %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendMessage</td>
+      <td style="text-align: left">“Send Message”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">facetimeAudio</td>
+      <td style="text-align: left">“FaceTime Audio”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendEmailTitle</td>
+      <td style="text-align: left">“Send Email”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sendEmailMessage</td>
+      <td style="text-align: left">“Would you like to send an email to %@?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">notNow</td>
+      <td style="text-align: left">“Not now”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">yes</td>
+      <td style="text-align: left">“Yes”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">feedbackYesButtonTitle</td>
+      <td style="text-align: left">“Yes”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">feedbackNoButtonTitle</td>
+      <td style="text-align: left">“No”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cantSendMail</td>
+      <td style="text-align: left">“Can’t send email”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">noEmailOnDeviceError</td>
+      <td style="text-align: left">“No email is defined on this device”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dismissUrgent</td>
+      <td style="text-align: left">“Dismiss urgency”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dismissUrgentConfirmation</td>
+      <td style="text-align: left">“Are you sure you want to mark this conversation as not urgent?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dismiss</td>
+      <td style="text-align: left">“Dismiss”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">markAsUrgent</td>
+      <td style="text-align: left">“Mark as urgent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">markAsUrgentConfirmation</td>
+      <td style="text-align: left">“Are you sure you want to mark this conversation as urgent?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">urgent</td>
+      <td style="text-align: left">“Urgent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">noInternetConnection</td>
+      <td style="text-align: left">“No Internet Connection”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ok</td>
+      <td style="text-align: left">“OK”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">markAsEndedConfirmation</td>
+      <td style="text-align: left">“Are you sure this topic is resolved?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">endTheConversation</td>
+      <td style="text-align: left">“Resolve the conversation”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrResponseMessage</td>
+      <td style="text-align: left">“An agent will respond within the next %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rateConnectionWithAgent</td>
+      <td style="text-align: left">“How would you rate your\nconnection with our agent?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rateConnectionWithName</td>
+      <td style="text-align: left">“How would you rate your\nconnection with %@?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">veryDissatisfied</td>
+      <td style="text-align: left">“Very Dissatisfied”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dissatisfied</td>
+      <td style="text-align: left">Dissatisfied</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">neither</td>
+      <td style="text-align: left">“Neither”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">satisfied</td>
+      <td style="text-align: left">“Satisfied”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">verySatisfied</td>
+      <td style="text-align: left">“Very Satisfied”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">writeMessage</td>
+      <td style="text-align: left">“Write a message”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">olderMessages</td>
+      <td style="text-align: left">“Older messages”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numberOfDays</td>
+      <td style="text-align: left">“%d days”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">day</td>
+      <td style="text-align: left">“1 day”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numberOfHours</td>
+      <td style="text-align: left">“%d hours”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">oneHour</td>
+      <td style="text-align: left">“1 hour”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">oneMinute</td>
+      <td style="text-align: left">“1 minute”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numberOfMinutes</td>
+      <td style="text-align: left">“%d minutes”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minutesAgo</td>
+      <td style="text-align: left">“%d min ago”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">send</td>
+      <td style="text-align: left">“Send”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">submit</td>
+      <td style="text-align: left">“Submit”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">today</td>
+      <td style="text-align: left">“Today”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">noSocketConnectivity</td>
+      <td style="text-align: left">“No connectivity to server\nPlease try again”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationAlreadyEnded</td>
+      <td style="text-align: left">“This conversation has already been resolved.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">loadingHistoryMessages</td>
+      <td style="text-align: left">“Loading…”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">and</td>
+      <td style="text-align: left">“and”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">anAgentWillRespondShortly</td>
+      <td style="text-align: left">“An agent will respond shortly”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">nowTimestamp</td>
+      <td style="text-align: left">“Now”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surveySubmittedSuccessfullyThankYou</td>
+      <td style="text-align: left">“Survey submitted successfully.\nThank you!”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrOffHoursResponseMessageToday</td>
+      <td style="text-align: left">“Thanks for your message. We will be back online Today at %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrOffHoursResponseMessageTomorrow</td>
+      <td style="text-align: left">“Thanks for your message. We will be back online Tomorrow at %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ttrOffHoursResponseMessageDate</td>
+      <td style="text-align: left">“Thanks for your message. We will be back online %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maskedMessageResendError</td>
+      <td style="text-align: left">“Message failed to send. Please re-enter message and send again.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">systemMessageRealTimeMasked</td>
+      <td style="text-align: left">“Your personal data has been masked to protect your security and cannot be read by the agent.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">systemMessageClientOnlyMasked</td>
+      <td style="text-align: left">“Your personal data has been masked to protect your security. Only the agent can read it.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">offlineNotification</td>
+      <td style="text-align: left">“Offline. Check your internet connection.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">resolve</td>
+      <td style="text-align: left">“Resolve”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">unreadMessages</td>
+      <td style="text-align: left">”%@ UNREAD MESSAGES”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">invalidHyperLinkError</td>
+      <td style="text-align: left">“Link is not valid”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityAgentDefaultAvatar</td>
+      <td style="text-align: left">“Agent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityAgentIsTyping</td>
+      <td style="text-align: left">”%@ is typing”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityAgentWithoutNameIsTyping</td>
+      <td style="text-align: left">“Agent is typing”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageFromAgentWithName</td>
+      <td style="text-align: left">“Agent %@: %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageFromAgentWithoutName</td>
+      <td style="text-align: left">“Agent: %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageFromUser</td>
+      <td style="text-align: left">“You: %@”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityCameraButton</td>
+      <td style="text-align: left">“Camera”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityCloseScreenButton</td>
+      <td style="text-align: left">“Close”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityNavigationMenuButton</td>
+      <td style="text-align: left">“Menu”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityCloseCameraButton</td>
+      <td style="text-align: left">“Close camera”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageError</td>
+      <td style="text-align: left">“Error”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityMessageErrorHint</td>
+      <td style="text-align: left">“Tap to resend message”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileUploadAnnouncement</td>
+      <td style="text-align: left">“Uploading photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileDownloadAnnouncement</td>
+      <td style="text-align: left">“Downloading photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityPhotoMessageFromAgentWithName</td>
+      <td style="text-align: left">“Agent %@: photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityPhotoMessageFromAgentWithoutName</td>
+      <td style="text-align: left">“Agent: photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityPhotoMessageFromUser</td>
+      <td style="text-align: left">“You: photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityPhoto</td>
+      <td style="text-align: left">“Photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileNoFileState</td>
+      <td style="text-align: left">“Double tap to download”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileUploadingState</td>
+      <td style="text-align: left">“Uploading”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileDownloadingState</td>
+      <td style="text-align: left">“Downloading”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileSyncedState</td>
+      <td style="text-align: left">“Double tap to open”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileDownloadedErrorState</td>
+      <td style="text-align: left">“Failed to download”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityFileNotAvailableState</td>
+      <td style="text-align: left">“Not available”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityScrollIndicator</td>
+      <td style="text-align: left">“Scroll indicator”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityRealTimeLinkPreviewView</td>
+      <td style="text-align: left">“Link preview”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityRealTimeLinkPreviewClosePreviewButton</td>
+      <td style="text-align: left">“Close link preview”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityRealTimeLinkPreviewCloseButtonHint</td>
+      <td style="text-align: left">“Press to close link preview”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityRealTimeLinkPreviewTitle</td>
+      <td style="text-align: left">“Link preview title”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityRealTimeLinkPreviewDescription</td>
+      <td style="text-align: left">“Link preview description”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accessibilityRealTimeLinkPreviewImage</td>
+      <td style="text-align: left">“Link preview image”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">clearHistoryMenuTitle</td>
+      <td style="text-align: left">“Clear history”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">clearHistoryConfirmation</td>
+      <td style="text-align: left">“All of your existing conversation history will be lost. Are you sure?”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">clearHistoryFailureMessage</td>
+      <td style="text-align: left">“Please resolve the conversation first.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">clearHistoryConfirmButton</td>
+      <td style="text-align: left">“Clear”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sharePhotoFromPhotoLibrary</td>
+      <td style="text-align: left">“Photo Library”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sharePhotoFromCamera</td>
+      <td style="text-align: left">“Take Photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">tapToAddACaption</td>
+      <td style="text-align: left">“Tap to add a caption”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">errorSendingThePhoto</td>
+      <td style="text-align: left">“Error sending the photo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sorryWeveEncounteredAnErrorWhileSendingThePhoto</td>
+      <td style="text-align: left">“Sorry, we’ve encountered an error while sending the photo. Please try again.”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextSending</td>
+      <td style="text-align: left">“Sending”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextSent</td>
+      <td style="text-align: left">“Sent”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextDistributed</td>
+      <td style="text-align: left">“Distributed”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">readReceiptTextRead</td>
+      <td style="text-align: left">“Read”</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

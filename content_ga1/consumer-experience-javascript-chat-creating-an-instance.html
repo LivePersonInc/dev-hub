@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Creating an Instance | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Creating an Instance">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -654,7 +654,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-creating-an-instance.html">Creating an Instance</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Creating an Instance</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,192 @@ $('#toc').on('click', 'a', function() {
 
     
 
+  <p>Creating your instance is the first thing to do when using the SDK. <br />
+The instance expects a configuration file with an appkey and your lpNumber (LivePerson site ID). <br />
+Once you create an instance of the API, it retrieves your site’s domain and initializes the ability to request data and chat. <br />
+At this stage you can also bind to the main events that you will be using throughout your chat application.</p>
+
+<p>At this point, it is recommended to bind to at least the following methods: onLoad, onInit, onStart, onState, onStop, and onLine.</p>
+
+<p><strong>Instance Code Sample</strong></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">myChatObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lpTag</span><span class="p">.</span><span class="nx">taglets</span><span class="p">.</span><span class="nx">ChatOverRestAPI</span><span class="p">({</span>
+    <span class="c1">// The api key for this site</span>
+    <span class="na">appKey</span><span class="p">:</span> <span class="s2">"12345678945613"</span><span class="p">,</span>
+    <span class="c1">// The LivePerson site number</span>
+    <span class="na">lpNumber</span><span class="p">:</span> <span class="s2">"123456"</span><span class="p">,</span>
     
+    <span class="c1">//**************Here start samples of event binding via the config **************************************</span>
+    
+    <span class="c1">// Binding an inline function to onLoad</span>
+    <span class="na">onLoad</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+    <span class="p">},</span>
+    <span class="c1">// Binding a single callback to on init with a specified execution context</span>
+    <span class="na">onInit</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// The function that will be called back</span>
+        <span class="na">callback</span><span class="p">:</span> <span class="nx">myObj</span><span class="p">.</span><span class="nx">handleInit</span><span class="p">,</span>
+        <span class="c1">// The execution context</span>
+        <span class="na">context</span><span class="p">:</span> <span class="nx">myObj</span> 
+    <span class="p">},</span>
+    <span class="c1">// Binding a function to the onState event</span>
+    <span class="na">onState</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+    <span class="p">},</span>
+    <span class="c1">// An Array of callbacks bound to this event</span>
+    <span class="na">onLine</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="c1">// A function that will be called back</span>
+            <span class="na">callback</span><span class="p">:</span> <span class="nx">myObj</span><span class="p">.</span><span class="nx">handleLine</span><span class="p">,</span>
+            <span class="c1">// The execution context for this callback</span>
+            <span class="na">context</span><span class="p">:</span> <span class="nx">myObj</span> 
+        <span class="p">},</span>
+        <span class="c1">// An inline callback also bound to onLine</span>
+        <span class="kd">function</span> <span class="p">(</span><span class="nx">lineData</span><span class="p">)</span> <span class="p">{</span> 
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">});</span>                                                                                              
+</code></pre>
+</div>
+<p><strong>Expected properties of a configuration object in instantiation</strong></p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">appKey</td>
+      <td style="text-align: left">The app key that was provisioned for this account.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lpNumber</td>
+      <td style="text-align: left">The LivePerson account number.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">domain</td>
+      <td style="text-align: left">If you know the domain for the site.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">This is taken care of in case you do not know the domain.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sessionUID</td>
+      <td style="text-align: left">Allows you to control if the session is automatically resumed on refresh.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">If set, it will need to be set to the same info for refreshes, otherwise the chat will not be automatically resumed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">failureTolerance</td>
+      <td style="text-align: left">Allows you to control the number of concurrent failures (when trying to fetch events from the server), after which the chat is no longer valid for the client.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">moveToPrimaryRetry</td>
+      <td style="text-align: left">The number of retries to get chat information when the server responds it has not found the visitor.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">moveToPrimaryInterval</td>
+      <td style="text-align: left">Time in milliseconds between retries to find the visitor.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">transportOrder</td>
+      <td style="text-align: left">Defines how the chat API will try to connect with the server.</td>
+      <td style="text-align: left">array (of strings)</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Currently only ‘postmessage’ is supported <br /> It is best not to override this property since it may cause unexpected behavior.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Event Binding (see <a href="consumer-experience-javascript-chat-events.html">Events</a>)</td>
+      <td style="text-align: left">Here you can pass any binding you want performed on instantiation.</td>
+      <td style="text-align: left">function, object, array of functions/objects</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Binding supports functions, objects and mixed arrays of both.</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>Binding Properties</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Value/Properties</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Function</td>
+      <td style="text-align: left">An inline function or function pointer.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Object</td>
+      <td style="text-align: left">An object containing properties: <br /> - callback - the callback function (Required) <br /> - context - the execution context for the function (Optional)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Array</td>
+      <td style="text-align: left">An array containing functions, or objects with the above syntax, or both.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Examples</strong></p>
+
+<p>Function:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>onLoad: myOnLoad
+</code></pre>
+</div>
+<p>or</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>onLoad: function(data){ alert(data); }
+</code></pre>
+</div>
+<p>Object</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>onLoad: {
+    callback: myObj.handlleLoad,
+    context: myObj
+}
+</code></pre>
+</div>
+<p>Array</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">onLoad</span><span class="err">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="na">callback</span><span class="p">:</span> <span class="nx">myObj</span><span class="p">.</span><span class="nx">handlleLoad</span><span class="p">,</span>
+        <span class="na">context</span><span class="p">:</span> <span class="nx">myObj</span>
+    <span class="p">},</span>
+    <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span> 
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
+    <span class="p">}</span>
+<span class="p">]</span>
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

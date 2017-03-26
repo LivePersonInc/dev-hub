@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Create Session | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Create Session">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1707,7 +1707,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="rt-interactions-create-session.html">Create Session</a></li>
+                                                        <li class="active thirdlevel"><a href="rt-interactions-create-session.html">Create Session</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Create Session</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,397 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Use this method to start a new session and to get an engagement according to the SDEs provided.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="request">Request</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">POST</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;CSDSdomainForMSDKGW&gt;/api/account/{accountId}/app/engagement/visitors/{visitor-id}?sid={session-id}</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Body Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">appType</td>
+      <td style="text-align: left">External system type</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Supported Values: MSDK, EXTERNAL</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appDetails</td>
+      <td style="text-align: left">Optional JSON format with the following fields: Type, Platform, Name, Version, Client timestamp</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">JSON structure - The main purpose of this information is for troubleshooting and visibility of the consumer SDK / app version that manages the communication with the server side.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appDetails.appVersion</td>
+      <td style="text-align: left">Application version</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Example: For mobile it will be the host app version</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appDetails.deviceFamily</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Example: personal_computer/tablet/mobile_phone <br /> Supported values: “DESKTOP”, “TABLET”, “MOBILE”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appDetails.ipAddress</td>
+      <td style="text-align: left">IP address (V4)</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">(IP format XXX.XXX.XXX.XXX) <br /> Validation: Real IP address (IPv6 or IPv4)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appDetails.os</td>
+      <td style="text-align: left">Contains the operating system, including version info</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Supported values: “WINDOWS”, “MAC_OSX”, “LINUX”, “IOS”, “ANDROID”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appDetails.osVersion</td>
+      <td style="text-align: left">OS version</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Example: For Android it could be 2.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">consumerSections</td>
+      <td style="text-align: left">List of locations in the external system relevant for the engagement</td>
+      <td style="text-align: left">Comma delimited list of strings</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementAttributes</td>
+      <td style="text-align: left">Array of engagement attributes (SDEs)</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Supported Values: all SDEs excluding the type of ImpressionEvent. See <a href="rt-interactions-example.html">here</a> for examples.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Path Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">accountId</td>
+      <td style="text-align: left">LP site ID</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">^[a-zA-Z0-9_]{1,20}$</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Visitor ID</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional (Required on second request)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Query parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">API version number</td>
+      <td style="text-align: left">double</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Supported Value: 1.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sid</td>
+      <td style="text-align: left">Session ID</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Optional (required on second request)</td>
+      <td style="text-align: left">If session doesn’t exist, a new session will be generated and sent by the server</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>POST Body entity example</strong></p>
+
+<p>https://domainToLiveperson/api/account/{accountId}/app/engagement/visitors/{visitor-id}?v=1.0&amp;sid={session-id}</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+ </span><span class="nt">"appType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MSDK"</span><span class="p">,</span><span class="w">
+ </span><span class="nt">"appDetails"</span><span class="p">:{</span><span class="w">
+   </span><span class="nt">"os"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MAC_OSX"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"osVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"appVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"deviceFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MOBILE"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"ipAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.5.2"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="nt">"consumerSections"</span><span class="p">:[</span><span class="w">
+   </span><span class="s2">"Support"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"English"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"Other"</span><span class="w">
+ </span><span class="p">],</span><span class="w">
+ </span><span class="nt">"engagementAttributes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+   </span><span class="p">{</span><span class="w">
+     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"personal"</span><span class="p">,</span><span class="w">
+     </span><span class="nt">"personal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nt">"contacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"email"</span><span class="p">:</span><span class="s2">"sarahw@gmail.com"</span><span class="p">,</span><span class="nt">"phone"</span><span class="p">:</span><span class="s2">"12345678"</span><span class="p">},{</span><span class="nt">"email"</span><span class="p">:</span><span class="s2">"sarahw@myemail.com"</span><span class="p">,</span><span class="nt">"phone"</span><span class="p">:</span><span class="s2">"98765430"</span><span class="p">}],</span><span class="w">
+       </span><span class="nt">"age"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nt">"age"</span><span class="p">:</span><span class="mf">30.0</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"year"</span><span class="p">:</span><span class="mi">1986</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"month"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"day"</span><span class="p">:</span><span class="mi">22</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="nt">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sarah"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"West"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FEMALE"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"liveperson"</span><span class="w">
+     </span><span class="p">}</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+ </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="response">Response</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Response Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Code</th>
+      <th style="text-align: left">Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">200</td>
+      <td style="text-align: left">OK</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">400</td>
+      <td style="text-align: left">Validation error</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">401</td>
+      <td style="text-align: left">Unauthorized</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">404</td>
+      <td style="text-align: left">Data not found</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">500</td>
+      <td style="text-align: left">Internal server error</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">503</td>
+      <td style="text-align: left">The server is temporarily unavailable</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Retry Policy Recommendation</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Error code</th>
+      <th style="text-align: left">Meaning</th>
+      <th style="text-align: left">Recommendation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">4xx</td>
+      <td style="text-align: left">Client side error</td>
+      <td style="text-align: left">Do not retry, fix problem in code</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5xx</td>
+      <td style="text-align: left">Error on server side</td>
+      <td style="text-align: left">Retry 3 times with 5, 10, 15 second pause between retries</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Entity Structure</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Attribute</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">Availability status</td>
+      <td style="text-align: left">enum (‘Available’, ‘NotAvailable’)</td>
+      <td style="text-align: left">Required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails</td>
+      <td style="text-align: left">The details of an engagement when it is available</td>
+      <td style="text-align: left">object</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.campaignId</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.engagementId</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.contextId</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.windowId</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.language</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.engagementRevision</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.validForSeconds</td>
+      <td style="text-align: left">The period in seconds that the engagement will be valid</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Required when the status is ‘Available’, otherwise is not returned</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.skillId</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Optional when the status is ‘Available’</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementDetails.skillName</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Optional when the status is ‘Available’</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">pageId</td>
+      <td style="text-align: left">Page identification ID for sending event on the current engagement</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sessionId</td>
+      <td style="text-align: left">The visit session ID</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Must be saved in order to reuse for future requests in the same visit</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">The visit visitor ID</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Must be saved in order to reuse for future requests in the same visit</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Response entity example</strong></p>
+
+<p>Status code: 200 OK (engagement is available)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Available"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"sessionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xyz"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"pageId” : “4743822558”,
+  "</span><span class="err">engagementDetails</span><span class="nt">": {
+    "</span><span class="err">campaignId</span><span class="nt">": "</span><span class="err">3346848610</span><span class="nt">",
+    "</span><span class="err">engagementId</span><span class="nt">": "</span><span class="err">3562981110</span><span class="nt">",
+    "</span><span class="err">contextId</span><span class="nt">": "</span><span class="err">1</span><span class="nt">",
+    "</span><span class="err">windowId</span><span class="nt">": "</span><span class="err">3346847910</span><span class="nt">",
+    "</span><span class="err">language</span><span class="nt">": "</span><span class="err">en-US</span><span class="nt">",
+    "</span><span class="err">engagementRevision</span><span class="nt">": 44,
+    "</span><span class="err">validForSeconds</span><span class="nt">": 900,
+    "</span><span class="err">skillId</span><span class="nt">": 23,
+    "</span><span class="err">skillName</span><span class="nt">":"</span><span class="err">TestSkill"</span><span class="w"> 
+   </span><span class="err">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>Status code: 200 OK (engagement is not available)</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">“status”</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="err">“NotAvailable”,</span><span class="w">
+    </span><span class="nt">"sessionId"</span><span class="p">:</span><span class="w"> </span><span class="err">“abc”</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="err">“xyz”</span><span class="p">,</span><span class="w">
+    </span><span class="err">"pageId”</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">“</span><span class="mi">4743822558</span><span class="err">”</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 
     <div class="tags">

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Close Conversation | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Close Conversation">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2683,7 +2683,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-msg-conv-ttr.html">Urgent Conversation</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-msg-conv-ttr.html">Urgent Conversation</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Close Conversation</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,167 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  
+<h2>Request </h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><span class="label label-warning">
+	<i class="fa fa-user" aria-hidden="true"></i>
+	<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+	<i class="fa fa-server" aria-hidden="true"></i>
+</span></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<div id="req_editor"></div>
+<h4>JSON Output</h4>
+<p><button id="req_editorcopy" onclick=" document.getElementById('req_editoroutput').select(); document.execCommand('copy');">Copy to Clipboard</button>
+<span id="req_editorvalid_indicator"></span></p>
+<textarea id="req_editoroutput" style="width: 100%; height: 100px; font-family: monospace;" class="form-control"></textarea>
+<h4>Json Schema</h4>
+<p>You can find the json schema definition of this message here: <a href="assets/schema/ws/consumerRequests.json">assets/schema/ws/consumerRequests.json</a></p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<script src="assets/js/jsoneditor.js"></script>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<script>
+  var req_editor;
+  
+  $.getJSON( "assets/schema/ws/consumerRequests.json" , function( data ) {
+    const fullpath = "assets/schema/ws/consumerRequests.json";          
+    data.baseUrl = fullpath.substring(0, fullpath.lastIndexOf("/"));
+    JSONEditor.defaults.editors.object.options.collapsed = true;
+    req_editor = new JSONEditor(document.getElementById('req_editor'),{
+      ajax: true,
+      schema: data,
+      
+      startval: {"id":"0","type":"cm.UpdateConversationField","body":{"conversationId":"hello","conversationField":[{"field":"TTRField","ttrType":"URGENT","value":300}]}},
+                
+      no_additional_properties: false,
+      disable_edit_json: true,
+      display_required_only: true,
+      // form_name_root : "structure",
+      keep_oneof_values: false,
+      theme: 'bootstrap3',
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+      
+      disable_properties: true,
+      
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+      iconlib: "fontawesome4"
+    });
+
+
+    req_editor.on('change',function() {
+      if ('') {
+        ''.split(" ").forEach(function(ro){
+              req_editor.getEditor(ro).disable()
+        });          
+      }
+      if ('root') {
+        'root'.split(" ").forEach(function(ro){
+            req_editor.getEditor(ro).switcher.disabled = true
+        });
+      }
+      // Get an array of errors from the validator
+      var errors = req_editor.validate();      
+      var indicator = document.getElementById('req_editorvalid_indicator');
+      
+      // Not valid
+      if(errors.length) {
+        indicator.style.color = 'red';
+        indicator.textContent = "not valid";
+        document.getElementById('req_editorcopy').disabled = true;
+        document.getElementById('req_editoroutput').value = JSON.stringify(errors,null,2);
+      }
+      // Valid
+      else {
+        indicator.style.color = 'green';
+        indicator.textContent = "valid";
+        document.getElementById('req_editorcopy').disabled = false;
+        document.getElementById('req_editoroutput').value = JSON.stringify(req_editor.getValue());
+      }
+    });
+  });
+  
+</script>
+
+<h2>Response </h2>
+
+<p><span class="label label-success"> 
+	<i class="fa fa-user" aria-hidden="true"></i>
+	<i class="fa fa-angle-double-left" aria-hidden="true"></i>
+	<i class="fa fa-server" aria-hidden="true"></i>
+</span></p>
+
+<div id="resp_editor"></div>
+<h4>JSON Output</h4>
+<p><button id="resp_editorcopy" onclick=" document.getElementById('resp_editoroutput').select(); document.execCommand('copy');">Copy to Clipboard</button>
+<span id="resp_editorvalid_indicator"></span></p>
+<textarea id="resp_editoroutput" style="width: 100%; height: 100px; font-family: monospace;" class="form-control"></textarea>
+<h4>Json Schema</h4>
+<p>You can find the json schema definition of this message here: <a href="assets/schema/infra/stringResp.json">assets/schema/infra/stringResp.json</a></p>
+
+<script src="assets/js/jsoneditor.js"></script>
+
+<script>
+  var resp_editor;
+  
+  $.getJSON( "assets/schema/infra/stringResp.json" , function( data ) {
+    const fullpath = "assets/schema/infra/stringResp.json";          
+    data.baseUrl = fullpath.substring(0, fullpath.lastIndexOf("/"));
+    JSONEditor.defaults.editors.object.options.collapsed = true;
+    resp_editor = new JSONEditor(document.getElementById('resp_editor'),{
+      ajax: true,
+      schema: data,
+      
+      startval: { "reqId":"A3HC", "code":200 },
+                
+      no_additional_properties: false,
+      disable_edit_json: true,
+      display_required_only: true,
+      // form_name_root : "structure",
+      keep_oneof_values: false,
+      theme: 'bootstrap3',
+
+      
+      disable_properties: true,
+      
+
+      iconlib: "fontawesome4"
+    });
+
+
+    resp_editor.on('change',function() {
+      if ('root') {
+        'root'.split(" ").forEach(function(ro){
+              resp_editor.getEditor(ro).disable()
+        });          
+      }
+      if ('') {
+        ''.split(" ").forEach(function(ro){
+            resp_editor.getEditor(ro).switcher.disabled = true
+        });
+      }
+      // Get an array of errors from the validator
+      var errors = resp_editor.validate();      
+      var indicator = document.getElementById('resp_editorvalid_indicator');
+      
+      // Not valid
+      if(errors.length) {
+        indicator.style.color = 'red';
+        indicator.textContent = "not valid";
+        document.getElementById('resp_editorcopy').disabled = true;
+        document.getElementById('resp_editoroutput').value = JSON.stringify(errors,null,2);
+      }
+      // Valid
+      else {
+        indicator.style.color = 'green';
+        indicator.textContent = "valid";
+        document.getElementById('resp_editorcopy').disabled = false;
+        document.getElementById('resp_editoroutput').value = JSON.stringify(resp_editor.getValue());
+      }
+    });
+  });
+  
+</script>
+
 
 
     <div class="tags">

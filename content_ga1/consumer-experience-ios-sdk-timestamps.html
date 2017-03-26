@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Timestamps Formatting | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Timestamps Formatting">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1261,7 +1261,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-timestamps.html">Timestamps Formatting</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-timestamps.html">Timestamps Formatting</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Timestamps Formatting</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,123 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="timedate-styles">Time/Date Styles</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>The iOS platform provides four different default types of date and time styles:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li><a href="https://developer.android.com/reference/java/text/DateFormat.html#SHORT" target="_blank">SHORT</a> is completely numeric.</li>
+  <li><a href="https://developer.android.com/reference/java/text/DateFormat.html#MEDIUM" target="_blank">MEDIUM</a> is longer and contains the first 3 letters of the month.</li>
+  <li><a href="https://developer.android.com/reference/java/text/DateFormat.html#LONG" target="_blank">LONG</a> is longer and contains the full month name.</li>
+  <li><a href="https://developer.android.com/reference/java/text/DateFormat.html#FULL" target="_blank">FULL</a> specifies the complete time and date.</li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p><em>iOS examples:</em></p>
+
+<ul>
+  <li>SHORT  12/13/52 or 3:30 PM</li>
+  <li>MEDIUM  Jan 12, 1952</li>
+  <li>LONG January 12, 1952 or 3:30:32 PM</li>
+  <li>FULL Tuesday, April 12, 1952 AD or 3:30:42 PM PST.</li>
+</ul>
+
+<p>The LPMessagingSDK uses default styles. Each feature has its own style. The style is flexible and adapts the ‘locale’ configuration of the device.</p>
+
+<p><em>Example: US locale SHORT date is displayed as “9/25/16”, whereas Japanese locale SHORT date is displayed as “2016/9/25”.</em></p>
+
+<p>A specific ‘locale’ which is different from the device locale can be set through the language and country configurations.</p>
+
+<p><em>Example: country: String?,  language: String?</em></p>
+
+<p><strong>Time/Date formats</strong></p>
+
+<p>It is also possible to configure a specific format for time and date instead of style.</p>
+
+<p>If the host app has configured its own formatting, this formatting will be used instead of style (and therefore will not be affected by ‘locale’).</p>
+
+<p>To configure the formatting by the host app, three configurable formatting resources have been added:
+For date only (separator):</p>
+
+<ul>
+  <li>lpDateFormat: String?
+For time only (bubble’s timestamp &amp; off hours time in case of today/tomorrow):</li>
+  <li>lpTimeFormat: String? 
+For date &amp; time together (resolve message &amp; off hours time in case of other date):</li>
+  <li>lpDateTimeFormat: String?</li>
+</ul>
+
+<h2 id="off-hours">Off Hours</h2>
+
+<p><strong>Date &amp; Time</strong></p>
+
+<ul>
+  <li>The Today and tomorrow off hours message uses the default SHORT time without date according to the locale (default or custom).</li>
+</ul>
+
+<p>If the device is set to 12 hour format: “Thanks for your message. We will be back online today/tomorrow at 3:30 PM”
+If the device is set to 24 hour format:	“Thanks for your message. We will be back online today/tomorrow at 15:30”</p>
+
+<p>To use a different time format, you can use lpTimeFormat: String? with any time format. 
+<em>Example: “hh:mm a”, “HH:mm”, etc.</em></p>
+
+<ul>
+  <li>The Date off hours message (not today/tomorrow) uses default LONG date and SHORT time according to the locale (default or custom).</li>
+</ul>
+
+<p>If the device is set to 12 hour format: “Thanks for your message. We will be back online January 12, 2017 at 3:30 PM” 
+If the device is set to 24 hour format: “Thanks for your message. We will be back online January 12, 2017 at 15:30”</p>
+
+<p>To use a different date/hour format, you can use lpDateFormat: String? with any date &amp; time format.</p>
+
+<p><em>Example: “MMM d, yyyy hh:mm a”, “EEEE dd/mm/yy HH:mm” etc.</em></p>
+
+<p><strong>Timezone</strong></p>
+
+<p>Off hours can appear in different time zones with this resource ID :</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>offHoursTimeZoneName: String = ""
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>A list of timezone IDs can be found <a href="https://garygregory.wordpress.com/2013/06/18/what-are-the-java-timezone-ids/" target="_blank">here</a>.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><em>Example: ”US/Pacific”, “Europe/Berlin”.</em></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h2 id="bubble-timestamp">Bubble timestamp</h2>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>The Bubble timestamp contains the time only in the <a href="https://developer.android.com/reference/java/text/DateFormat.html#SHORT" target="_blank">SHORT</a> time format, according to the locale (default or custom) and to the device setting.</p>
+
+<p>If the device is set to 12 hours format : “3:30 PM”
+If the device is set to 24 hours format : ”15:30”</p>
+
+<p>If you wish to configure this time format, override the resource ID lpTimeFormat: String? with any time format.</p>
+
+<p><em>Example: “hh:mm a”, “HH:mm” etc.</em></p>
+
+<p><em>Note: This applies to all bubble timestamps.</em></p>
+
+<h2 id="separator-timestamp">Separator timestamp</h2>
+
+<p>The Separator timestamp contains the date only in the <a href="https://developer.android.com/reference/java/text/DateFormat.html#SHORT" target="_blank">SHORT</a> date format, according to the locale (default or custom) and to device setting.</p>
+
+<p>“9/25/16” for US locale / “2016/9/25” for JP locale</p>
+
+<p>If you wish to configure this time format, override the resource ID <code class="highlighter-rouge">lpDateFormat: String?</code> with any date format.</p>
+
+<p><em>Example: “MMM d, yyyy”, “EEEE dd/mm/yy” etc.</em></p>
+
+<h2 id="resolve-message">Resolve message</h2>
+
+<p>The Resolve message uses the default SHORT date and SHORT time according to the locale (default or custom) and to the device setting.</p>
+
+<p>If the device is set to 12 hour format (US locale): “Conversation resolved by [agent name] \n 9/25/16, 3:30 PM”
+If the device is set to 24 hour format (US locale): “Conversation resolved by [agent name] \n 9/25/16, 15:30”</p>
+
+<p>To use a different date/hour format, you can use lpDateTimeFormat: String? with any date &amp; time format.</p>
+
+<p><em>Example: “MMM d, yyyy hh:mm a”, “EEEE dd/mm/yy HH:mm” etc.</em></p>
+
+<p><em>Limitation: If the formatting is changed after the Resolve messages already appears, this change will take no effect. This will be fixed in future versions.</em></p>
 
 
     <div class="tags">

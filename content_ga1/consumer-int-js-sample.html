@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>JavaScript Sample | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="JavaScript Sample">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2632,7 +2632,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-js-sample.html">JavaScript Messenger</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-js-sample.html">JavaScript Messenger</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">JavaScript Sample</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,42 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p><strong>Note</strong>: This document is subject to change without notice.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>This sample demonstrates the usage of the messaging API from browser JavaScript code.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+  <li>LivePerson account enabled with two features: <code class="highlighter-rouge">Async_Messaging</code> and <code class="highlighter-rouge">Authenticated_Chat</code>. If you are not sure that your account is enabled with these two features, please contact LivePerson Support.</li>
+</ul>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="step-1---wire-the-sample-to-your-account">Step 1 - Wire the sample to your account.</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p>Open the following <a href="https://codepen.io/liveperson/pen/xRzXXd?editors=0010">codepen page</a></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p data-height="498" data-theme-id="0" data-slug-hash="xRzXXd" data-default-tab="js" data-user="liveperson" data-embed-version="2" data-pen-title="UMS js example" class="codepen">See the Pen <a href="https://codepen.io/liveperson/pen/xRzXXd/">UMS js example</a> by liveperson (<a href="http://codepen.io/liveperson">@liveperson</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async="" src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>Type in your account ID in the account textbox.</p>
+
+<h2 id="step-2---create-a-conversation">Step 2 - Create a conversation</h2>
+
+<p>In the rendered page area, click the <code class="highlighter-rouge">connect</code> button.
+While the <code class="highlighter-rouge">send</code> button is enabled, type a message in the text area and click the send button.</p>
+
+<p>You can disconnect and connect again and see the existing transcript.</p>
+
+<h2 id="step-3---agent-login">Step 3 - Agent login</h2>
+
+<p>Log in as an agent. <code class="highlighter-rouge">Accept</code> the incoming conversation, and then you will be joined to the conversation.
+You can close the conversation, and the consumer in the JavaScript window will be notified.</p>
+
+<h2 id="further-details">Further Details</h2>
+
+<p>You can fork the codepen and make changes in the code.</p>
+
+<p>The sample code uses sample library that handles the network layer. The sample library can be found <a href="https://codepen.io/liveperson/pen/oYyLJr.babel">here</a>.</p>
+
 
 
     <div class="tags">

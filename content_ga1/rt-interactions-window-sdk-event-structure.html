@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Event Structure | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Event Structure">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1872,7 +1872,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-event-structure.html">Event Structure</a></li>
+                                                        <li class="active thirdlevel"><a href="rt-interactions-window-sdk-event-structure.html">Event Structure</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Event Structure</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,116 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Each event contains three parameters: id, type and data. They appear as follows:</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">id:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">type:</span><span class="w"> </span><span class="err">lpTag.LPWidgetSDK.API.events.[key],</span><span class="w">
+  </span><span class="err">data:</span><span class="w"> </span><span class="err">&lt;object&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="event-types">Event types</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">type: lpTag.LPWidgetSDK.API.events.[key]</th>
+      <th style="text-align: left">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">“conversationInfo”</td>
+      <td style="text-align: left">object</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">“messages”</td>
+      <td style="text-align: left">object</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">“participants”</td>
+      <td style="text-align: left">array</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">“uiWindow”</td>
+      <td style="text-align: left">object</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">“uiWidget”</td>
+      <td style="text-align: left">object</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="data-examples">Data examples</h2>
+
+<p><strong>“conversationInfo”</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">conversationId:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">sessionId:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">*dialogId:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">startTime:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">state:</span><span class="w"> </span><span class="err">lpTag.LPWidgetSDK.API.states,</span><span class="w">
+  </span><span class="err">*dialogType:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">channelType:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w"> </span><span class="err">(</span><span class="nt">"chat”/”messaging"</span><span class="err">)</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Note: This data will be relevant for messaging in future versions.</em></p>
+
+<p><strong>“messages”</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">id:</span><span class="w"> </span><span class="err">&lt;string&gt;,</span><span class="w">
+  </span><span class="err">ts:</span><span class="w"> </span><span class="err">1231231312,</span><span class="w">
+  </span><span class="err">type:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w"> </span><span class="err">(</span><span class="nt">"text/message"</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">now),</span><span class="w">
+  </span><span class="err">content</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="p">,</span><span class="w">
+  </span><span class="err">originator</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">type:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w"> </span><span class="err">(“visitor”/”agent”/”system”),</span><span class="w"> </span><span class="err">name:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>“participants”</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[
+  {
+      "id": &lt;string&gt;,
+      "name": &lt;string&gt;,
+      "type": "visitor"
+  },
+  {
+      "id": &lt;string&gt;,
+      "name": &lt;string&gt;,
+      "type": "agent",
+      "imgPath": &lt;string&gt;,
+      "description": &lt;string&gt;
+  }
+]
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>“uiWindow”</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"isMaximized"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>“uiWidget”</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"isShown"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
 
 
     <div class="tags">

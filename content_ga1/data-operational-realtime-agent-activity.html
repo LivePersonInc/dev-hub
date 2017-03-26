@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Agent Activity | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Agent Activity">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2430,7 +2430,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-operational-realtime-agent-activity.html">Agent Activity</a></li>
+                                                        <li class="active thirdlevel"><a href="data-operational-realtime-agent-activity.html">Agent Activity</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Agent Activity</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,537 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Retrieves Agent State Distribution data, which includes the following states:</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<ul>
+  <li>Logged in (total of all states)</li>
+  <li>Online</li>
+  <li>Away</li>
+  <li>Back soon</li>
+</ul>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>For each state, the following is indicated:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<ul>
+  <li>Time spent chatting</li>
+  <li>Time spent not chatting</li>
+  <li>Time spent logged in and chatting concurrently with the maximum allowed chats</li>
+</ul>
+
+<h2 id="request">Request</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/operations/api/account/{accountID}/agentactivity?timeframe=&lt;timeframe in minutes&gt;&amp;agentIds=all&amp;interval=&lt;interval size in minutes&gt;&amp;v=&lt;version&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>URL Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">timeframe</td>
+      <td style="text-align: left">The time range (in minutes) in which the data can be filtered. Where end time = current time, and start time = end time - timeframe.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentIds</td>
+      <td style="text-align: left">When provided, metrics on the response will be grouped by the requested agent/s’ id/s. If there is no data for the specified agent/s, an object will be returned with an empty value for key: “metricsPerAgent” with a map including all metrics valued zero. To retrieve all active agents for the time period, use agentIds=all. <br /> Notes: <br /> Totals are not currently supported. <br /> Currently, only agentIds=all is supported. <br /> Selecting specific agents is not currently supported.</td>
+      <td style="text-align: left">numeric, comma separated</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">Version of API, for example, v=1.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interval</td>
+      <td style="text-align: left">Interval size in minutes. When provided, the returned data will be aggregated by intervals of the requested size. The interval has to be smaller or equal to the time frame, and also a divisor of the time frame. <br /> Example: <br /> timeframe=60&amp;interval=30 (correct) <br /> timeframe=60&amp;interval=61 (bad request) <br /> timeframe=60&amp;interval=31 (bad request)</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<p><strong>JSON Example</strong></p>
+
+<p>Request by v=1 and timeframe=120 and agentIds=all (including two agentIds: 2 and 3).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+</span><span class="nt">"agentsMetrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"metricsPerAgent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"2"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">4714</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">4714</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2486</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2486</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">7200</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2486</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">4714</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">],</span><span class="w">  
+</span><span class="nt">"3"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2486</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2486</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">4714</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">4714</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">7200</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2486</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">4714</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">]</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="nt">"metricsTotals"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>Request by v=1 and timeframe=120 and agentIds=all and interval=60 (including two agentIds: 2 and 3).</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+</span><span class="nt">"metricsByIntervals"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1404226200000</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"metricsData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"agentsMetrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"metricsPerAgent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"2"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  	
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3368</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3368</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">],</span><span class="w">  
+</span><span class="nt">"3"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3368</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3368</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">]</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="nt">"metricsTotals"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1404222600000</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"metricsData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"agentsMetrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"metricsPerAgent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"2"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">1376</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">1376</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2224</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2224</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2224</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">1376</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">],</span><span class="w">  
+</span><span class="nt">"3"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2224</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2224</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">1376</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">1376</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">2224</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">1376</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">]</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="nt">"metricsTotals"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1404219000000</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"metricsData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"agentsMetrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"metricsPerAgent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"2"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">232</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">232</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">],</span><span class="w">  
+</span><span class="nt">"3"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Online"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Back in 5"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">232</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Away"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="p">{</span><span class="w">  
+</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Logged in"</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">232</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"notChatting"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+</span><span class="nt">"chattingInMaxConcurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">]</span><span class="w">  
+</span><span class="p">},</span><span class="w">  
+</span><span class="nt">"metricsTotals"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">],</span><span class="w">  
+</span><span class="nt">"agentsMetrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span><span class="nt">"metricsPerAgent"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">  
+</span><span class="nt">"metricsTotals"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">  
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>Elements in the Response</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">agentsMetrics</td>
+      <td style="text-align: left">An object that represents the agents’ data. It includes one member: •	metricsPerAgent - A list of agent/s’ id/s that were sent in the request with their metrics data. If there is no data for any agent/s, this member will have an empty object as value. If there is no data for a specific agent, it won’t be included in this list. When interval size is provided in the request, the response will have the agentsMetrics element in each interval. There will also be an agentsMetrics element at the end of the response, representing the data of the whole requested time frame (totals of all intervals).</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">metricsTotals</td>
+      <td style="text-align: left">When agentIDs are provided: Total metrics for all requested agents. When agentIDs are not provided: The site metrics. When interval is provided: Total metrics for all requested intervals. If agentIds are requested and there is no data for any of them, this element will still include all of the metrics with value zero. Note: Totals are not currently supported.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Timestamp</td>
+      <td style="text-align: left">When interval size is provided in the request, the response will be aggregated by intervals. The timestamp is the UTC timestamp in milliseconds representing the end time on the interval. Example: Interval size: 30 min. Interval start and end time: 26/03/2014 07:30:00 - 26/03/2014 08:00:00. Timestamp: 1395820800000. Intervals are rounded up to 5 minutes. Consequently: •	The latest interval timestamp will be rounded up. Example: Now: 08:07. Last interval end time: 8:10. •	The earliest interval will include only the remainder of the requested timeframe - between the start of the timeframe (now - timeframe) and the end of the earliest interval. Example: Now: 8:07. Request parameters: timeframe=20&amp;interval=10 (20 minutes in 10 minutes intervals). Response from and to time: 7:47 - 8:07 –&gt; 20 minutes. Response intervals: 8:00 - 8:10 (10 minutes. actual 7 minutes because now is 8:07). 7:50 - 8:00 (10 minutes). 7:47 - 7:50 (only 3 minutes).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">The ID of the agent state: logged in = -1 online = 2 back in 5 = 3 away = 4</td>
+      <td style="text-align: left">integer</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">The name of the agent state: “Logged in”, “Online”, “Back soon” and “Away”</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">value</td>
+      <td style="text-align: left">This element contains all the values for a specific distribution agent state.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">The total time the agent was in this state (seconds).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chatting</td>
+      <td style="text-align: left">The total time the agent was chatting in this state (seconds).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">notChatting</td>
+      <td style="text-align: left">The total time the agent was not chatting in this state (seconds).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chattingInMaxConcurrency</td>
+      <td style="text-align: left">The amount of time the agent was chatting concurrently with the maximum allowed chats in this state (seconds).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

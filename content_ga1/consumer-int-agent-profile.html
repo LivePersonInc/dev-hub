@@ -4,8 +4,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<meta name="keywords" content=" picture name">
+<title>Agent Profile | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Agent Profile">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2599,7 +2599,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-agent-profile.html">Agent Profile</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Agent Profile</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,53 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p>When you want to present the name or picture of an agent to a consumer, you will need to pull this information using the agent public ID.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>See <a href="consumer-int-get-msg.html#prerequisites">Prerequisites</a>.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<h3 id="step-1---find-the-agent-public-id">Step 1 - Find the Agent Public ID</h3>
+
+<p>The agent public ID can be found in the conversation details sent to you by the conversation list subscription.</p>
+
+<p>Follow the instructions of the <a href="consumer-int-conversation-md.html">Conversation List Tutorial</a> to subscribe yourself.</p>
+
+<p>Inside the notification, you will see a section with content similar to the below:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"participantsPId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nt">"ASSIGNED_AGENT"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"3b5b7ec6-2b0f-53af-9afd-11d4072c85a7"</span><span class="p">],</span><span class="w">
+			</span><span class="nt">"CONSUMER"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">	</span><span class="s2">"19f98cd2-63b9-42e4-bc0d-9222b86574e1"</span><span class="p">]</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Copy the value of the <code class="highlighter-rouge">ASSIGNED_AGENT</code> property and put it into a variable named <code class="highlighter-rouge">LP_AGENT_PID</code>. For example:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AGENT_PID</span><span class="o">=</span>3b5b7ec6-2b0f-53af-9afd-11d4072c85a7
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h3 id="step-2---pull-the-agent-profile">Step 2 - Pull the Agent Profile</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<p>You will now be able to run the following request:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>curl https://<span class="nv">$LP_ACCDNDOMAIN</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/configuration/le-users/users/<span class="nv">$LP_AGENT_PID</span>
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>In response, you will get the public profile of the agent, for example:</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"pictureUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://s-media-cache-ak0.pinimg.com/236x/03/f1/e4/03f1e4f711680ce53a051e5913775139.jpg"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"employeeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dont-Have-One"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NirL"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nir L."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
 
 
     <div class="tags">

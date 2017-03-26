@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Demo App | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Demo App">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -888,7 +888,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-demo.html">Demo App</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-demo.html">Demo App</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Demo App</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,56 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This demo app includes information on how to work with the SDK. There are two flows:</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<ul>
+  <li><a href="#unmonitored-flow">Unmonitored Flow</a></li>
+  <li><a href="#monitored-flow">Monitored Flow</a></li>
+</ul>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>Download the Sample App from the following <a href="https://github.com/LivePersonInc/chat-js-sdk-sample-app" target="_blank">Github repository</a>.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<h2 id="unmonitored-flow">Unmonitored Flow</h2>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h3 id="prerequisites-for-un-monitored-flow">Prerequisites for un-monitored flow</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<ul>
+  <li>An existing LiveEngage site - <a href="https://register.liveperson.com/" target="_blank">click here</a> to create a site.</li>
+  <li>An existing API-based engagement window configured in LiveEngage.</li>
+  <li>An existing External engagement configured in LiveEngage, which refers to the above API-based engagement window.</li>
+  <li>An available user (agent) who is logged into LiveEngage.</li>
+</ul>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><em>Note: Please contact your LivePerson representative in order to create your API-based engagement window and External engagement.</em></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<h3 id="launch-your-api-based-window-in-an-unmonitored-flow">Launch your API-based Window in an Unmonitored Flow</h3>
+
+<ol>
+  <li>From the Sample App project, open the “index.html” file in the browser.</li>
+  <li>Once open in the browser add the following query params <code class="highlighter-rouge">/index.html?site={siteId}&amp;lptag=false</code>.</li>
+  <li>An engagement button should be displayed on this page.</li>
+  <li>Click the chat button to start a chat.</li>
+</ol>
+
+<h2 id="monitored-flow">Monitored Flow</h2>
+
+<h3 id="prerequisites-for-monitored-flow">Prerequisites for monitored flow</h3>
+
+<ul>
+  <li>An existing LiveEngage site - <a href="https://register.liveperson.com/" target="_blank">click here</a> to create a site.</li>
+  <li>An existing API-based engagement window configured in LiveEngage, with the context:<code class="highlighter-rouge">window</code> and methodName: <code class="highlighter-rouge">externalJsMethodName</code>. <br /> <em>Note: Please contact your LivePerson representative in order to create your API-based engagement window.</em></li>
+  <li>An existing Website engagement configured in LiveEngage, which refers to the above API-based engagement window.  <br /> <em>Note: This is configured in the Engagement template gallery.</em></li>
+  <li>An available user (agent) who is logged into LiveEngage.</li>
+</ul>
+
+<h3 id="launch-your-api-based-window-in-a-monitored-flow">Launch your API-based Window in a Monitored Flow</h3>
+
+<ol>
+  <li>From the Sample App project, open the “index.html” file in the browser.</li>
+  <li>Once open in the browser add the following query params <code class="highlighter-rouge">/index.html?site={siteId}&amp;lptag=true</code>.</li>
+  <li>An engagement button should be displayed on this page.</li>
+  <li>Click the chat button to start a chat.</li>
+</ol>
 
 
     <div class="tags">

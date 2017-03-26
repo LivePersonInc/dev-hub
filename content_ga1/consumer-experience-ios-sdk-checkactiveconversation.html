@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>checkActiveConversation | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="checkActiveConversation">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1117,7 +1117,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-checkactiveconversation.html">checkActiveConversation</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-checkactiveconversation.html">checkActiveConversation</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">checkActiveConversation</h1>
 </div>
 
 <script>
@@ -2779,54 +2779,453 @@
    
 
     
+
     
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
 
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
+    
 
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
+    
 
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
+  <p>Check if there is an active conversation by passing a conversation query.</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+  <li><em>Conversation query defines a filter that fetches conversations which match certain conditions. Each query can have one active conversation at most.</em></li>
+  <li><em>Conversation is said to be active the moment an ‘ack’ is received from the server. It may not yet have an assigned agent.</em></li>
+  <li>
+    <p><em>You may call this API only if you are sure that the SDK is in sync with the server, meaning LPMessagingSDKConnectionStateChanged was invoked and isReady is set to true.</em></p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  func checkActiveConversation(_ conversationQuery: ConversationParamProtocol) -&gt; Bool
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">conversationQuery</td>
+      <td style="text-align: left">Represents a ‘filter’ for the conversation screen, determining which of the conversations will be displayed in the following screens.</td>
+      <td style="text-align: left">Default: sorts the conversations by account number. <br /> See helpers methods above for how to generate a conversation query.</td>
+    </tr>
+  </tbody>
+</table>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   
-});
-</script>
+    <title>UITextChecker - NSHipster</title>
+    <meta name="description" content="Make no mistake, a tiny keyboard on a slab of glass doesn't always lend itself to perfect typing. Whether for accuracy or hilarity, anyone typing on an iOS device notices when autocorrect steps in to help out. You might not know, however, that UIKit includes a class to help you with your user's typing inside your app." />
+    <link rel="canonical" href="http://nshipster.com/uitextchecker/" />
+  
+  
+  
+  
+  <meta name="author" content="Croath Liu" />
+  
+  <meta name="revisit-after" content="7 days" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://nshipster.com/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="http://nshipster.com/css/screen.css" />
+  <link rel="apple-touch-icon" href="/touch-icon-iphone.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/touch-icon-ipad.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/touch-icon-iphone-retina.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/touch-icon-ipad-retina.png" />
+  <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+  <link rel="mask-icon" sizes="any" href="/website_icon.svg" color="black" />
+  <link rel="author" type="text/plain" href="http://nshipster.com/humans.txt" />
 
-<div id="toc"></div>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@NSHipster" />
+  
+  <meta name="twitter:creator" content="@cr0ath" />
+  
+  
+    <meta name="twitter:title" content="UITextChecker" />
+    <meta name="twitter:description" content="Make no mistake, a tiny keyboard on a slab of glass doesn&#39;t always lend itself to perfect typing. Whether for accuracy or hilarity, anyone typing on an iOS device notices when autocorrect steps in to help out. You might not know, however, that UIKit includes a class to help you with your user&#39;s typing inside your app." />
+  
+  <meta property="twitter:account_id" content="629523445" />
+
+  <meta property="og:site_name" content="NSHipster" />
+  <meta property="og:image" content="http://nshipster.com/touch-icon-ipad-retina.png" />
+  
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="UITextChecker" />
+    <meta property="og:url" content="http://nshipster.com/uitextchecker/" />
+    <meta property="og:description" content="Make no mistake, a tiny keyboard on a slab of glass doesn&#39;t always lend itself to perfect typing. Whether for accuracy or hilarity, anyone typing on an iOS device notices when autocorrect steps in to help out. You might not know, however, that UIKit includes a class to help you with your user&#39;s typing inside your app." />
+    <meta property="article:published_time" content="2016-04-25T00:00:00-07:00" />
+    <meta property="article:modified_time" content="2016-12-27T22:34:46-08:00" />
+    <meta property="article:tag" content="cocoa" />
+    <meta property="article:publisher" content="https://www.facebook.com/NSHipster" />
+  
+
+  
+    <meta property="st:title" content="UITextChecker" />
+    <meta property="st:type" content="article" />
+  
+  
+  <meta property="nshipster:hide-single-lang" content="swift,objective-c" />
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage">
+
+  <script src="http://nshipster.com/js/zepto.min.js"></script>
+  <script src="http://nshipster.com/js/application.js"></script>
+
+  <div role="container">
+    <header role="banner">
+      <h1 id="logo">
+        <a href="/">
+          <svg id="ns" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 79.5 45.7" enable-background="new 0 0 79.5 45.7" xml:space="preserve">
+<g>
+  <path fill="#F58020" d="M0.6,1h13.7L27,24.4h0.1V1h12.7v43.6H26.8L13.4,20.8h-0.1v23.8H0.6V1z" />
+  <path fill="#F58020" d="M51.4,30c0,1.1,0.2,2.1,0.5,2.9c1,2.6,3.9,3.2,6.4,3.2c2.2,0,5.6-0.7,5.6-4c0-2.3-1.9-2.9-9.4-5
+    c-6.9-2-14.8-3.8-14.8-12.6C39.7,4.3,48.3,0,57.3,0c9.5,0,17.8,3.6,18.2,14.2H62.8c0.2-1.6-0.5-2.7-1.6-3.5
+    c-1.1-0.8-2.6-1.1-4-1.1c-1.8,0-4.8,0.5-4.8,2.9c0.2,3.1,6.5,3.8,12.6,5.5c6.2,1.7,12.3,4.6,12.3,12.6c0,11.4-10.4,15-20.1,15
+    c-4.9,0-19-1.8-19.2-15.7H51.4z" />
+</g>
+</svg>
+
+          <svg id="mustache" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 79.5 45.7" enable-background="new 0 0 79.5 45.7" xml:space="preserve">
+  <g transform="translate(0,-952.36217)" opacity="0.95">
+    <path id="path2987" fill="#010101" d="M28.2,971.4c-10,0.5-19.1,13.3-28.2,2.1c0,15.1,23.7,30.5,39.8,16.3
+      c16,14.1,39.8-1.3,39.8-16.3c-12.5,15.4-25-14.4-39.8,4.5C35.8,972.7,31.9,971.2,28.2,971.4z" />
+  </g>
+</svg>
+
+        </a>
+
+        <span hidden="" style="display:none;">NSHipster</span>
+      </h1>
+
+      <form role="search">
+        <input type="text" id="st-search-input" class="st-search-input" />
+      </form>
+
+      
+    </header>
+
+    <div id="main" role="main" itemprop="mainContentOfPage">
+      
+
+<article role="article" itemscope="" itemtype="http://schema.org/Article">
+  <header role="heading">
+    <h1 class="title" itemprop="name">
+      <a href="/uitextchecker/">UIText​Checker</a>
+    </h1>
+
+    <h2>
+    
+      Written by <a class="author" href="/authors/croath-liu/">Croath Liu</a> —
+    
+    <time datetime="2016-04-25T00:00:00-07:00" itemprop="datePublished">April 25<sup>th</sup>, 2016</time>
+    
+    </h2>
+
+  </header>
+
+  <div class="content" itemprop="articleBody" data-swiftype-index="true">
+    <p>Make no mistake, a tiny keyboard on a slab of glass doesn&rsquo;t always lend itself to perfect typing. Whether for accuracy or hilarity, anyone typing on an iOS device notices when autocorrect steps in to help out. You might not know, however, that UIKit includes a class to help you with your user&rsquo;s typing inside your app.</p>
+
+<p>First introduced in iOS 3.2 (or should we call it iPhone OS 3.2, given the early date?), <code>UITextChecker</code> does exactly what it says: it checks text. Read on to learn how you can use this class for spell checking and text completion.</p>
+
+<hr />
+
+<h2 id="spell-checking">Spell Checking</h2>
+
+<p>What happens if you mistype a word in iOS? Type &ldquo;hipstar&rdquo; into a text field and iOS will offer to autocorrect to &ldquo;hipster&rdquo; most of the time. </p>
+
+<p><img src="http://nshipster.s3.amazonaws.com/uitextchecker-hipstar.png" alt="Autocorrecting &#39;hipstar&#39;" /></p>
+
+<p>We can find the same suggested substitution using <code>UITextChecker</code>:</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
+
+<span class="k">let</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;hipstar&quot;</span>
+<span class="k">let</span> <span class="n">textChecker</span> <span class="o">=</span> <span class="bp">UITextChecker</span><span class="p">()</span>
+<span class="k">let</span> <span class="n">misspelledRange</span> <span class="o">=</span> <span class="n">textChecker</span><span class="p">.</span><span class="n">rangeOfMisspelledWordInString</span><span class="p">(</span>
+        <span class="n">str</span><span class="p">,</span> <span class="nl">range</span><span class="p">:</span> <span class="n">NSRange</span><span class="p">(</span><span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">str</span><span class="p">.</span><span class="n">utf16</span><span class="p">.</span><span class="n">count</span><span class="p">),</span> 
+        <span class="nl">startingAt</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">wrap</span><span class="p">:</span> <span class="nb">false</span><span class="p">,</span> <span class="nl">language</span><span class="p">:</span> <span class="s">&quot;en_US&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">misspelledRange</span><span class="p">.</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">,</span>
+    <span class="k">let</span> <span class="n">guesses</span> <span class="o">=</span> <span class="n">textChecker</span><span class="p">.</span><span class="n">guessesForWordRange</span><span class="p">(</span>
+        <span class="n">misspelledRange</span><span class="p">,</span> <span class="nl">inString</span><span class="p">:</span> <span class="n">str</span><span class="p">,</span> <span class="nl">language</span><span class="p">:</span> <span class="s">&quot;en_US&quot;</span><span class="p">)</span> <span class="kt">as</span><span class="o">?</span> <span class="p">[</span><span class="n">String</span><span class="p">]</span> 
+<span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;First guess: \(guesses.first)&quot;</span><span class="p">)</span>
+    <span class="c1">// First guess: hipster</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;Not found&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="s">@&quot;hipstar&quot;</span><span class="p">;</span>
+<span class="bp">UITextChecker</span> <span class="o">*</span><span class="n">textChecker</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">UITextChecker</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="n">NSRange</span> <span class="n">misspelledRange</span> <span class="o">=</span> <span class="p">[</span><span class="n">textChecker</span> 
+                           <span class="nl">rangeOfMisspelledWordInString</span><span class="p">:</span><span class="n">str</span> 
+                           <span class="nl">range</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="n">str</span> <span class="n">length</span><span class="p">])</span> 
+                           <span class="nl">startingAt</span><span class="p">:</span><span class="mi">0</span> 
+                           <span class="nl">wrap</span><span class="p">:</span><span class="nb">NO</span> 
+                           <span class="nl">language</span><span class="p">:</span><span class="s">@&quot;en_US&quot;</span><span class="p">];</span>
+
+<span class="bp">NSArray</span> <span class="o">*</span><span class="n">guesses</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSArray</span> <span class="n">array</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">misspelledRange</span><span class="p">.</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">guesses</span> <span class="o">=</span> <span class="p">[</span><span class="n">textChecker</span> <span class="nl">guessesForWordRange</span><span class="p">:</span><span class="n">misspelledRange</span> 
+                                      <span class="nl">inString</span><span class="p">:</span><span class="n">str</span> 
+                                      <span class="nl">language</span><span class="p">:</span><span class="s">@&quot;en_US&quot;</span><span class="p">];</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;First guess: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">guesses</span> <span class="n">firstObject</span><span class="p">]);</span>
+    <span class="c1">// First guess: hipster</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Not found&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The returned array of strings <em>might</em> look like this one:</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">[</span><span class="s">&quot;hipster&quot;</span><span class="p">,</span> <span class="s">&quot;hip star&quot;</span><span class="p">,</span> <span class="s">&quot;hip-star&quot;</span><span class="p">,</span> <span class="s">&quot;hips tar&quot;</span><span class="p">,</span> <span class="s">&quot;hips-tar&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>Or it might not&mdash;<code>UITextChecker</code> produces context- and device-specific guesses. According to the documentation, <code>guessesForWordRange(_:inString:language:)</code> &ldquo;returns an array of strings, in the order in which they should be presented, representing guesses for words that might have been intended in place of the misspelled word at the given range in the given string.&rdquo;</p>
+
+<p>So no guarantee of idempotence or correctness, which makes sense for a method with <code>guesses...</code> in the name. How can NSHipsters trust a method that changes its return value? We&rsquo;ll find the answer if we dig further.</p>
+
+<h2 id="learning-new-words">Learning New Words</h2>
+
+<p>Let&rsquo;s assume that you want your users to be able to type <code>&quot;hipstar&quot;</code> exactly. Let your app know that by telling it to learn the word, using the <code>UITextChecker.learnWord(_:)</code> class method:</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="bp">UITextChecker</span><span class="p">.</span><span class="n">learnWord</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">[</span><span class="bp">UITextChecker</span> <span class="nl">learnWord</span><span class="p">:</span><span class="n">str</span><span class="p">];</span>
+</code></pre></div>
+<p><code>&quot;hipstar&quot;</code> is now a recognized word for the whole device and won&rsquo;t show up as misspelled in further checks.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">misspelledRange</span> <span class="o">=</span> <span class="n">textChecker</span><span class="p">.</span><span class="n">rangeOfMisspelledWordInString</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> 
+        <span class="nl">range</span><span class="p">:</span> <span class="n">NSRange</span><span class="p">(</span><span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">str</span><span class="p">.</span><span class="n">utf16</span><span class="p">.</span><span class="n">count</span><span class="p">),</span> 
+        <span class="nl">startingAt</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">wrap</span><span class="p">:</span> <span class="nb">false</span><span class="p">,</span> <span class="nl">language</span><span class="p">:</span> <span class="s">&quot;en_US&quot;</span><span class="p">)</span>
+<span class="c1">// misspelledRange.location == NSNotFound</span>
+</code></pre></div><div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="n">NSRange</span> <span class="n">misspelledRange</span> <span class="o">=</span> <span class="p">[</span><span class="n">textChecker</span> 
+                           <span class="nl">rangeOfMisspelledWordInString</span><span class="p">:</span><span class="n">str</span> 
+                           <span class="nl">range</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="n">str</span> <span class="n">length</span><span class="p">])</span> 
+                           <span class="nl">startingAt</span><span class="p">:</span><span class="mi">0</span> 
+                           <span class="nl">wrap</span><span class="p">:</span><span class="nb">NO</span> 
+                           <span class="nl">language</span><span class="p">:</span><span class="s">@&quot;en_US&quot;</span><span class="p">];</span>
+<span class="c1">// misspelledRange.location == NSNotFound</span>
+</code></pre></div>
+<p>As expected, the search above returns <code>NSNotFound</code>, for <code>UITextChecker</code> has learned the word we created. <code>UITextChecker</code> also provides class methods for checking and unlearning words: <code>UITextChecker.hasLearnedWord(_:)</code> and <code>UITextChecker.unlearnWord(_:)</code>.</p>
+
+<h2 id="suggesting-completions">Suggesting Completions</h2>
+
+<p>There&rsquo;s one more <code>UITextChecker</code> API, this time for finding possible completions for a partial word:</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">partial</span> <span class="o">=</span> <span class="s">&quot;hipst&quot;</span>
+<span class="k">let</span> <span class="n">completions</span> <span class="o">=</span> <span class="n">textChecker</span><span class="p">.</span><span class="n">completionsForPartialWordRange</span><span class="p">(</span>
+        <span class="n">NSRange</span><span class="p">(</span><span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">partial</span><span class="p">.</span><span class="n">utf16</span><span class="p">.</span><span class="n">count</span><span class="p">),</span> <span class="nl">inString</span><span class="p">:</span> <span class="n">partial</span><span class="p">,</span> 
+        <span class="nl">language</span><span class="p">:</span> <span class="s">&quot;en_US&quot;</span><span class="p">)</span>
+<span class="c1">// completions == [&quot;hipster&quot;, &quot;hipsters&quot;]</span>
+</code></pre></div><div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">partial</span> <span class="o">=</span> <span class="s">@&quot;hipst&quot;</span><span class="p">;</span>
+<span class="bp">NSArray</span> <span class="o">*</span><span class="n">completions</span> <span class="o">=</span> <span class="p">[</span><span class="n">textChecker</span>
+                        <span class="nl">completionsForPartialWordRange</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="n">partial</span> <span class="n">length</span><span class="p">])</span>
+                        <span class="nl">inString</span><span class="p">:</span><span class="n">partial</span>
+                        <span class="nl">language</span><span class="p">:</span><span class="s">@&quot;en_US&quot;</span><span class="p">];</span>
+<span class="c1">// completions == [&quot;hipster&quot;, &quot;hipsters&quot;]</span>
+</code></pre></div>
+<p><code>completionsForPartialWordRange</code> gives you an array of possible words from a group of initial characters. Although the documentation states that the returned array of strings will be sorted by probability, <code>UITextChecker</code> only sorts the completions alphabetically. <code>UITextChecker</code>&rsquo;s OS X-based sibling,  <code>NSSpellChecker</code>, does behave as it describes.</p>
+
+<blockquote>
+<p>You won&rsquo;t see any of the custom words you&rsquo;ve taught <code>UITextChecker</code> show up as possible completions. Why not? Since vocabulary added via <code>UITextChecker.learnWord(_:)</code> is global to the device, this prevents your app&rsquo;s words from showing up in another app&rsquo;s autocorrections.</p>
+</blockquote>
+
+<hr />
+
+<p>Building an app that leans heavily on a textual interface? Use <code>UITextChecker</code> to make sure the system isn&rsquo;t flagging your own vocabulary. Writing a keyboard extension? With <code>UITextChecker</code> and <code>UILexicon</code>, which provides common and user-defined words from the system-wide dictionary and first and last names from the user’s address book, you can support nearly any language without creating your own dictionaries!</p>
+
+  </div>
+
+  <footer role="complementary">
+    
+    <section id="revisions">
+      <small>NSMutableHipster</small>
+
+      <p>
+      Questions? Corrections?  <a href="https://github.com/NSHipster/articles/issues">Issues</a> and <a href="https://github.com/NSHipster/articles/blob/master/2016-04-25-uitextchecker.md">pull requests</a> are always welcome — NSHipster is made better by readers like you.
+      </p>
+      
+      <p>
+      
+        
+            <em>This article uses Swift version 2.2.</em>
+        
+      
+      Find status information for all articles on the <a href="/status/">status page</a>.
+      </p>
+      
+      <dl>
+      
+      </dl>
+    </section>
+    
+
+    <section id="follow">
+      <small>Follow NSHipster</small>
+
+      <ul>
+        <li class="twitter">
+          <a href="https://twitter.com/intent/user?screen_name=NSHipster" title="Follow NSHipster on Twitter"><i class="icon-twitter" aria-hidden="true"></i></a>
+        </li>
+        <li class="facebook">
+          <a href="https://www.facebook.com/NSHipster" title="Like NSHipster on Facebook"><i class="icon-facebook" aria-hidden="true"></i></a>
+        </li>
+        <li class="google-plus">
+          <a href="https://plus.google.com/+NSHipster" title="Follow NSHipster on G+"><i class="icon-googleplus" aria-hidden="true"></i></a>
+        </li>
+        <li class="rss">
+          <a href="/feed.xml" title="Subscribe to the NSHipster RSS Feed"><i class="icon-feed" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+
+      <form action="https://tinyletter.com/NSHipster" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/NSHipster', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+        <label for="tlemail" hidden="" style="display:none;">Enter Your Email Address</label>
+        <input type="email" name="email" id="tlemail" placeholder="Your Email Address" />
+        <input type="hidden" name="embed" value="1" />
+        <input type="submit" value="Join the Newsletter" />
+      </form>
+    </section>
+
+    <section id="attribution">
+      
+  <div class="contributor" itemprop="author" itemscope="" itemtype="http://data-vocabulary.org/Person">
+    <small>Written by</small>
+
+    <img class="avatar" alt="Croath Liu" itemprop="image" src="http://nshipster.s3.amazonaws.com/croath-liu.jpg" draggable="false" />
+    <div class="details">
+      <span itemprop="name"><a href="/authors/croath-liu/">Croath Liu</a></span>
+
+      <p><a href="http://croath.com">Croath Liu</a> (<a href="https://twitter.com/cr0ath">@cr0ath</a>) is an iOS developer and one of the <a href="http://nshipster.cn/translators/croath-liu/">lead translators</a> for <a href="http://nshipster.cn/">nshipster.cn</a>. He lives in Beijing.</p>
+
+
+      
+        <a href="https://plus.google.com/?rel=author" rel="author"></a>
+      
+    </div>
+  </div>
+
+
+    </section>
 
     
 
     
 
-    
+    <section>
+      <div id="continue">
+        <small>Next Article</small>
+        
+        
 
-    
+          <article>
+            <h1 class="title">
+              <a href="/nshipster-quiz-8/" title="NSHipster Quiz #8" rel="next">NSHipster Quiz #8</a>
+            </h1>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+            <p>Our fourth annual WWDC NSHipster Pub Quiz! Nearly two hundred developers, teamed up and competing with themselves and each other for a chance to ask: &ldquo;Wait, what?&rdquo; It&rsquo;s time for the home edition—sharpen your pencil and give it your best!</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+          </article>
+      </div>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+      
+      
+        
+        
+      
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+      <div id="related">
+        <small>Related Articles</small>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+        <ul>
+          
+          
+          
+            <li>
+              <a href="/nsvaluetransformer/" title="NSValueTransformer">NSValueTransformer</a>
+            </li>
+            
+          
+          
+            <li>
+              <a href="/uisplitviewcontroller/" title="UISplitViewController">UISplitViewController</a>
+            </li>
+            
+          
+          
+            <li>
+              <a href="/nsindexset/" title="NSIndexSet">NSIndexSet</a>
+            </li>
+            
+          
+          
+            <li>
+              <a href="/nslinguistictagger/" title="NSLinguisticTagger">NSLinguisticTagger</a>
+            </li>
+            
+          
+        </ul>
+      </div>
+    </section>
+  </footer>
+</article>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+    </div>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+    <footer role="contentinfo">
+      <section class="credits colophon">
+        <p>
+          Questions? Corrections? <a href="https://twitter.com/NSHipster">@NSHipster</a> or <a href="https://github.com/NSHipster/articles">on GitHub</a>.
+        </p>
+        <p>
+          <i aria-hidden="true" class="icon-cc"></i>
+          <i aria-hidden="true" class="icon-cc-by"></i>
+          <i aria-hidden="true" class="icon-cc-nc"></i>
+          NSHipster.com is released under a <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="license">Creative Commons BY-NC License</a>.
+        </p>
+        <p><abbr title="International Standard Serial Number">ISSN</abbr> 2373-9800</p>
+        <p lang="zh-Hans"><a href="http://nshipster.cn" hreflang="zh-Hans" title="Articles also available in Chinese">文章也可在中文版阅读</a>。</p>
+        <a href="https://plus.google.com/105091289906267717942" rel="publisher"></a>
+      </section>
+    </footer>
+  </div>
+
+  <script>
+    if (window.navigator && window.navigator.loadPurpose === "preview") {
+      window.location.href = "http://nshipster.com/topsites_preview.html";
+    }
+  </script>
+
+  <script async="">
+    var Swiftype = window.Swiftype || {};
+    (function() {
+      Swiftype.key = 'Q5jNBiR8qVs5xE5dNect';
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.src = "//swiftype.com/embed.js";
+      var entry = document.getElementsByTagName('script')[0];
+      document.getElementsByTagName('script')[0].parentNode.insertBefore(script, entry);
+    }());
+  </script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-49868484-1', 'nshipster.com');
+    ga('send', 'pageview');
+  </script>
+
+</body>
+</html>
+
 
 
     <div class="tags">

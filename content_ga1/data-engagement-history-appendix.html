@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Appendix | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Appendix">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2391,7 +2391,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-engagement-history-appendix.html">Appendix</a></li>
+                                                        <li class="active thirdlevel"><a href="data-engagement-history-appendix.html">Appendix</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Appendix</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,814 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="engagement-attributes">Engagement Attributes</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>Engagement Attributes allow a brand to communicate events, for example, purchases, visitor login, shopping cart backout etc., from the webpage into LiveEngage. This section describes the data retrieved in the response body. All engagement attribute values are of unlimited length (up to 50K chars).</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h3 id="cartstatus">CartStatus</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total cart value.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numItems</td>
+      <td style="text-align: left">Number of items.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">quantity</td>
+      <td style="text-align: left">Quantity of the product.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Name of product.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Product category.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sku</td>
+      <td style="text-align: left">Product stocking unit (unique identifier).</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">price</td>
+      <td style="text-align: left">Price of this product.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currency</td>
+      <td style="text-align: left">Currency code.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"cartStatus"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721832"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11.7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="w">
+        </span><span class="s2">"numItems"</span><span class="err">:</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prod1"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"category"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sku"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7.8"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h3 id="customerinfo">customerInfo</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerStatus</td>
+      <td style="text-align: left">Customer status- will be matched against customer status entity name.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">Case insensitive.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerType</td>
+      <td style="text-align: left">Customer type - will be matched against customer type entity name.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">Case insensitive.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">balance</td>
+      <td style="text-align: left">The current balance of the customer.</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerId</td>
+      <td style="text-align: left">The customer ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">socialId</td>
+      <td style="text-align: left">The social ID of your choice: Facebook, Twitter etc.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">imei</td>
+      <td style="text-align: left">Unique phone identifier.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userName</td>
+      <td style="text-align: left">Nickname or username of a consumer.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accountName</td>
+      <td style="text-align: left">Name of the company or account.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">role</td>
+      <td style="text-align: left">Role title of the consumer within their organization.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastPaymentDate</td>
+      <td style="text-align: left">The customer’s last payment date.</td>
+      <td style="text-align: left">json : {  <br /> “year”: 2011, <br /> “month”: 3, <br /> “day”: 21}</td>
+      <td style="text-align: left">This consists of 3 integer fields: Year, month, and day.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">registrationDate</td>
+      <td style="text-align: left">The customer’s registration date.</td>
+      <td style="text-align: left">json : { <br /> “year”: 2011, <br /> “month”: 3, <br /> “day”: 21}</td>
+      <td style="text-align: left">This consists of 3 integer fields: Year, month, and day.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">companySize</td>
+      <td style="text-align: left">The company size.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">storeNumber</td>
+      <td style="text-align: left">Customer’s specific store number.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">storeZipCode</td>
+      <td style="text-align: left">Customer’s store zip code.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"customerInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721833"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"customerInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"customerStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelled"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"customerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vip"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-400.99"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"customerId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"138766AC"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"socialId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4444</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"imei"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"userName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"accountName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"storeNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"storeNumber13123"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"storeZipCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"lastPaymentDate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"year"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"month"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"registrationDate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"year"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"month"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"companySize"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h3 id="lead">Lead</h3>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">topic</td>
+      <td style="text-align: left">Topic lead.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">value</td>
+      <td style="text-align: left">Value lead.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">leadId</td>
+      <td style="text-align: left">Lead ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"topic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"luxury car test drive 2015"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"22.22"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"leadId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xyz123"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721836"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="marketingcampaigninfo">marketingCampaignInfo</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">originatingChannel</td>
+      <td style="text-align: left">Marketing channel.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">0-Direct, 1-Search, 2-Social, 3-Email, 4-Referral, 5-Paid Search, 6-Display</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">affiliate</td>
+      <td style="text-align: left">Affiliate name.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">Campaign ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"marketingCampaignInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721833"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"marketingCampaignInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"originatingChannel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"affiliate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Yahoo"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"campaignId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US coupon campaign"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="personalinfo">personalInfo</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Personal name.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surname</td>
+      <td style="text-align: left">Surname.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">gender</td>
+      <td style="text-align: left">Visitor’s gender.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">company</td>
+      <td style="text-align: left">Visitor’s company.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerAge</td>
+      <td style="text-align: left">Year of birth. For calculating age.</td>
+      <td style="text-align: left">json : <br /> {“customerAge”: <br /> {“customerAgeInYears”: “34.0”, <br /> “customerYearOfBirth”: “1980”,<br />“customerMonthOfBirth”: “4”,<br />“customerDateOfBirth”: “15”}}</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">email</td>
+      <td style="text-align: left">Visitor email.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">phone</td>
+      <td style="text-align: left">Visitor phone number.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">language</td>
+      <td style="text-align: left">Visitor’s language.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"personalInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721833"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"personalInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MALE"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"company"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"English"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"customerAge"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"customerAgeInYears"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34.0"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"customerYearOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1980"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"customerMonthOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"customerDateOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"contacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"personalContact"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myname@example.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+1 212-788-8877"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="purchase">Purchase</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total purchase value.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">orderId</td>
+      <td style="text-align: left">Unique order ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">quantity</td>
+      <td style="text-align: left">Quantity of this product.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total cart value.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Name of product.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Product category.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sku</td>
+      <td style="text-align: left">Product stocking unit (unique identifier).</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">price</td>
+      <td style="text-align: left">Product price.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numItems</td>
+      <td style="text-align: left">Number of items.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">orderId</td>
+      <td style="text-align: left">Unique order ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currency</td>
+      <td style="text-align: left">Currency code.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"purchase"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11.7"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1434394476705"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"cart"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17.8"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"antivirus pro plan"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"software"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xyz001"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7.8"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"numItems"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRV1534XC"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="serviceactivity">serviceActivity</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">topic</td>
+      <td style="text-align: left">The service topic.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">Activity status</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">0-Complete, 1-In Progress, 2-Approved, 3-cancelled, 4-Not Approved, 5-Reviewed, 6-Missing Details, 7-Closed, 8-Removed, 9-Assigned, 10-Waiting for Customer Response, 11-Waiting for Response, 12-Pending, 13-Resolved</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Category name.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serviceId</td>
+      <td style="text-align: left">Service ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"serviceActivity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721836"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"serviceActivity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"topic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order checkbook"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"finance"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"serviceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"service12"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="visitorerror">VisitorError</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Error context.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">message</td>
+      <td style="text-align: left">Error message.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">code</td>
+      <td style="text-align: left">Error code.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">level</td>
+      <td style="text-align: left">Error level.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">resolved</td>
+      <td style="text-align: left">Resolution status (false.true).</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"visitorError"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1440412721834"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"visitorError"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Expiration date missing"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"er100004"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"level"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"resolved"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="viewedproduct">viewedProduct</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event timestamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Product name.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Product category.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sku</td>
+      <td style="text-align: left">Product SKU.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">price</td>
+      <td style="text-align: left">Product price.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currency</td>
+      <td style="text-align: left">Currency code.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"viewedProduct"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1434394466093"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RUB"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"red high heel shoe"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"women shoes"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xyz567"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77.8"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="searchcontent">searchContent</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event timestamp.</td>
+      <td style="text-align: left">long - epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">keywords</td>
+      <td style="text-align: left">Array of keywords searched by the visitor.</td>
+      <td style="text-align: left"><code class="highlighter-rouge">array&lt;alphanumeric&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"sdes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"searchContent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"serverTimeStamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1481111429931"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"apple"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"banana"</span><span class="w">
+              </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+</div>
 
 
     <div class="tags">

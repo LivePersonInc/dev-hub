@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Surveys | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Surveys">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -648,7 +648,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-surveys.html">Surveys</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Surveys</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,165 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>All surveys follow the same structure and behavior patterns. To avoid duplication for the different survey types, here is a summary of the survey object.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>You can also use our JavaScript Survey Logic Helper class to manage the survey complexity and result structure.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>The Survey Object</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">survey</td>
+      <td style="text-align: left">The top level container of the survey object.</td>
+      <td style="text-align: left">object</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">The identifier for this survey.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">header</td>
+      <td style="text-align: left">A header for the survey to display before the questions.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">questions</td>
+      <td style="text-align: left">A top level container for the question object.</td>
+      <td style="text-align: left">object</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">question</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">array/object</td>
+      <td style="text-align: left">If a single question appears it will be an object. Otherwise it is an array of questions.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>The Question Object</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">An identifier for the question. Will be later used when submitting answers.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">order</td>
+      <td style="text-align: left">The order of the question in the question list.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mandatory</td>
+      <td style="text-align: left">If this question must be filled in for the survey to be valid.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left">Due to the survey having logic some mandatory questions do not need to be answered.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">validationType</td>
+      <td style="text-align: left">The required validation for this field.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Options:  alpha_numeric, numeric, email. <br /> alpha_numeric: Any input will accept empty spaces. <br /> numeric: Any valid number. <br /> email: A valid email.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">logicId</td>
+      <td style="text-align: left">This represents the question’s logical ID.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Surveys can have logic defined for displaying a question only when a specific multi-option answer was selected.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">label</td>
+      <td style="text-align: left">The question text.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastKnownValue</td>
+      <td style="text-align: left">The last value entered for this question by the specific user.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Only exists in questions of type Text Field and Text Area.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">entry</td>
+      <td style="text-align: left">An array of possible answers for this question.</td>
+      <td style="text-align: left">object</td>
+      <td style="text-align: left">Explained in a separate table below. <br /> Only exists in questions of type: Dropdown Box, Radio Button, Radio Button (side by side) and Checkbox.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">type</td>
+      <td style="text-align: left">The expected DOM display and behavior for a question.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Types: <br /> Text Field - an input field of type text <input type="text" /> <br /> Text Area - a text area <textarea></textarea> <br /> Dropdown Box - a select element <select><option>First Choice</option></select> <br /> Radio Button - an input field of type radio. <input type="radio" value="first option" /> <br /> Radio Button (side by side) - same as Radio Button, the difference is the expected rendering for this should be side by side options. <br /> Checkbox -  an input field of type checkbox. <input type="checkbox" value="first option" /> <br /> This is the only type that allows multiple answers for the same question.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>The Entry Object</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">value</td>
+      <td style="text-align: left">The answer text.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">checked</td>
+      <td style="text-align: left">Indicates if this answer is selected.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">logic</td>
+      <td style="text-align: left">Contains the showLogicId property which can be a single one or an array.</td>
+      <td style="text-align: left">object</td>
+      <td style="text-align: left">The showLogicId is a list of logicId that are a part of the question object.  When an entry is marked as checked true, the questions whose logicId’s match the showLogicId field should be displayed.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Logic Example:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">logic</span> <span class="err">:</span> <span class="p">{</span>
+    <span class="nl">showLogicId</span> <span class="p">:</span> <span class="p">[</span><span class="mi">2</span> <span class="p">,</span><span class="mi">3</span> <span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

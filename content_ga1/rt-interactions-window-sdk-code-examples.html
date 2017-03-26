@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Code Examples | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Code Examples">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1866,7 +1866,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-code-examples.html">Code Examples</a></li>
+                                                        <li class="active thirdlevel"><a href="rt-interactions-window-sdk-code-examples.html">Code Examples</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Code Examples</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,132 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p><strong>‘Init’ and ‘bind’ (Single event)</strong></p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>var lpWidgetSDK = lpTag.LPWidgetSDK.init();
+lpWidgetSDK.bind(lpTag.LPWidgetSDK.API.events.CONVERSATION_INFO, _onEvent, this);
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+function _onEvent(eventData) {
+  if (eventData) {
+      console.log(eventData);
+  }
+}
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>‘Init’ with ‘bind’ (Multiple events)</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>var lpWidgetSDK,
+   widgetSDKAPI = lpTag.LPWidgetSDK.API
+   opts = {bind: {}},
+   bindingEvent = [widgetSDKAPI.events.CONVERSATION_INFO, widgetSDKAPI.events.MESSAGES];
+
+   bindingEvent.forEach(function (eventName) {
+   opts.bind[eventName] = {func: _onEvent, context: this};
+   });
+
+ lpWidgetSDK = lpTag.LPWidgetSDK.init(opts);
+
+function _onEvent(eventData) {
+  if (typeof eventData === "object") {
+  console.log("Event id: " + eventData.id);
+  console.log("Event type: " + eventData.type);
+  console.log("Event data: " + eventData.data);
+  }
+}
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>Send Notification</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>var lpWidgetSDK = lpTag.LPWidgetSDK.init();
+lpWidgetSDK.bind(lpTag.LPWidgetSDK.API.events.CONVERSATION_INFO, _onEvent, this);
+
+function _onEvent(eventData) {
+  if (eventData) {
+          lpWidgetSDK.notify("Data was received!", notificationCallback);
+  }
+}
+
+function notificationCallback(err) {
+  if (err) {
+       console.log("Error on sending notification from widget");
+  }
+}
+</code></pre>
+</div>
+
+<p><em>Note: Notification causes the window to show a notification counter for widgets, which decreases to 0 when the widget is viewed by the visitor.</em></p>
+
+<p><strong>Dispose Widget</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var lpWidgetSDK = lpTag.LPWidgetSDK.init();
+lpWidgetSDK.dispose(disposeCallback);
+
+function disposeCallback(err) {
+  if (err) {
+      console.log("Error on widget disposal");
+  }
+}
+</code></pre>
+</div>
+
+<p><strong>End to End</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://lpcdn-a.lpsnmedia.net/unifiedwindow/widgetSDK.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>Test Widget<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">lpWidgetSDK</span><span class="p">,</span>
+          <span class="nx">widgetSDKAPI</span> <span class="o">=</span> <span class="nx">lpTag</span><span class="p">.</span><span class="nx">LPWidgetSDK</span><span class="p">.</span><span class="nx">API</span><span class="p">;</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"load"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">bindingEvent</span> <span class="o">=</span> <span class="p">[</span><span class="nx">widgetSDKAPI</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">CONVERSATION_INFO</span><span class="p">,</span> <span class="nx">widgetSDKAPI</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">MESSAGES</span><span class="p">],</span>
+                  <span class="nx">opts</span> <span class="o">=</span> <span class="p">{</span><span class="na">bind</span><span class="p">:</span> <span class="p">{}};</span>
+
+          <span class="nx">bindingEvent</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">eventName</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">opts</span><span class="p">.</span><span class="nx">bind</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="na">func</span><span class="p">:</span> <span class="nx">_onEvent</span><span class="p">,</span> <span class="na">context</span><span class="p">:</span> <span class="k">this</span><span class="p">};</span>
+          <span class="p">});</span>
+
+          <span class="nx">lpWidgetSDK</span> <span class="o">=</span> <span class="nx">lpTag</span><span class="p">.</span><span class="nx">LPWidgetSDK</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">opts</span><span class="p">);</span>
+      <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+
+      <span class="kd">function</span> <span class="nx">_onEvent</span><span class="p">(</span><span class="nx">eventData</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">eventData</span> <span class="o">&amp;&amp;</span> <span class="nx">widgetSDKAPI</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">MESSAGES</span> <span class="o">===</span> <span class="nx">eventData</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+              <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span>  <span class="nx">eventData</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">content</span> <span class="o">||</span> <span class="s2">""</span><span class="p">;</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"MESSAGES data: "</span><span class="p">,</span> <span class="nx">eventData</span> <span class="p">);</span>
+              <span class="k">if</span> <span class="p">(</span><span class="nx">content</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">"disposeWidget"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="nx">disposeWidget</span><span class="p">();</span>
+              <span class="p">}</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">eventData</span> <span class="o">&amp;&amp;</span> <span class="nx">widgetSDKAPI</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">CONVERSATION_INFO</span> <span class="o">===</span> <span class="nx">eventData</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"CONVERSATION_INFO data: "</span><span class="p">,</span> <span class="nx">eventData</span> <span class="p">);</span>
+          <span class="p">}</span>
+          <span class="nx">sendNotification</span><span class="p">(</span><span class="s2">"Event received!"</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="kd">function</span> <span class="nx">sendNotification</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">text</span> <span class="o">===</span> <span class="s2">"string"</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">lpWidgetSDK</span><span class="p">.</span><span class="nx">notify</span><span class="p">({</span><span class="na">content</span><span class="p">:</span> <span class="nx">text</span><span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+                      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Error on sending notification from widget"</span><span class="p">);</span>
+                  <span class="p">}</span>
+              <span class="p">});</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="kd">function</span> <span class="nx">disposeWidget</span><span class="p">()</span> <span class="p">{</span>
+          <span class="nx">lpWidgetSDK</span><span class="p">.</span><span class="nx">dispose</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"bla"</span><span class="p">);</span>
+          <span class="p">});</span>
+      <span class="p">}</span>
+  <span class="p">})();</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre>
+</div>
+
 
 
     <div class="tags">

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>requestChat | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="requestChat">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -684,7 +684,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-requestchat.html">requestChat</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-requestchat.html">requestChat</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">requestChat</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,297 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This method queues a chat request to the agents. It has a number of possible properties that can be passed to specify the Agent, Skill or ServiceQueue requested and other information about the visitor.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><strong>Notes</strong>:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li><em>If you displayed a Pre-chat survey, this is where you submit the answers to that survey.</em></li>
+  <li><em>In response to a chat starting, the following events will be triggered: onStart, onState, onInfo and onLine (if there are any chat lines).</em></li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<h2 id="request">Request</h2>
+
+<p><strong>Properties</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Element</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">agent</td>
+      <td style="text-align: left">A specific agent requested for this chat.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skill</td>
+      <td style="text-align: left">A specific skill requested for this chat.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Will be ignored if an agent was specified.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serviceQueue</td>
+      <td style="text-align: left">A ServiceQueue for this chat.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Will be ignored if an agent or skill property are passed. Must be supplied with the maxWaitTime property.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxWaitTime</td>
+      <td style="text-align: left">The number of seconds the visitor can wait for a chat.</td>
+      <td style="text-align: left">number</td>
+      <td style="text-align: left">Must be supplied in conjunction with the serviceQueue property.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">referrer</td>
+      <td style="text-align: left">The referrer for this chat.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">If not supplied, will default to the document.referrer property of the browser.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">preChatLines</td>
+      <td style="text-align: left">An array of strings that should be received by the agent immediately when the chat starts.</td>
+      <td style="text-align: left">array</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">survey</td>
+      <td style="text-align: left">The result of the Pre-chat survey.</td>
+      <td style="text-align: left">object</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">buttonName</td>
+      <td style="text-align: left">The name of the button clicked. This is used to create a pipeline report.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Takes preference over invitation.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">invitation</td>
+      <td style="text-align: left">Indication if this was a result of an invitation.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">siteContainer</td>
+      <td style="text-align: left">In case of a federated site, you need to pass this in to locate the visitor in the secondary servers.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Exists in the Global variable on the parent page: window.lpMTagConfig.FPC_CONT. Required in case of federation. This is for the first chat only.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">runWithRules</td>
+      <td style="text-align: left">Specifies if you want rules to be evaluated on the Pre-chat survey and applied to the chat.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left">Example: have a skill question change the chat skill. <br /> Default: off</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ssoKey</td>
+      <td style="text-align: left">A key generated by the customer site that will be verified against the customer SSO service and can add information about the chat visitor in the process.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ssoServiceKey</td>
+      <td style="text-align: left">The SSO service key in case of a multi SSO configuration.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ssoServiceExtraParams</td>
+      <td style="text-align: left">The SSO extra information in case of an SSO chat request.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorSession</td>
+      <td style="text-align: left">The monitored visitors session on the page.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Used to create pipeline reports from the page monitoring to the chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">The monitored visitor ID in case of a LiveEngage account.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sessionId</td>
+      <td style="text-align: left">The monitored visitor session ID in case of a LiveEngage account.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">The context ID of the engagement that was clicked in case of a LiveEngage account.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The engagement ID in case of a LiveEngage account.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">The campaign ID in case of a LiveEngage account.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">language</td>
+      <td style="text-align: left">The language set in the engagement in case of a LiveEngage account (sets the system messages language for the chat).</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">a2aSourceSiteId</td>
+      <td style="text-align: left">The source site for the account to account transfer</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Supplied on the account to account event. You must have a valid API key for the new account.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">a2aSourceSessionId</td>
+      <td style="text-align: left">The originating session ID for the account to account transfer</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Supplied on the account to account event. You must have a valid API key for the new account</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">a2aEventId</td>
+      <td style="text-align: left">The event ID of the account to account transfer</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Supplied on the account to account event. You must have a valid API key for the new account</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Sample code</strong></p>
+
+<p><em>preChatLines</em></p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nt">"preChatLines"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
+    </span><span class="s2">"This chat started from a  mobile browser"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Returning visitor from support"</span><span class="w"> 
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>survey</em></p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nt">"survey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"question"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123345"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">"answer"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>Sample request</strong></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">failedRequest</span> <span class="o">=</span> <span class="nx">chat</span><span class="p">.</span><span class="nx">requestChat</span><span class="p">({</span>
+    <span class="na">skill</span> <span class="p">:</span> <span class="s2">"support"</span><span class="p">,</span>
+    <span class="na">preChatLines</span> <span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"Hello I need support"</span><span class="p">,</span>
+        <span class="s2">"Can you help me?"</span> <span class="p">]</span> <span class="p">,</span>
+    <span class="na">referrer</span> <span class="p">:</span> <span class="s2">"https://liveperson.com"</span><span class="p">,</span>
+    <span class="na">survey</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">id</span> <span class="p">:</span><span class="mi">2</span> <span class="p">,</span>
+        <span class="na">question</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="na">id</span> <span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="na">answer</span> <span class="p">:</span> <span class="s2">"PC"</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span> <span class="p">,</span> <span class="na">answer</span> <span class="p">:</span> <span class="s2">"Ahtml"</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="na">success</span><span class="p">:</span> <span class="nx">myChat</span><span class="p">.</span><span class="nx">showStartAnimation</span><span class="p">,</span>
+    <span class="na">error</span><span class="p">:</span> <span class="nx">myChat</span><span class="p">.</span><span class="nx">showFailedRequest</span><span class="p">,</span>
+    <span class="na">context</span><span class="p">:</span> <span class="nx">myChat</span>
+<span class="p">});</span>
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="response">Response</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Data in the response</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">events</td>
+      <td style="text-align: left">An object containing an event array of chat events.</td>
+      <td style="text-align: left">object</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">info</td>
+      <td style="text-align: left">An info object that contains information for this chat.</td>
+      <td style="text-align: left">object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Notes</strong>:</p>
+
+<ul>
+  <li><em>The event is broken down into onState event and onLine events. For a detailed description of these properties, refer to <a href="consumer-experience-javascript-chat-onstate.html">onState</a> and <a href="consumer-experience-javascript-chat-online.html">onLine</a>.</em></li>
+  <li><em>For a description of the info object, see <a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a>.</em></li>
+</ul>
+
+<p><strong>Sample response</strong></p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.182-04:00"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"state"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiting"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please wait for a site operator to respond."</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.183-04:00"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REGULAR"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"textType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plain"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"systemMessageId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"info"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"visitorTyping"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not-typing"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"visitorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"you"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testSkill"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastUpdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.356-04:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiting"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.183-04:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345678910</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"agentTyping"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not-typing"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"chatSessionKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"H123345578-123456789096534324243"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"rtSessionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345678910</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"chatTimeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Advanced Configurations | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Advanced Configurations">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1075,7 +1075,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-advanced-configurations.html">Advanced Configurations</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-advanced-configurations.html">Advanced Configurations</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Advanced Configurations</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,119 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="sdk-initialization-and-lifecycle">SDK Initialization and Lifecycle</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>In order to get started and initialize the In-App Messaging SDK, utilize the following functions:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li><code class="highlighter-rouge">public func initialize(brandID: String? = nil) throws</code></li>
+  <li><code class="highlighter-rouge">public func showConversation(conversationQuery: ConversationParamProtocol, authenticationCode: String? = nil, containerViewController: UIViewController? = nil)</code></li>
+  <li><code class="highlighter-rouge">public func removeConversation(conversationQuery: ConversationParamProtocol)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func - LPMessagingSDKConnectionStateChanged(isReady: Bool, brandID: String)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   func LPMessagingSDKError(error: NSError)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKHasConnectionError(error: String?)</code></li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>Supporting functions:</strong></p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<ul>
+  <li><code class="highlighter-rouge">public func getConversationBrandQuery(brandID: String) -&gt; ConversationParamProtocol</code></li>
+  <li><code class="highlighter-rouge">public func getConversationBrandAndSkillQuery(brandID: String, skillID: String) -&gt; ConversationParamProtocol</code></li>
+  <li><code class="highlighter-rouge">public func getConversationConsumerQuery(consumerID: String?, brandID: String, agentToken: String) -&gt; ConversationParamProtocol</code></li>
+  <li><code class="highlighter-rouge">public func isBrandReady(brandID: String) -&gt; Bool</code></li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<h2 id="sdk-delegates">SDK Delegates</h2>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>The SDK uses 2 delegates:</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<ul>
+  <li>LPMessagingSDKDelegate - for lifecycle and connectivity events.</li>
+  <li>LPMessagingSDKNotificationDelegate - for handling push and in app notifications.</li>
+</ul>
+
+<p>You should implement and set the delegate for the above in order to receive notifications from the SDK.</p>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>For users of OAuth 2.0 for customer authentication, the following functions apply:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">public func reconnect(conversationQuery: ConversationParamProtocol, authenticationCode: String)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt; func LPMessagingSDKAuthenticationFailed(error: NSError)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt; func LPMessagingSDKTokenExpired(brandID: String)</code></li>
+</ul>
+
+<h2 id="ui">UI</h2>
+
+<p>To determine the layout of messaging within the app, you can utilize various actions to control the behavior and UI such as menus, custom buttons, typing indication, etc.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">public func toggleChatActions(accountID: String, sender: UIBarButtonItem? = nil)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKActionsMenuToggled(toggled: Bool)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKCustomButtonTapped()</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKAgentIsTypingStateChanged(isTyping: Bool)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKOffHoursStateChanged(isOffHours: Bool, brandID: String)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConversationViewControllerDidDismiss()</code></li>
+</ul>
+
+<h2 id="conversation-lifecycle">Conversation Lifecycle</h2>
+
+<p>During the course of the conversation, consumers can take several actions such as Mark as urgent to receive a faster service, or Resolve conversation to let your agents know they have received their answers.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConversationStarted(conversationID: String?)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;   optional func LPMessagingSDKConversationEnded(conversationID: String?)</code></li>
+  <li><code class="highlighter-rouge">public func checkActiveConversation(conversationQuery: ConversationParamProtocol) -&gt; Bool  </code></li>
+  <li><code class="highlighter-rouge">public func markAsUrgent(conversationQuery: ConversationParamProtocol)  </code></li>
+  <li><code class="highlighter-rouge">public func isUrgent(conversationQuery: ConversationParamProtocol) -&gt; Bool  </code></li>
+  <li><code class="highlighter-rouge">public func dismissUrgent(conversationQuery: ConversationParamProtocol)  </code></li>
+  <li><code class="highlighter-rouge">public func resolveConversation(conversationQuery: ConversationParamProtocol)  </code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;  optional func - LPMessagingSDKConversationCSATDismissedOnSubmittion(conversationID: String?)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;  optional func LPMessagingSDKCSATScoreSubmissionDidFinish(brandID: String, rating: Int)</code></li>
+  <li><code class="highlighter-rouge">public func clearHistory(conversationQuery: ConversationParamProtocol) throws </code></li>
+  <li><code class="highlighter-rouge">public func logout()</code></li>
+  <li><code class="highlighter-rouge">public func destruct()</code></li>
+</ul>
+
+<h2 id="notifications">Notifications</h2>
+
+<p>Push and local notifications are a key factor that make the experience better for consumers - they never have to stay in your app or keep the window open as they will get a proactive notification as soon as a reply or notice is available.</p>
+
+<p><em>Note: In order to enable push notifications, you must also configure them within the LiveEngage UI.  See <a href="consumer-experience-ios-sdk-configuration.html">instructions</a>.</em></p>
+
+<ul>
+  <li><code class="highlighter-rouge">public func handlePush(userInfo: [NSObject : AnyObject])  </code></li>
+  <li><code class="highlighter-rouge">public func registerPushNotifications(token token: NSData, notificationDelegate: - LPMessagingSDKNotificationDelegate? = nil, alternateBundleID: String? = nil)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKNotificationDelegate&gt; optional func LPMessagingSDKNotification(didReceivePushNotification notification: LPNotification)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKNotificationDelegate&gt;  optional func - LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -&gt; Bool</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKNotificationDelegate&gt;   optional func LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -&gt; UIView</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKNotificationDelegate&gt;   optional func LPMessagingSDKNotification(notificationTapped notification: LPNotification)</code></li>
+</ul>
+
+<h2 id="user-data">User Data</h2>
+
+<p>Pass and display consumer information to agents, and agent information to consumers.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">public func setUserProfile(lpuser: LPUser, brandID: String) </code></li>
+  <li><code class="highlighter-rouge">public func getAssignedAgent(conversationQuery: ConversationParamProtocol) -&gt; LPUser? </code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;  optional func LPMessagingSDKAgentDetails(agent: LPUser?)</code></li>
+</ul>
+
+<h2 id="logs-and-info">Logs and Info</h2>
+
+<p>Send logs from LiveEngage to your app. Logs include different severity levels of errors and warnings.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">public func subscribeLogEvents(logLevel: LogLevel)</code></li>
+  <li><code class="highlighter-rouge">&lt;LPMessagingSDKdelegate&gt;  func LPMessagingSDKObseleteVersion(error: NSError)</code></li>
+  <li><code class="highlighter-rouge">public func getSDKVersion() -&gt; String?</code></li>
+  <li><code class="highlighter-rouge">public func printAllLocalizedKeys()</code></li>
+  <li><code class="highlighter-rouge">public func printSupportedLanguages()</code></li>
+  <li><code class="highlighter-rouge">public func getAllSupportedLanguages() -&gt; [String : String]</code></li>
+</ul>
+
 
 
     <div class="tags">

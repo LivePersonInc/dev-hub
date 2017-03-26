@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Messaging CSAT Distribution | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Messaging CSAT Distribution">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Messaging CSAT Distribution</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,171 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Retrieves messaging CSAT (Customer Satisfaction) distribution related metrics at the site, skill or agent level.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>Messaging CSAT Distribution is calculated using bucket aggregation techniques where events are collected into 5 minute buckets, therefore the API might include events which were not in the requested time frame.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>Example</strong>: If the time is now 13:29 and time frame is 7 minutes the API will use 2 buckets: 13:25 and 13:30. In other words in practice the time of the data is not 13:22-13:29 but 13:20-13:29.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<h2 id="retrieving-messaging-csat-distribution-api-by-account-and-skills">Retrieving Messaging CSAT Distribution API by Account and Skills</h2>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/operations/api/account/{accountID}/msgconversation?timeframe=&lt;timeframe in minutes&gt;&amp;skillIds=&lt;skillIDs&gt;&amp;agentIds=&lt;agentIDs&gt;&amp;v=&lt;version&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>URL Parameters</strong></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">timeframe</td>
+      <td style="text-align: left">The time range (in minutes) by which the data can be filtered. Where: end time is the current time and the start time is the end time - timeframe. The maximum timeframe value is 1440 minutes (24 hours).</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">Version of API e.g. v=1</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillIds</td>
+      <td style="text-align: left">When provided, metrics on the response will be grouped by the requested skill/s’ id/s. For each skill the metrics will be grouped per agent and also in total for all the skills specified. When neither skill nor agent ID are provided, metrics on the response will be calculated at the account level. If there is no data for the specified skill/s an object will be returned with an empty value for key: “metricsPerSkill” and “metricsTotal” key with a map including all metrics valued zero. You can provide one or more skill IDs. Example: skillIds=4,15,3. To retrieve all skills active for the time period use skillIds=all</td>
+      <td style="text-align: left">numeric, separated by commas</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentIds</td>
+      <td style="text-align: left">When provided, metrics on the response will be grouped by the requested agent/s’ ID/s. The metrics will also be grouped in total for all specified agent/s’ id/s. When neither skill nor agent ID are provided, metrics on the response will be calculated at the account level. If there is no data for the specified agent/s an object will be returned with an empty value for key: “metricsPerAgent” and “metricsTotal” key with a map including all metrics valued at zero. You can provide one or more skill IDs. Example: agentIds=4,15,3. To retrieve all skills active for the time period use agentIds=all</td>
+      <td style="text-align: left">numeric, separated by commas</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+  </tbody>
+</table>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p><strong>Elements in the Response</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">skillsMetrics</td>
+      <td style="text-align: left">An object that represent the skills’ data. It includes two elements: <br /> •   metricsPerSkill - A list of skill/s’ ID/s that were sent in the request with their metrics data. The skill’s data is returned per agent ID and totals for the skill. If there is no data for any of the skill/s then this member will have an empty object as value. If there is no data for a specific skill then it won’t be included in this list. <br /> •   metricsTotals - An object containing the metrics’ names and values for the whole skill/s specified in the request. If there is no data for the any of the skill/s this object will still include all metrics with value of zero. When interval size is provided in the request, the response will have the skillsMetrics element in each interval and in addition there will also be a skillsMetrics element at the end of the response, representing the data of the whole requested time frame (totals of all intervals).</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentsMetrics</td>
+      <td style="text-align: left">An object that represent the agents’ data. It includes two elements: <br /> •   metricsPerAgent - A list of agent/s’ id/s that were sent in the request with their metrics data. If there is no data for any of the agent/s then this member will have an empty object as value. If there is no data for a specific agent then it won’t be included in this list. <br /> •   metricsTotals - An object containing the metrics’ names and values for the whole skill/s specified in the request. If there is no data for the any of the skill/s this object will still include all metrics with value of zero. <br /> When interval size is provided in the request, the response will have the agentsMetrics element in each interval and in addition there will also be an agentsMetrics element at the end of the response, representing the data of the whole requested time frame (totals of all intervals).</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">metricsTotals</td>
+      <td style="text-align: left">This member will be returned in separate of skill/agent element only when no skill nor agent id was requested. If any ID was requested then it would be returned as part of the relevant skill/agent metrics element. <br /> Note: Totals may not add up due to rounding differences.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skill id</td>
+      <td style="text-align: left">When skill Ids value(/s) provided: The skill Id.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agent id</td>
+      <td style="text-align: left">When agent Ids value(/s) provided: The agent Id.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat_score1_answers</td>
+      <td style="text-align: left">The number of times CSAT answer 1 was submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat_score2_answers</td>
+      <td style="text-align: left">The number of times CSAT answer 2 was submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat_score3_answers</td>
+      <td style="text-align: left">The number of times CSAT answer 3 was submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat_score4_answers</td>
+      <td style="text-align: left">The number of times CSAT answer 4 was submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat_score5_answers</td>
+      <td style="text-align: left">The number of times CSAT answer 5 was submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total_answers</td>
+      <td style="text-align: left">The total number of answers which were submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">positive_answers</td>
+      <td style="text-align: left">The total number of CSAT 4 and 5 answers which were submitted in the current time frame.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat_score</td>
+      <td style="text-align: left">The percentage of the total answers which were positive (scores 4 and 5) which were submitted in the current time frame.</td>
+      <td style="text-align: left">float</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Optional Response Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Code</th>
+      <th style="text-align: left">Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">200</td>
+      <td style="text-align: left">OK - Successfully retrieved the data.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">400</td>
+      <td style="text-align: left">Bad request - Problem with body or query parameters.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">401</td>
+      <td style="text-align: left">Unauthorized - Bad Authentication (invalid site or agent).</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

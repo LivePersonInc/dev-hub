@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Enable Messaging Features | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Enable Messaging Features">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Enable Messaging Features</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,41 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p><strong>Prerequisites</strong>: The provisioning is currently not self service and can only be done internally by LivePerson.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>Go to the LiveEngage login page and click on the Live Chat button. Ask LivePerson Support to enable the following features in your account:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<ul>
+  <li>Common.Async_Messaging</li>
+  <li>Common.Authenticated_Chat</li>
+</ul>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>If you have internal LPA (admin) credentials, you can enable these features by following the steps below:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<ul>
+  <li>hc1d &gt; serverCommands &gt; Account Config features
+    <ul>
+      <li>Choose the server.
+        <ul>
+          <li>QA - hc1.dev.lprnd.net</li>
+          <li>US - server.iad.liveperson.net</li>
+          <li>EMEA - server.lon.liveperson.net</li>
+          <li>APAC - server.sy.liveperson.net</li>
+        </ul>
+      </li>
+      <li>Paste your account ID at the end of the path.</li>
+      <li>Click Go.</li>
+      <li>Type your LPA credentials.</li>
+    </ul>
+  </li>
+  <li>Turn on the following features:
+    <ul>
+      <li>Common.Async_Messaging</li>
+      <li>Common.Authenticated_Chat</li>
+    </ul>
+  </li>
+</ul>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

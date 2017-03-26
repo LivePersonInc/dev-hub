@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>TLS Authentication | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="TLS Authentication">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1042,7 +1042,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="push-service-tls-html">TLS Authentication</a></li>
+                                                        <li class="active thirdlevel"><a href="push-service-tls-html">TLS Authentication</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">TLS Authentication</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,91 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Customers supply a valid client key and certificate for a TLS connection (two-way SSL). The
+key and certificate is used in every request to the relevant proxy call. The key is securely
+stored in LivePerson’s server.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="request-details">Request Details</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h3 id="protocol">Protocol</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p>Https only.</p>
+
+<h3 id="authorization">Authorization</h3>
+
+<p>TLS</p>
+
+<h3 id="method">Method</h3>
+
+<p>Method is <strong>POST</strong>.</p>
+
+<h3 id="payload">Payload</h3>
+
+<p>Payload differs slightly in iOS and Android:</p>
+
+<p>Shared:</p>
+
+<ul>
+  <li><strong>backendService</strong> - The originator service that sends the push to the pusher (in most
+cases will be “ams”).</li>
+  <li><strong>conversationId</strong> - The associated conversation ID.</li>
+  <li><strong>push-service</strong> - The ENUM describing the service type (APNS - 1, GCM - 2).</li>
+  <li><strong>originatorId</strong> - The originator context for the push (AccountID.AgentNumber).</li>
+  <li><strong>brandId</strong> - The account number associated with the push.</li>
+  <li><strong>notificationType</strong> - The type of notification (APN or GCM).</li>
+  <li><strong>device-token</strong> - The device token used for the push.</li>
+</ul>
+
+<p>iOS (APNS) only:</p>
+
+<ul>
+  <li><strong>aps</strong> - contains the raw iOS push object.</li>
+</ul>
+
+<p>Android (GCM) only:</p>
+
+<ul>
+  <li><strong>data</strong> - Contains payload and raw message objects.</li>
+  <li><strong>payload</strong> - Contains backendService, conversationId, originatorId and brandID.</li>
+  <li><strong>message</strong> - Raw message text.</li>
+</ul>
+
+<p><strong>iOS JSON:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"aps"</span><span class="p">:</span><span class="w">	</span><span class="p">{</span><span class="w">
+</span><span class="nt">"alert"</span><span class="p">:</span><span class="w">	</span><span class="s2">"My	Test:	123\\n"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"sound"</span><span class="p">:</span><span class="w">	</span><span class="s2">"default"</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="nt">"push-service"</span><span class="p">:</span><span class="w">	</span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="nt">"device-token"</span><span class="p">:</span><span class="w">	</span><span class="s2">"01408800000259"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"backendService"</span><span class="p">:</span><span class="w">	</span><span class="s2">"ams"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"conversationId"</span><span class="p">:</span><span class="w">	</span><span class="s2">"13a1ca79-22eb-4a60-8cad-cd7f9dbdb9f3"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"originatorId"</span><span class="p">:</span><span class="w">	</span><span class="s2">"qa90588718.2333061110"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"brandId"</span><span class="p">:</span><span class="w">	</span><span class="s2">"qa90588711"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"notificationType"</span><span class="p">:</span><span class="w">	</span><span class="s2">"apn"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Android JSON:</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"data"</span><span class="p">:</span><span class="w">	</span><span class="p">{</span><span class="w">
+</span><span class="nt">"message"</span><span class="p">:</span><span class="w">	</span><span class="s2">"My	Test:	111\\n"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"payload"</span><span class="p">:</span><span class="w">	</span><span class="p">{</span><span class="w">
+</span><span class="nt">"backendService"</span><span class="p">:</span><span class="w">	</span><span class="s2">"ams"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"conversationId"</span><span class="p">:</span><span class="w">	</span><span class="s2">"ff816d0d-3572-4430-956f-cab638d18826"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"originatorId"</span><span class="p">:</span><span class="w">	</span><span class="s2">"qa90588718.2333061110"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"brandId"</span><span class="p">:</span><span class="w">	</span><span class="s2">"qa90588711"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="nt">"push-service"</span><span class="p">:</span><span class="w">	</span><span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="nt">"device-token"</span><span class="p">:</span><span class="w">	</span><span class="s2">"01408800000259"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"notificationType"</span><span class="p">:</span><span class="w">	</span><span class="s2">"gcm"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

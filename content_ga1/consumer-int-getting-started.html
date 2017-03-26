@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Getting Started | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Getting Started">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2554,7 +2554,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-getting-started.html">Getting Started</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Getting Started</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,115 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p><strong>Note</strong>: This document is subject to change without notice.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>In this tutorial you will create a new conversation with your contact center, publish text messages, and receive agent responses.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+  <li><a href="https://docs.docker.com/engine/installation">Docker</a></li>
+  <li>LivePerson account enabled with two features: <code class="highlighter-rouge">Async_Messaging</code> and <code class="highlighter-rouge">Authenticated_Chat</code>. If you are not sure that your account is enabled with these two features, please contact LivePerson Support.</li>
+</ul>
+
+<h2 id="step-1---launch-your-shell">Step 1 - Launch your Shell</h2>
+
+<p>We will use a docker image called <code class="highlighter-rouge">lp-shell</code> to run the shell for this tutorial. It is a Linux image equipped with <code class="highlighter-rouge">curl</code>,<a href="https://www.npmjs.com/package/wscat2"><code class="highlighter-rouge">wscat</code></a>,<a href="https://stedolan.github.io/jq/"><code class="highlighter-rouge">jq</code></a> and several scripts.</p>
+
+<p>After replacing the <code class="highlighter-rouge">__YOUR_ACCOUNT_ID__</code> with your account ID, type the following into your terminal:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>docker run --env <span class="nv">LP_ACCOUNT</span><span class="o">=</span>__YOUR_ACCOUNT_ID__ -it lpinc/shell
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>You should receive a shell line.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<h2 id="step-2---create-a-token">Step 2 - Create a Token</h2>
+<p>In this demonstration we will create a new unauthenticated consumer identity. Run the following command:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST https://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>This will request the creation of a new identity. Extract the <code class="highlighter-rouge">JWT</code> from the response, and set it as a variable called <code class="highlighter-rouge">LP_JWT</code> in your shell. This new identity will be used in the next step.</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>To check the value inside the <code class="highlighter-rouge">LP_JWT</code>, type:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">&gt; </span><span class="nb">echo</span> <span class="nv">$LP_JWT</span>
+eyJraWQiOiIwMDAwMSIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1OTI2MzFhMC01ZmFlLTQ2YTMtODk2NC0xYzRjM2U3MjBhNGEiLCJhdWQiOiJhY2M6cWE1NzIyMTY3NiIsImlzcyI6Imh0dHBzOlwvXC9pZHAubGl2ZXBlcnNvbi5uZXQiLCJleHAiOjE4ODIzNTg5NDMsImlhdCI6MTQ3MjExODkwM30.iJFlQuMyO8BVRH4ybgNfZxiTTQbAIWHDa4e24TohZGdqyZSv0Vlc4zgVP9wf0Svxbye_yyTx-Q_f8BB7Vy1ZdUYy0t_NK57bAxFTV8x4lx9fxAj_PJ0VvJncJjhn7JFu3s46WeKScFv28D78wJMgoHOKAKD-CacGzGtvFU9NuUQ
+</code></pre>
+</div>
+
+<h2 id="step-3---connect-to-the-messaging-service">Step 3 - Connect to the Messaging Service</h2>
+<p>Using the JWT we have created, we can open the connection to the UMS:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_JWT</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
+</code></pre>
+</div>
+
+<p>In the following steps we will send JSON requests and receive responses and notifications through this connection.
+If the connection is closed, you can reconnect using the same <code class="highlighter-rouge">wscat</code> command.</p>
+
+<h2 id="step-4---create-a-new-conversation">Step 4 - Create a New Conversation</h2>
+
+<p>Before creating the conversation, log into LiveEngage as an agent. In order for the agent to receive the messages, ensure that no other agent is logged into your account.</p>
+
+<p>To request a new conversation, paste the following message into the connection from the previous step.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cm.ConsumerRequestConversation"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In response, you will receive the ID of the new conversation.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resp"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"reqId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"conversationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7507be78-60ef-4468-b3b1-baa47fbeea21"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cm.RequestConversationResponse"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Open the Agent Workspace (from Step 1), and accept the incoming request by clicking the <code class="highlighter-rouge">Accept</code> button.</p>
+
+<p><img src="img/ring.png" alt="agent-ring" /></p>
+
+<h2 id="step-5---publish-a-text-message">Step 5 - Publish a Text Message</h2>
+
+<p>In order to publish content to a conversation, substitute the <code class="highlighter-rouge">__YOUR_CONVERSATION_ID__</code> with the the <code class="highlighter-rouge">consersationId</code> you got in the response of Step 4, and paste it into the opened WebSocket.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.PublishEvent"</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"dialogId"</span><span class="p">:</span><span class="s2">"__YOUR_CONVERSATION_ID__"</span><span class="p">,</span><span class="nt">"event"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ContentEvent"</span><span class="p">,</span><span class="nt">"contentType"</span><span class="p">:</span><span class="s2">"text/plain"</span><span class="p">,</span><span class="nt">"message"</span><span class="p">:</span><span class="s2">"hi there"</span><span class="p">}}}</span><span class="w">
+</span></code></pre>
+</div>
+<p><strong>Note</strong>: you can use the message builder (<a href="consumer-int-msg-text-cont.html" target="_blank"><i class="fa fa-magic" aria-hidden="true"></i></a>) to build the above message.</p>
+
+<p>The published message will be displayed on the agent side:
+<img src="img/consumer_msg.png" alt="consumer-msg" /></p>
+
+<p>Now close the conversation from the Agent Workspace using the <code class="highlighter-rouge">Close conversation</code> menu item:
+<img src="img/close.png" alt="close" /></p>
+
+<h2 id="step-6---record-lp_jwt-to-next-tutorials">Step 6 - Record LP_JWT to Next Tutorials</h2>
+
+<p>In order to use the consumer token (LP_JWT) in the following tutorials, we will put a file on your machine. Create a new file outside of the <code class="highlighter-rouge">lp-shell</code> and paste the following content into it:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LP_ACCOUNT=qa57221676					# put here your account id
+
+# Put here the jwt you have created in this tutorial
+# You can use echo $LP_JWT from your lp-shell to view it
+LP_JWT=eyJraWQiOiIwMDAwMSIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmMDY4ZTllZi1lMzkzLTQxYTEtYmMyYy1hOTZhOWZmMGY2ZmIiLCJhdWQiOiJhY2M6cWE1NzIyMTY3NiIsImlzcyI6Imh0dHBzOlwvXC9pZHAubGl2ZXBlcnNvbi5uZXQiLCJleHAiOjE4ODIwMjM2MzIsImlhdCI6MTQ3MTc4MzU5Mn0.HUJe1CZzqzRoJJxoTll_vDvRalKIeJJRt2MEhY-aFq__V6lrN-ebrRxydozm-gjbpMecKiZDZZiJPw3hf560iKbW-gK1AzsfHxiPrxMdg_TRZqsNhXui_7k579IpfAvKSdgQHZ5uLfGq2XtQNfBdvKWPCIAfW8mJ7oZT-aNMhjE
+</code></pre>
+</div>
+
+<h2 id="whats-next">What’s next</h2>
+
+<p>You can now close the <code class="highlighter-rouge">lp-shell</code> and move on to the <a href="consumer-int-get-msg.html">next tutorial</a>.</p>
+
+<p>Explore API messages in the <a href="consumer-int-api-reference.html">API Reference</a> page. In order to build your own messages, you can use the <a href="consumer-int-msg-reqs.html"><code class="highlighter-rouge">message builder</code> <i class="fa fa-magic" aria-hidden="true"></i></a></p>
+
 
 
     <div class="tags">

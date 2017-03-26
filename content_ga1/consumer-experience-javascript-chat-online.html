@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>onLine | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="onLine">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -846,7 +846,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-online.html">onLine</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">onLine</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,108 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Triggered any time a line is added to the chat. The data here can be a single line or multiple lines.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><strong>Notes</strong>:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li>Visitor chat lines you sent will also appear here.</li>
+  <li>Lines have a textType property, it is very important to adhere to it when rendering the actual chat line.</li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Line Properties</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">text</td>
+      <td style="text-align: left">The line of text.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">The time this line was received by the server.</td>
+      <td style="text-align: left">date</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">source</td>
+      <td style="text-align: left">The source of the chat line.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “visitor”, “agent”, “system”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">textType</td>
+      <td style="text-align: left">How this line should be rendered.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Possible values: “plain”, “html”. To help prevent possible XSS attacks it is very important to comply with the textType.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">by</td>
+      <td style="text-align: left">The name for the contributor of the line in this chat.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Sample Response</strong></p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-30T13:25:20.471-04:00"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REGULAR"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"textType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plain"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-30T13:25:20.762-04:00"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REGULAR"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"textType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plain"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-30T13:25:21.103-04:00"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REGULAR"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"textType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plain"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello there"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-30T13:25:21.295-04:00"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REGULAR"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"textType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plain"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">  
+</span></code></pre>
 </div>
-
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Events | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Events">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -786,7 +786,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-events.html">Events</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Events</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,114 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Listening to events is a fundamental part of using the JavaScript Chat API. The events represent chat states and information received from the server or the agent. Listening to events is what allows you to understand the flow of the application and manage your UI state. All events need to be registered by callback functions.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>There are two main ways to register for an event:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li>On creation of the chat object (see <a href="consumer-experience-javascript-chat-creating-an-instance.html">creating an instance</a>).</li>
+  <li>When you decide you want to listen for a specific event at run time, the onX events always support the following fields:
+    <ul>
+      <li><strong>callback</strong> - Function to be triggered when event fires.</li>
+      <li><strong>appName</strong> - If you know of a specific identifier that will be used to trigger this callback, if not use an empty string or null (optional).</li>
+      <li><strong>context</strong> - The context to run your callback function in (optional).</li>
+    </ul>
+  </li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p><em>Note: Some events such as the <a href="consumer-experience-javascript-chat-onload.html">onLoad</a> event can only be registered for on instantiation since they run almost immediately.</em></p>
+
+<p><strong>Registering at Run-time Code Sample</strong></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">chat</span><span class="p">.</span><span class="nx">onInfo</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//Example using a simple anonymous function</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">key</span> <span class="o">+</span> <span class="s2">" : "</span> <span class="o">+</span> <span class="nx">data</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Events</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Event</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onload.html">onLoad</a></td>
+      <td style="text-align: left">Contains the current state of the API</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-oninit.html">onInit</a></td>
+      <td style="text-align: left">Triggers when you can request some information about the chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onestimatedwaittime.html">onEstimatedWaitTime</a></td>
+      <td style="text-align: left">Triggered in response to <a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onengagement.html">onEngagement</a></td>
+      <td style="text-align: left">Triggered in response to <a href="consumer-experience-javascript-chat-getengagement.html">getEngagement</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onprechatsurvey.html">onPreChatSurvey</a></td>
+      <td style="text-align: left">Triggered in response to <a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onstart.html">onStart</a></td>
+      <td style="text-align: left">Triggered when a chat starts in response to <a href="consumer-experience-javascript-chat-startchatrequestchat.html">requestChat</a>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onstop.html">onStop</a> .</td>
+      <td style="text-align: left">Triggered when a chat has ended.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></td>
+      <td style="text-align: left">Triggered in response to <a href="consumer-experience-javascript-chat-startchatrequestchat.html">requestChat</a>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-ontranscript.html">onTranscript</a></td>
+      <td style="text-align: left">Triggered when a transcript has been requested from the server.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-online.html">onLine</a></td>
+      <td style="text-align: left">Triggered any time a line is added to the chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onstate.html">onState</a></td>
+      <td style="text-align: left">This is the current chat state.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></td>
+      <td style="text-align: left">This  is published when there is a change in the chat information.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onagenttyping.html">onAgentTyping</a></td>
+      <td style="text-align: left">Triggered when the agent typing status is changed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onexitsurvey.html">onExitSurvey</a></td>
+      <td style="text-align: left">Triggered in response to the <a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a> method.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">onVisitorDisposed</td>
+      <td style="text-align: left">Triggered in response to disposeVisitor.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">onOfflineSurvey</td>
+      <td style="text-align: left">Triggered in response to the <a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a> method.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-onaccounttoaccounttransfer.html">onAccountToAccountTransfer</a></td>
+      <td style="text-align: left">Triggered in response to the agent transferring the chat to another account.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

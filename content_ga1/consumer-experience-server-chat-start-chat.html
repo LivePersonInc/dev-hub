@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Start Chat | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Start Chat">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -943,7 +943,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-server-chat-start-chat.html">Start a Chat</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Start Chat</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,216 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Initiates a request to chat. If successful, a new chat session will be created, and the session will be placed in the queue until an agent accepts the chat. This URI returns a “session-URI” which uniquely identifies this session, and can be used for further interaction with the session.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><em>Note: The URI of the chat session is returned in the Location header. This URI is referred to as the chat-session-uri in the rest of the document.</em></p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="request">Request</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">POST</td>
+      <td style="text-align: left">https://{domain}/api/account/{accountId}/chat/request?v=1&amp;NC=true</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Formats</strong></p>
+
+<ul>
+  <li>XML</li>
+  <li>JSON</li>
+</ul>
+
+<p><strong>Request Headers</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Header</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Authorization</td>
+      <td style="text-align: left">LivePerson appKey=721c180b09eb463d9f3191c41762bb68</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Content-Type</td>
+      <td style="text-align: left">application/json</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Accept</td>
+      <td style="text-align: left">application/json</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Body Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">skill</td>
+      <td style="text-align: left">Requests a chat with a specific skill.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ssoKey</td>
+      <td style="text-align: left">Requests a Single Sign On chat.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">The SSO key is an encrypted set of custom variables. SSO  is an  account specific feature that is used by existing LivePerson customers. The account owner or LivePerson Account Manager will need to  be  involved in the implementation process.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serviceQueue</td>
+      <td style="text-align: left">Requests a chat with a specific Service Queue.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">This parameter must be used together with the maxWaitTime parameter.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxWaitTime</td>
+      <td style="text-align: left">The maximum time in seconds that a visitor can wait before a chat starts.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">This parameter must be between 0 and 86,400 seconds (24 hours). Use 0 for immediate availability.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agent</td>
+      <td style="text-align: left">Requests a chat with a specific agent (agent login name).</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">This parameter cannot be used with the skill, serviceQueue and maxWaitTime parameters.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorIp</td>
+      <td style="text-align: left">Sets the visitor’s IP address.</td>
+      <td style="text-align: left">alphanumeric (IP)</td>
+      <td style="text-align: left">The IP address can be used to identify a visitor if that visitor has been marked as “blocked”. This can be viewed in the Agent Console’s Info tab (IP). The visitor’s host name is found using this IP address. If no IP address is specified, the visitor’s IP will be taken from the request’s IP.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chatReferrer</td>
+      <td style="text-align: left">Sets the location of where the chat button was clicked.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">Can have a URI format, but not mandatory. This is displayed in the Admin Console under Reporting &amp; Analytics &gt; Transcripts &gt; select a transcript &gt; Chat starting page (under General Chat Info).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userAgent</td>
+      <td style="text-align: left">Sets the visitor’s user agent.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">If no user agent is specified, it will be taken from the HTTP “User-Agent” header. This can be viewed in the Agent Console’s Info tab (Browser).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">A visitorId from a previous chat can be set in this parameter in order to link this chat to an existing visitor.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">This will enable viewing chat history and visitor information from previous chats (of this visitor) in the Agent Console. Can be obtained using the Chat Information resource.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">preChatLines</td>
+      <td style="text-align: left">A list of lines that are shown to the agent before the chat starts in a special color.</td>
+      <td style="text-align: left">XML/JSON object</td>
+      <td style="text-align: left">These lines are not displayed to the visitor.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">survey</td>
+      <td style="text-align: left">Answers to a Pre-Chat survey. Answers and IDs must be according to the retrieved Pre-Chat survey.</td>
+      <td style="text-align: left">XML/JSON object</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The ID of the engagement.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">The campaign ID to be used in this chat.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">language</td>
+      <td style="text-align: left">The language code of the auto messages to be used in this chat i.e. en-US.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Survey Body Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">question</td>
+      <td style="text-align: left">Contains answer elements for the survey’s question with this ID</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">answer</td>
+      <td style="text-align: left">Given answer for the container question.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">If the question is a multiselection type (CheckBox) it can contain more than one answer.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Request Body Example</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"request"</span><span class="p">:{</span><span class="nt">"skill"</span><span class="p">:</span><span class="s2">"Sales"</span><span class="p">,</span><span class="nt">"interactionTimeout"</span><span class="p">:</span><span class="mi">40</span><span class="p">,</span><span class="nt">"userAgent"</span><span class="p">:</span><span class="s2">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"</span><span class="p">,</span><span class="nt">"LETagVisitorId"</span><span class="p">:</span><span class="s2">"rloXnVgEQ-iQuoOytvKNqA"</span><span class="p">,</span><span class="nt">"LETagSessionId"</span><span class="p">:</span><span class="s2">"rN82d4rATN6EuiA4cJwaPg"</span><span class="p">,</span><span class="nt">"LETagContextId"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="nt">"engagementId"</span><span class="p">:</span><span class="mi">27469613</span><span class="p">,</span><span class="nt">"campaignId"</span><span class="p">:</span><span class="mi">26948813</span><span class="p">,</span><span class="nt">"language"</span><span class="p">:</span><span class="s2">"en-US"</span><span class="p">}}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><em>Notes:</em></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<ul>
+  <li><em>If the userAgent parameter is in the standard “User-Agent” header format, the relevant browser will be shown in the “Browser” parameter in the Agent Workspace.</em></li>
+  <li><em>If the userAgent parameter is NOT in the standard header format, the userAgent parameter itself will be shown (unless its value includes a space character, in which case only the first word will be shown).</em></li>
+</ul>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h2 id="response">Response</h2>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p><strong>Response Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Code</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">200</td>
+      <td style="text-align: left">Successful</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Conversations | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Conversations">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2328,7 +2328,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-messaging-interactions-conversations.html">Conversations</a></li>
+                                                        <li class="active thirdlevel"><a href="data-messaging-interactions-conversations.html">Conversations</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Conversations</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,1348 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This method retrieves a list of conversations with all their metadata and related messages based on a predefined search criteria. Search criteria includes filtering by time range, agent, skill, etc.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="request">Request</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td><code class="highlighter-rouge">https://&lt;domain&gt;/messaging_history/api/account/{accountID}/conversations/search?offset=0&amp;limit=50</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>URL Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">offset</td>
+      <td style="text-align: left">The offset specifies from which record to retrieve the chat.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Default is 0. Example: Of 100 records, the first 20 have already been retrieved. Thus, in the next request will be specified with offset 21.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">limit</td>
+      <td style="text-align: left">Max amount of conversations to be received in the response.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Default is 50. Max value is 100. The remaining conversations can be obtained using pagination (using offset, in a subsequent request).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sort</td>
+      <td style="text-align: left">Sort the results in a predefined order.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Example: start:des will order conversations by descending value of the start time.  Valid values include: start, end. Order:[asc/des]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>BODY/POST Parameters</strong></p>
+
+<p>Filter is sent in the POST data (body) with the following JSON structure.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">start {from, to}</td>
+      <td style="text-align: left">Conversation’s start time range.</td>
+      <td style="text-align: left">long - epoch time in milliseconds.</td>
+      <td style="text-align: left">Required</td>
+      <td style="text-align: left">Including bounds. From/to value is rounded to the last/next 10 minutes, respectively. The maximum time interval is three months. Larger intervals will be rejected.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">Latest status of the conversation.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;status&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Valid values: “OPEN”, “CLOSE”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillIds</td>
+      <td style="text-align: left">An array of skill IDs, represented as numbers.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;skillID&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Any skill, through the entire flow of the conversation.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestSkillIds</td>
+      <td style="text-align: left">An array of latest skill IDs, represented as numbers.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;skillID&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Filters only conversations whose latest skill appears in the array.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentIds</td>
+      <td style="text-align: left">An array of agent IDs, represented as numbers.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;agentID&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentIds</td>
+      <td style="text-align: left">An array of latest agent IDs, represented as numbers.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;agentID&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Filters only conversations whose latest agent appears in the array.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentGroupIds</td>
+      <td style="text-align: left">An array of agent group IDs, represented as numbers.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;agentGroupID&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">keyword</td>
+      <td style="text-align: left">Specific word or phrase found in the messages of the conversation.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">summary</td>
+      <td style="text-align: left">Specific word or phrase found in the summary of the conversation.</td>
+      <td style="text-align: left">alphanumeric</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">duration {from, to}</td>
+      <td style="text-align: left">Range of conversation length (in seconds).</td>
+      <td style="text-align: left">numeric, numeric</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">If one parameter is filled out, the other parameter must be as well. Either “from” or “to” fields are mandatory. In case one of the fields is missing, its value will be set to 0 or the retention time of conversations (13 months), respectively.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mcs {from,to}</td>
+      <td style="text-align: left">Range of Meaningful Connection Score in a particular conversation (including the boundaries).</td>
+      <td style="text-align: left">numeric, numeric</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Either “from” or “to” fields are mandatory. In case one of the fields is missing, its value will be set to the minimal or maximal possible values of MCS, respectively.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">alertedMcsValues</td>
+      <td style="text-align: left">Alerted MCS of the conversation up until the most recent message.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;alertedMCS&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Valid values: “-1”, “0”, “1”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat {from,to}</td>
+      <td style="text-align: left">Range of CSAT assigned to the conversation.</td>
+      <td style="text-align: left">numeric, numeric</td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Either “from” or “to” fields are mandatory. In case one of the fields is missing, its value will be set to the minimal or maximal possible value of CSAT (1 or 5 respectively).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">source</td>
+      <td style="text-align: left">Source origin (Facebook, App etc.) from which the conversation was initially opened.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;String&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Possible values: APP, WEB, AGENT, SMS, FACEBOOK</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">device</td>
+      <td style="text-align: left">Type of device from which the conversation was initially opened.</td>
+      <td style="text-align: left">Array <code class="highlighter-rouge">&lt;String&gt;</code></td>
+      <td style="text-align: left">Optional</td>
+      <td style="text-align: left">Possible values: DESKTOP, TABLET, MOBILE, NA</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Filters examples:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">start</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000}}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”status”:[“CLOSE”,”OPEN”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillIds</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”skillIds”:[“-1”,”2”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestSkillIds</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”latestSkillIds”:[“-1”,”2”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentIds</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”agentIds”:[“11111111-2222-3333-4444-555555555555”,”2”]}</td>
+      <td> </td>
+      <td>latestAgentIds</td>
+      <td>{“start”:{“from”:1470148243000,”to”:1472543048000},”latestAgentIds”:[3678429210,3673269110]}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentGroupIds</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”agentGroupIds”:[“0”,”2”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">keyword</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”keyword”:”bonus”}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">summary</td>
+      <td style="text-align: left">{“start”:{“from”:1481694532185,”to”:1482324227482},”summary”:”purchase”}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">duration</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000}, “duration”:{“from”:0,”to”:1000}}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mcs</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000}, “mcs”:{“from”:0,”to”:100}}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">alertedMcsValues</td>
+      <td style="text-align: left">{“start”: {“from”: “1485330205108”, “to”: “1485942798000”}, “alertedMcsValues”: [“-1”,”1”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000}, “csat”:{“from”:4,”to”:5}}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">source</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000}, “source”:[“APP”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">device</td>
+      <td style="text-align: left">{“start”:{“from”:1470037448000,”to”:1472543048000},”device”:[“DESKTOP”]}</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<p><strong>Elements in the Response</strong></p>
+
+<p><em>Metadata info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">_metadata</td>
+      <td style="text-align: left">All response-related Metadata.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rel</td>
+      <td style="text-align: left">Name of a link to be used in the next request.</td>
+      <td style="text-align: left">alphanumeric (256)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">href</td>
+      <td style="text-align: left">A specific link to be used in the next request.</td>
+      <td style="text-align: left">alphanumeric (256)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">count</td>
+      <td style="text-align: left">Number of sessions using the current query/filter.</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">info</td>
+      <td style="text-align: left">Information about a specific conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Conversation record</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">info</td>
+      <td style="text-align: left">Contains information on the conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messagesRecords</td>
+      <td style="text-align: left">Contains information about a specific message.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messageStatuses</td>
+      <td style="text-align: left">Contains information about message acceptance status (i.e. read/accept).</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentParticipants</td>
+      <td style="text-align: left">Contains information about the agent(s) participating in the conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">consumerParticipants</td>
+      <td style="text-align: left">Contains information about the consumer(s) participating in the conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">transfers</td>
+      <td style="text-align: left">Contains information about transfers in the conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interactions</td>
+      <td style="text-align: left">Contains information about the interactions in the conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messageScore</td>
+      <td style="text-align: left">Contains information about the message’s score, including raw and MCS.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationSurveys</td>
+      <td style="text-align: left">Contains information about the different surveys for the current conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">summary</td>
+      <td style="text-align: left">Contains information about the conversation’s summary.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sdes</td>
+      <td style="text-align: left">List of Engagement Attributes.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Conversation info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">conversationId</td>
+      <td style="text-align: left">ID of conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">brandId</td>
+      <td style="text-align: left">ID of brand.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">Latest status of the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">startTime</td>
+      <td style="text-align: left">Start-time of the conversation.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">endTime</td>
+      <td style="text-align: left">End-time of the conversation.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">duration</td>
+      <td style="text-align: left">Time from when the consumer started the conversation until it ended.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left">For open conversations, the duration returned is the time until the time the data was retrieved (in milliseconds).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">closeReason</td>
+      <td style="text-align: left">Reason for closing the conversation - by agent / consumer.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">firstConversation</td>
+      <td style="text-align: left">Whether it is the consumer’s first conversation.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">csat</td>
+      <td style="text-align: left">CSAT score of the conversation (as given in the answer).</td>
+      <td style="text-align: left">int</td>
+      <td style="text-align: left">Range: 1 to 5.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mcs</td>
+      <td style="text-align: left">Meaningful Connection Score of the conversation.</td>
+      <td style="text-align: left">int</td>
+      <td style="text-align: left">Range: 0-100. If it is for an open conversation, the score is take from the conversation up until the most recent interaction.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">alertedMCS</td>
+      <td style="text-align: left">Divides the MCS score into 3 groups: Positive, Neutral, Negative.</td>
+      <td style="text-align: left">int</td>
+      <td style="text-align: left">Values: -1, 0, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">source</td>
+      <td style="text-align: left">Source origin (Facebook, app, etc).</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">device</td>
+      <td style="text-align: left">Device origin (desktop, smartphone, etc.).</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestSkillId</td>
+      <td style="text-align: left">Most recent skill id the conversation was routed to.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestSkillName</td>
+      <td style="text-align: left">Most recent skill name that the conversation was routed to.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentId</td>
+      <td style="text-align: left">Most recent agent ID the conversation was assigned to.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentLoginName</td>
+      <td style="text-align: left">The agent’s login name.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentNickname</td>
+      <td style="text-align: left">The agent’s nickname.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentFullName</td>
+      <td style="text-align: left">The agent’s full name.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentGroupId</td>
+      <td style="text-align: left">Group ID of the agent most recently assigned to the conversation.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestAgentGroupName</td>
+      <td style="text-align: left">Group name of the agent most recently assigned to the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">latestQueueState</td>
+      <td style="text-align: left">Indicates if the conversation is assigned to an agent or waiting in queue.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “IN_QUEUE”, “ACTIVE”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isPartial</td>
+      <td style="text-align: left">Indicates whether the conversation’s data is partial.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left">In order to retrieve its full data, use single conversation method (by conversation ID).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Message Info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">Time the message was sent.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timeL</td>
+      <td style="text-align: left">Time the message was sent in a long format.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">type</td>
+      <td style="text-align: left">Type of data</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “text”, “file”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messageData</td>
+      <td style="text-align: left">Content of the message.</td>
+      <td style="text-align: left">container</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messageId</td>
+      <td style="text-align: left">ID of message.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">seq</td>
+      <td style="text-align: left">Message’s sequence in the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Does not have to be continuous, i.e. 0, 2, 5, etc.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dialogId</td>
+      <td style="text-align: left">ID of dialog bulk.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">participantId</td>
+      <td style="text-align: left">ID of participant.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">source</td>
+      <td style="text-align: left">Message’s origin.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">device</td>
+      <td style="text-align: left">Device the message was sent from.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sentBy</td>
+      <td style="text-align: left">Who sent the message</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “agent”, “consumer”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Message Text</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">text</td>
+      <td style="text-align: left">The text content of the message.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Message File</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">relativePath</td>
+      <td style="text-align: left">Relative path of the file.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">fileType</td>
+      <td style="text-align: left">Type of the file.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “JPG”, “PNG”, “GIF”, “TXT”, “PDF”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">caption</td>
+      <td style="text-align: left">The caption (heading) of the file.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Message Link</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">externalFileLink</td>
+      <td style="text-align: left">Link to external file.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">fileType</td>
+      <td style="text-align: left">Type of the file.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “JPG”, “PNG”, “GIF”, “TXT”, “PDF”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Message Status info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">messageId</td>
+      <td style="text-align: left">ID of message.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">Time the change in message status occurred.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timeL</td>
+      <td style="text-align: left">Time the change in message status occurred, in long format.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messageDeliveryStatus</td>
+      <td style="text-align: left">The message’s delivery status (i.e - sent. accept, read).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Message Score info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">messageId</td>
+      <td style="text-align: left">ID of message.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">Time the MCS was calculated.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timeL</td>
+      <td style="text-align: left">Time the MCS was calculated, in long format.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mcs</td>
+      <td style="text-align: left">Meaningful Connection Score of the conversation up to this message</td>
+      <td style="text-align: left">int</td>
+      <td style="text-align: left">Range: 0 - 100.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">messageRawScore</td>
+      <td style="text-align: left">Score of message.</td>
+      <td style="text-align: left">int</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Participating Agent info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">agentId</td>
+      <td style="text-align: left">ID of agent.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentLoginName</td>
+      <td style="text-align: left">Login name of the agent assigned to the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentNickname</td>
+      <td style="text-align: left">Nickname of the agent assigned to the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentFullName</td>
+      <td style="text-align: left">Full name of the agent assigned to the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">The time the agent was added to the conversation.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timeL</td>
+      <td style="text-align: left">The time the agent was added to the conversation (in long format).</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">role</td>
+      <td style="text-align: left">The agent’s role in the conversation- assigned agent, manager etc.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentGroupId</td>
+      <td style="text-align: left">Agent’s group ID.</td>
+      <td style="text-align: left">long</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentGroupName</td>
+      <td style="text-align: left">The agent’s group name.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">permission</td>
+      <td style="text-align: left">Agent’s permission in the conversation (reader, assigned).</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Valid values: “reader”, “assigned”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Consumer Participant info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">participantId</td>
+      <td style="text-align: left">ID of consumer (in the LP database).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">Time the consumer joined the conversation.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timeL</td>
+      <td style="text-align: left">Time the consumer joined the conversation (in long format).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">firstName</td>
+      <td style="text-align: left">Consumer’s first name (provided by consumer in their profile).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastName</td>
+      <td style="text-align: left">Consumer’s last name (provided by consumer in their profile).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">phone</td>
+      <td style="text-align: left">Consumer’s phone number (provided by consumer in  their profile).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">email</td>
+      <td style="text-align: left">Consumer’s email (provided by consumer in their profile).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">token</td>
+      <td style="text-align: left">Private identifier of the user.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Transfer info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">transfer</td>
+      <td style="text-align: left">Information about the transfer operation in the conversation.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">time</td>
+      <td style="text-align: left">Time of transfer</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timeL</td>
+      <td style="text-align: left">Time of transfer (in long format).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">assignedAgentId</td>
+      <td style="text-align: left">Target agent ID (to transfer to).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">assignedAgentLoginName</td>
+      <td style="text-align: left">The agent’s login name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">assignedAgentNickname</td>
+      <td style="text-align: left">The agent’s nickname.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">assignedAgentFullName</td>
+      <td style="text-align: left">The agent’s full name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">targetSkillId</td>
+      <td style="text-align: left">Target skill ID (to transfer to).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">targetSkillName</td>
+      <td style="text-align: left">Target skill name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sourceSkillId</td>
+      <td style="text-align: left">The source skill ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sourceSkillName</td>
+      <td style="text-align: left">The source skill name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sourceAgentId</td>
+      <td style="text-align: left">The source agent ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sourceAgentLoginName</td>
+      <td style="text-align: left">The source agent name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sourceAgentNickname</td>
+      <td style="text-align: left">The source agent nickname.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sourceAgentFullName</td>
+      <td style="text-align: left">The source agent full name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">reason</td>
+      <td style="text-align: left">Reason for transfer - back2Queue, etc.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Interaction info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">assignedAgentId</td>
+      <td style="text-align: left">ID of the agent participating in the current interaction.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentLoginName</td>
+      <td style="text-align: left">The agent’s login name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentNickname</td>
+      <td style="text-align: left">The agent’s nickname.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentFullName</td>
+      <td style="text-align: left">The agent’s full name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interactionTime</td>
+      <td style="text-align: left">Interaction start time.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interactionTimeL</td>
+      <td style="text-align: left">Interaction start time (in long format).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interactiveSequence</td>
+      <td style="text-align: left">Interaction’s sequence within the conversation.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Survey info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">surveyType</td>
+      <td style="text-align: left">Type of the survey.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Currently always “Resolution”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surveyStatus</td>
+      <td style="text-align: left">Status of the submission of the survey.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surveyData</td>
+      <td style="text-align: left">List of the question and answers in the survey.</td>
+      <td style="text-align: left">container</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>SurveyData info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">question</td>
+      <td style="text-align: left">Survey question text.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">answer</td>
+      <td style="text-align: left">Survey answer text,</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Summary info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">text</td>
+      <td style="text-align: left">Conversation’s summary text.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastUpdatedTime</td>
+      <td style="text-align: left">Time the conversation’s summary was last updated.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Sdes info</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">events</td>
+      <td style="text-align: left">The sdes that were received from the brand.</td>
+      <td style="text-align: left">Container (see <a href="data-messaging-interactions-appendix.html">Appendix</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sdeType</td>
+      <td style="text-align: left">Type of sde.</td>
+      <td style="text-align: left">enum</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>JSON Example</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:8082/messaging_history/api/account/qa51680169/conversations/search?limit=50&amp;offset=0"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"shardsStatusResult"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"partialResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"conversationHistoryRecords"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"info"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 14:30:24.565+0000"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"startTimeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472481024565</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"undefined"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"endTimeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">78970</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"conversationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e5c58e49-e4a5-40a8-8a18-d6580d1d5630"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"brandId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa26409991"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestAgentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3677470410"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestAgentNickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestAgentFullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestAgentLoginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestSkillId"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestSkillName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unassigned"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APP"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"mcs"</span><span class="p">:</span><span class="w"> </span><span class="mi">67</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"alertedMCS"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OPEN"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstConversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"undefined"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestAgentGroupId"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestAgentGroupName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unassigned"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latestQueueState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"messageRecords"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_PLAIN"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"messageData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hi there #4"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:0"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"seq"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"dialogId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"undefined"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f92c9890-2c95-428b-8a32-083528620d31"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APP"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:14:19.564+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483659564</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"undefined"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sentBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Consumer"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_PLAIN"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"messageData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I love your service"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:2"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"seq"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"dialogId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"undefined"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f92c9890-2c95-428b-8a32-083528620d31"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APP"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:15:42.568+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483742568</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"undefined"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sentBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Consumer"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"agentParticipants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"agentFullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"agentNickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"agentLoginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"agentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3677470410"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AGENT"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"agentGroupName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unassigned"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"agentGroupId"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:14:05.005+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483645005</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"permission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ASSIGNED_AGENT"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"consumerParticipant"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"participantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f92c9890-2c95-428b-8a32-083528620d31"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Visitor"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 14:30:24.573+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472481024573</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"consumerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Visitor"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"transfers"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nt">"interactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"assignedAgentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3677470410"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"assignedAgentFullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"assignedAgentLoginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"assignedAgentNickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michalby@liveperson.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"interactionTimeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483644999</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"interactionTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:14:04.999+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"interactiveSequence"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"messageScore"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:0"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:14:26.314+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483666314</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:2"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:15:49.225+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483749225</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"messageStatuses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:0"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"seq"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:14:19.626+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483659626</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3677470410"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Agent"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"messageDeliveryStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:2"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"seq"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:15:42.609+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483742609</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3677470410"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Agent"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"messageDeliveryStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"messageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms::conv:e5c58e49-e4a5-40a8-8a18-d6580d1d5630::msg:0"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"seq"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-29 15:15:58.272+0000"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"timeL"</span><span class="p">:</span><span class="w"> </span><span class="mi">1472483758272</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3677470410"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"participantType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Agent"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"messageDeliveryStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"READ"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"summary"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastUpdatedTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1482333795318</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

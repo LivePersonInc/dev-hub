@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>onRequestChat | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="onRequestChat">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -834,7 +834,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-onrequestchat.html">onRequestChat</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">onRequestChat</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,56 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Triggered in response to <a href="consumer-experience-javascript-chat-startchatrequestchat.html">requestChat</a>.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><strong>Notes</strong>:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li><em>See <a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a> and <a href="consumer-experience-javascript-chat-online.html">onLine</a> to understand the data in this method.</em></li>
+  <li><em>It is a best practice to listen to specific events that are a breakdown of this one: <a href="consumer-experience-javascript-chat-onstate.html">onState</a>, <a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a> , <a href="consumer-experience-javascript-chat-online.html">onLine</a> and <a href="consumer-experience-javascript-chat-onstart.html">onStart</a> will provide the same information to deal with in more granular detail.</em></li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Sample Response</strong></p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.182-04:00"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"state"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiting"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please wait for a site operator to respond."</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.183-04:00"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REGULAR"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"textType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plain"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"systemMessageId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"info"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"visitorTyping"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not-typing"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"visitorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"you"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testSkill"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastUpdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.356-04:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiting"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:05.183-04:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345678910</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"agentTyping"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not-typing"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"chatSessionKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"H123345578-123456789096534324243"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"rtSessionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345678910</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"chatTimeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
-
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

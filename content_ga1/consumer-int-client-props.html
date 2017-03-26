@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Client Properties | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Client Properties">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2611,7 +2611,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-client-props.html">Client Properties</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Client Properties</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,21 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>The client can send information about its type, for example, mobile, desktop, browser type, OS version, etc. In this tutorial, we will see how to attach this information to client requests, and where to read the equivalent information about the agent.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>In order to send client properties, repeat the <a href="consumer-int-getting-started.html">Getting Started</a> tutorial. In Step 3, you are asked to open a new connection. Instead of the shell command written there, use the following command:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_PROPS</span><span class="o">=</span><span class="s1">'{"type":".ClientProperties","deviceFamily":"MOBILE","os":"ANDROID"}'</span>
+wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_JWT</span><span class="s2">"</span> -H <span class="s2">"Client-Properties:</span><span class="nv">$LP_PROPS</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>After sending a text message in Step 5, the device type and OS will be displayed in the Agent Workspace under the <code class="highlighter-rouge">Consumer Info</code> table:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><img src="img/consumer_client_properties.png" alt="consumer-msg" /></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>Other <code class="highlighter-rouge">ClientProperties</code> that can be sent can be found in the <a href="consumer-int-api-reference.html#conection-establishment">API Reference</a>.</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

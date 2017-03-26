@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Customized Chat Windows | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Customized Chat Windows">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -197,7 +197,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="guides-customizedchat.html">Customized Chat Windows</a></li>
+                                                        <li class="active thirdlevel"><a href="guides-customizedchat.html">Customized Chat Windows</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Customized Chat Windows</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,73 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="introduction">Introduction</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>As a part of its open platform, LiveEngage has the option to modify the Consumer interaction windows via APIs on which one can develop and deploy a unique chat experience for his consumers.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>Monitored and Un-Monitored flows both support API Based Consumer Chat windows triggering.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p>As a part of the solution, the prerequisites for chat management such as Different types of Engagements, Funnel reporting, Visitor Authentication flow (oAuth2.0+OpenId Connect) and SDEs  are supported.</p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="flows">Flows</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<h3 id="monitored">Monitored</h3>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>In a monitored flow, a visitor is  created and monitored on the LiveEngage monitoring system via the LiveEngage LpTag component.</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>Once an Engagement is presented and clicked on by a visitor, a Taglet on the monitored web page will trigger a Chat Window based on the Engagement Window configuration. In order to trigger an API Based Window, an Engagement with a dedicated API Based Window should be created. (For now, this kind of Window can be created manually by a LivePerson Admin ).</p>
+
+<p><strong>To create an API based window on this flow using the Chat API</strong></p>
+
+<p>An “API Based” Engagement Window must be configured in LE.</p>
+
+<p>Mandatory fields:</p>
+
+<ul>
+  <li>Name - The Window name</li>
+  <li>jsMethodName - The Javascript Method name which Liveperson Taglet will trigger and you initiate the window using the Chat API code.</li>
+  <li>jsContext -  The Javascript context where the jsMethodName is located.</li>
+</ul>
+
+<p>Attach the above “API Based” engagement window to the relevant Web Engagement / Campaign.</p>
+
+<h3 id="un-monitored">Un-Monitored</h3>
+
+<p>When the LiveEngage LpTag is not part of the flow, getting the Engagement is within the responsibility of the Chat API Based window Service.</p>
+
+<ul>
+  <li>In order to present a “Click to Chat” button with an updated state of availability, you must access the LP Monitoring system to create a visitor session and get an engagement. This call can be made by the <code class="highlighter-rouge">getEngagement()</code> function by the <a href="#app-engagement-api">App Engagement API</a> or directly from the <a href="#js-chat-api">JavaScript Chat API</a>.</li>
+</ul>
+
+<p>Using the Chat API</p>
+
+<ul>
+  <li>Before requesting a Chat the service can re check for availability</li>
+  <li>Request Chat</li>
+</ul>
+
+<h2 id="major-components">Major Components</h2>
+
+<ul>
+  <li><a href="consumer-experience-server-chat-getting-started.html" target="_blank">Server Chat API</a></li>
+  <li><a href="consumer-experience-javascript-chat-getting-started.html" target="_blank">JS Chat API</a></li>
+  <li><a href="rt-interactions-app-engagement-overview.html" target="_blank">App Engagement API</a></li>
+</ul>
+
+<h2 id="additional-apis">Additional APIs</h2>
+
+<ul>
+  <li><a href="agent-domain-domain-api.html" target="_blank">Domain API</a></li>
+</ul>
+
+<h2 id="authenticated-interactions">Authenticated Interactions</h2>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="liveengage-ui">LiveEngage UI</h3>
+
+<p>API Based Window - Coming Soon</p>
+
 
 
     <div class="tags">

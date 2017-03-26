@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Web Session | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Web Session">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2238,7 +2238,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-data-access-web-session.html">Web Session</a></li>
+                                                        <li class="active thirdlevel"><a href="data-data-access-web-session.html">Web Session</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Web Session</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,2224 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Web session retrieves the list of files in zip format of the visitor’s web session data.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>This data contains information about the vistor’s web journey. The web session data is calculated from the time the visitor enters the website till the time he leaves it. The data includes geo (country, city etc.), navigation (referrer URL etc.), eligible campaigns, engagement attributes and more.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>Use case example</strong>: If you have customer membership programs, you can learn whether your premium members are indeed the heaviest buyers. You can use the order value variable from LivePerson against your own customer membership data and compare the Average Order Value for each membership segment.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<h2 id="request">Request</h2>
+
+<p><strong>URL Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/data_access_le/account/{accountID}/le/webSession?startTime=&lt;startTime&gt;&amp;endTime=&lt;endTime&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Required:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">startTime</td>
+      <td style="text-align: left">Start time in milliseconds, refers to the start time boundary of the range the files were generated. Should be used as an incremental timestamp.</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">endTime</td>
+      <td style="text-align: left">End time in milliseconds, refers to the start time boundary of the range the files were generated. Should be used as an incremental timestamp.</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<p><strong>JSON Example</strong></p>
+
+<p>Request for account 75555851:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"dataAccessFiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"75555851"</span><span class="p">,</span><span class="w">
+		</span><span class="nt">"link"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> 
+</span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/75555851/le/webSession"</span><span class="p">,</span><span class="w">
+			</span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self"</span><span class="w">
+		</span><span class="p">},</span><span class="w">
+		</span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"@name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSession.1464778800000.1464782400000.part-00000-0.gz"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"@scopeStartDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-01T07:00:00-04:00"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"@scopeEndDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-01T08:00:00-04:00"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/75555851/le/webSession/WebSession.1464778800000.1464782400000.part-00000-0.gz"</span><span class="w">
+			</span><span class="p">},</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"@name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSession.1467043200000.1467046800000.part-00000-0.gz"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"@scopeStartDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T12:00:00-04:00"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"@scopeEndDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T13:00:00-04:00"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/75555851/le/webSession/WebSession.1467043200000.1467046800000.part-00000-0.gz"</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">]</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Elements in the Response</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">LivePerson account number.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">file</td>
+      <td style="text-align: left">List of files.</td>
+      <td style="text-align: left">array container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Name of file.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">scopeStartDate</td>
+      <td style="text-align: left">Start time of the automated process that generates the file.</td>
+      <td style="text-align: left">ISO standard</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">scopeEndDate</td>
+      <td style="text-align: left">End time of the automated process that generates the file.</td>
+      <td style="text-align: left">ISO standard</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">href</td>
+      <td style="text-align: left">URI to retrieve the file.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Data Structure</strong></p>
+
+<p>JSON Example</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"dataType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nt">"com.liveperson.dataaccess.DataTypeEnum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSession"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"metaData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nt">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"75555851"</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="nt">"schemaVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0.22"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291704468</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="nt">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"recordCollection"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+               </span><span class="nt">"com.liveperson.dataaccess.WebSessionEngAttrsData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                   </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"com.liveperson.dataaccess.VisitorHeader"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                           </span><span class="nt">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AjvT6hLKTEi3AXgGnYu_mQ.606c99c686cbe0d422d558a5005b3ec2275dc20a"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pKytlMTwSPCwpJS-RQqtlQ"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                       </span><span class="p">}</span><span class="w">
+                   </span><span class="p">},</span><span class="w">
+                   </span><span class="nt">"engagementAttributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291718263</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.CustomerInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"customerStatus"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agentManager"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"customerType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"balance"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"customerId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Account: 89995382"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"socialId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"imei"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"userName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"companySize"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"accountName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"lastPaymentDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"registrationDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291718494</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.PersonalInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"surname"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BrookeR@blinds.com"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"company"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"customerAge"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"contacts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                                   </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">}</span><span class="w">
+                       </span><span class="p">]</span><span class="w">
+                   </span><span class="p">}</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+           </span><span class="p">}</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+               </span><span class="nt">"com.liveperson.dataaccess.WebSessionNavigationData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                   </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"com.liveperson.dataaccess.VisitorHeader"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                           </span><span class="nt">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AjvT6hLKTEi3AXgGnYu_mQ.606c99c686cbe0d422d558a5005b3ec2275dc20a"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pKytlMTwSPCwpJS-RQqtlQ"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                       </span><span class="p">}</span><span class="w">
+                   </span><span class="p">},</span><span class="w">
+                   </span><span class="nt">"navigationData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291704525</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://authentication.liveperson.net/login.html"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"referrerUrl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"sections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                       </span><span class="s2">"loginPages"</span><span class="w">
+                                   </span><span class="p">]</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291714765</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://z1.le.liveperson.net/a/89995382/#wa!webagent"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"referrerUrl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://authentication.liveperson.net/login.html"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"sections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467308703041</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://authentication.liveperson.net/login.html?lpservice=liveEngage&amp;servicepath=a%2F%7E%7Eaccountid%7E%7E%2F%23%2C%7E%7Essokey%7E%7E"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"referrerUrl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://z1.le.liveperson.net/a/89995382/"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"sections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                       </span><span class="s2">"loginPages"</span><span class="w">
+                                   </span><span class="p">]</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">}</span><span class="w">
+                       </span><span class="p">]</span><span class="w">
+                   </span><span class="p">}</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+           </span><span class="p">}</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+               </span><span class="nt">"com.liveperson.dataaccess.WebSessionGoalAchievedData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                   </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"com.liveperson.dataaccess.VisitorHeader"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                           </span><span class="nt">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AjvT6hLKTEi3AXgGnYu_mQ.606c99c686cbe0d422d558a5005b3ec2275dc20a"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pKytlMTwSPCwpJS-RQqtlQ"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                       </span><span class="p">}</span><span class="w">
+                   </span><span class="p">},</span><span class="w">
+                   </span><span class="nt">"achievedGoals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b5f9655-7bcb-4143-960b-7a5b08195167"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291714594</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"campaignGoalRevision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"campaignGoalId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">153250510</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"campaignGoalType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"goalMetaData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.ReduceAbandonmentGoalMetadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"numberOfPages"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">}</span><span class="w">
+                       </span><span class="p">]</span><span class="w">
+                   </span><span class="p">}</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+           </span><span class="p">}</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+               </span><span class="nt">"com.liveperson.dataaccess.WebSessionEligibilityData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                   </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"com.liveperson.dataaccess.VisitorHeader"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                           </span><span class="nt">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AjvT6hLKTEi3AXgGnYu_mQ.606c99c686cbe0d422d558a5005b3ec2275dc20a"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pKytlMTwSPCwpJS-RQqtlQ"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                       </span><span class="p">}</span><span class="w">
+                   </span><span class="p">},</span><span class="w">
+                   </span><span class="nt">"eligibilityData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"eligibleCampaigns"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                       </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"com.liveperson.dataaccess.Campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">129082910</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"visitorProfiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                                           </span><span class="p">{</span><span class="w">
+                                                               </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">156579410</span><span class="w">
+                                                               </span><span class="p">},</span><span class="w">
+                                                               </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
+                                                               </span><span class="p">}</span><span class="w">
+                                                           </span><span class="p">}</span><span class="w">
+                                                       </span><span class="p">]</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">},</span><span class="w">
+                                           </span><span class="nt">"engagements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                                   </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"visitorBehaviors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                                               </span><span class="p">{</span><span class="w">
+                                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126225110</span><span class="w">
+                                                                   </span><span class="p">},</span><span class="w">
+                                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+                                                                   </span><span class="p">}</span><span class="w">
+                                                               </span><span class="p">}</span><span class="w">
+                                                           </span><span class="p">]</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"skillId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tier1"</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"surveySkills"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                                       </span><span class="nt">"isOffsiteEngagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"boolean"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"availabilityPolicy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"interactionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"renderingType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">]</span><span class="w">
+                                           </span><span class="p">},</span><span class="w">
+                                           </span><span class="nt">"goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"com.liveperson.dataaccess.Goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126222610</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"indicatorType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">},</span><span class="w">
+                                           </span><span class="nt">"controlGroupType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"com.liveperson.dataaccess.ControlGroupEnum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="w">
+                                           </span><span class="p">}</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">]</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291704571</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"eligibleCampaigns"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                       </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"com.liveperson.dataaccess.Campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">626105510</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"visitorProfiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                                           </span><span class="p">{</span><span class="w">
+                                                               </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">286374810</span><span class="w">
+                                                               </span><span class="p">},</span><span class="w">
+                                                               </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
+                                                               </span><span class="p">}</span><span class="w">
+                                                           </span><span class="p">}</span><span class="w">
+                                                       </span><span class="p">]</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">},</span><span class="w">
+                                           </span><span class="nt">"engagements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                                   </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"visitorBehaviors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                                               </span><span class="p">{</span><span class="w">
+                                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126225110</span><span class="w">
+                                                                   </span><span class="p">},</span><span class="w">
+                                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+                                                                   </span><span class="p">}</span><span class="w">
+                                                               </span><span class="p">}</span><span class="w">
+                                                           </span><span class="p">]</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"skillId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                                       </span><span class="nt">"surveySkills"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                                       </span><span class="nt">"isOffsiteEngagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"boolean"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"availabilityPolicy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                                       </span><span class="nt">"interactionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                                                       </span><span class="p">},</span><span class="w">
+                                                       </span><span class="nt">"renderingType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">]</span><span class="w">
+                                           </span><span class="p">},</span><span class="w">
+                                           </span><span class="nt">"goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"com.liveperson.dataaccess.Goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126222610</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"indicatorType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">},</span><span class="w">
+                                           </span><span class="nt">"controlGroupType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                               </span><span class="nt">"com.liveperson.dataaccess.ControlGroupEnum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="w">
+                                           </span><span class="p">}</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">]</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">1467291718265</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">}</span><span class="w">
+                       </span><span class="p">]</span><span class="w">
+                   </span><span class="p">}</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+           </span><span class="p">}</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+           </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+               </span><span class="nt">"com.liveperson.dataaccess.WebSessionImpressionData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                   </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"com.liveperson.dataaccess.VisitorHeader"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                           </span><span class="nt">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AjvT6hLKTEi3AXgGnYu_mQ.606c99c686cbe0d422d558a5005b3ec2275dc20a"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pKytlMTwSPCwpJS-RQqtlQ"</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                       </span><span class="p">}</span><span class="w">
+                   </span><span class="p">},</span><span class="w">
+                   </span><span class="nt">"impressions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                       </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"engagementInstanceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"impressionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Show"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"engagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Engagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"visitorBehaviors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126225110</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"skillId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tier1"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"surveySkills"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"isOffsiteEngagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"boolean"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"availabilityPolicy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"interactionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"renderingType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">129082910</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"visitorProfiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">156579410</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126222610</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"indicatorType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"engagementInstanceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"impressionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Show"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"engagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Engagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"visitorBehaviors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126225110</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"skillId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"surveySkills"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"isOffsiteEngagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"boolean"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"availabilityPolicy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"interactionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"renderingType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">626105510</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"visitorProfiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">286374810</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126222610</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"indicatorType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">},</span><span class="w">
+                           </span><span class="p">{</span><span class="w">
+                               </span><span class="nt">"engagementInstanceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"impressionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Close"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"engagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Engagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"visitorBehaviors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126225110</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"skillId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"skillName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"surveySkills"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"isOffsiteEngagement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"boolean"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"availabilityPolicy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                       </span><span class="nt">"interactionType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"renderingType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Campaign"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">626105510</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"visitorProfiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                               </span><span class="p">{</span><span class="w">
+                                                   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">286374810</span><span class="w">
+                                                   </span><span class="p">},</span><span class="w">
+                                                   </span><span class="nt">"revision"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                                       </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
+                                                   </span><span class="p">}</span><span class="w">
+                                               </span><span class="p">}</span><span class="w">
+                                           </span><span class="p">]</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">},</span><span class="w">
+                               </span><span class="nt">"goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                   </span><span class="nt">"com.liveperson.dataaccess.Goal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"long"</span><span class="p">:</span><span class="w"> </span><span class="mi">126222610</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                                       </span><span class="p">},</span><span class="w">
+                                       </span><span class="nt">"indicatorType"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                           </span><span class="nt">"int"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+                                       </span><span class="p">}</span><span class="w">
+                                   </span><span class="p">}</span><span class="w">
+                               </span><span class="p">}</span><span class="w">
+                           </span><span class="p">}</span><span class="w">
+                       </span><span class="p">]</span><span class="w">
+                   </span><span class="p">}</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+           </span><span class="p">}</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h3 id="geo">GEO</h3>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>Information about visitor geolocation.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique identifier of the visitor’s session.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique identifier of the visitor.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following table describes the information that is available in the geo data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">iPV4</td>
+      <td style="text-align: left">IP V4 address.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">iPV6</td>
+      <td style="text-align: left">IP V6 address.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">country</td>
+      <td style="text-align: left">Country name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">city</td>
+      <td style="text-align: left">City name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">State name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">org</td>
+      <td style="text-align: left">Organization name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isp</td>
+      <td style="text-align: left">Internet service provider.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">countryCode</td>
+      <td style="text-align: left">Country code.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="navigation">Navigation</h3>
+
+<p>Information about the navigated pages by the visitor on the brand’s website. The navigation is mainly based on the pages being monitored by the Monitor Tag. If a customer has non-monitored pages it will not be reflected in the data displayed here.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique visitor session identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique visitor identifier of the visitor.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following table describes the information that is available in the navigation data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">timestamp</td>
+      <td style="text-align: left">The time the visitor has first entered the page (in this particular visit). In format: UTC YYY-MM-DDThh:mm:ss</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">url</td>
+      <td style="text-align: left">The URL representation of the visited page.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">referrerUrl</td>
+      <td style="text-align: left">The URL representation of the last page the visitor visited.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sections</td>
+      <td style="text-align: left">A list of the sections/tabs of the page the visitor visited.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="session-info">Session Info</h3>
+
+<p>Information about the visitor’s browsing session.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique visitor session identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique visitor identifier of the visitor.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following table describes the information that is available in the session info data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">sessionStartTime</td>
+      <td style="text-align: left">Visitor session’s start time.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userAgent</td>
+      <td style="text-align: left">User agent.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">deviceOS</td>
+      <td style="text-align: left">Device OS type, can be one of the following: NA, WINDOWS, MAC_OS,LINUX, IOS, ANDROID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">deviceFamily</td>
+      <td style="text-align: left">Device type, can be one of the following: NA, DESKTOP, TABLET, MOBILE.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">siteControlGroup</td>
+      <td style="text-align: left">Site control group, can be one of the following: NA, CONTROL, TEST.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">search Engine</td>
+      <td style="text-align: left">Search engine. Exist only if the visitor started a session after searching a known search engine. It is extracted from the referrer URL.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">search EngineKey</td>
+      <td style="text-align: left">Keywords used to search through the search engine prior to the session starting point. It is taken from the referrer URL.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="eligibilitydata">EligibilityData</h3>
+
+<p>Information about the campaigns that are eligible for the visitor during his session.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique visitor session identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique visitor identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following table describes the information that is available in the eligibility data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eligibleCampaigns</td>
+      <td style="text-align: left">List of campaigns the visitor is eligible for.</td>
+      <td style="text-align: left">array container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timestamp</td>
+      <td style="text-align: left">The time that the assessment is made regarding which campaign is relevant to the visitor.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="eligiblecampaign">EligibleCampaign</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">campaign</td>
+      <td style="text-align: left">Contains campaign information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagements</td>
+      <td style="text-align: left">List of engagements.</td>
+      <td style="text-align: left">array container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">goal</td>
+      <td style="text-align: left">Contains goal information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">controlGroupType</td>
+      <td style="text-align: left">Type of the campaign control groups. Can be one of the following: NA, TEST, CONTROL.</td>
+      <td style="text-align: left">ControlGroupEnum</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="engagement">Engagement</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">Engagement ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">channel</td>
+      <td style="text-align: left">Channel type.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">type</td>
+      <td style="text-align: left">Engagement type.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorBehaviors</td>
+      <td style="text-align: left">List of visitor behaviors.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillId</td>
+      <td style="text-align: left">Engagement skill ID (in case a skill was defined for it).</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillName</td>
+      <td style="text-align: left">Engagement skill name (in case a skill was defined for it).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surveySkills</td>
+      <td style="text-align: left">List of skills defined for the survey.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isOffsiteEngagement</td>
+      <td style="text-align: left">Indication of offsite engagement.</td>
+      <td style="text-align: left">boolean</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">availabilityPolicy</td>
+      <td style="text-align: left">Policy which changes the engagement availability.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interactionType</td>
+      <td style="text-align: left">The engagement type. Can be either chat or messaging.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">renderingType</td>
+      <td style="text-align: left">Determines the way the engagement will be showed.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="visitor-behavior">Visitor Behavior</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">Visitor behavior unique identifier (LP ID).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">revision</td>
+      <td style="text-align: left">Revision in visitor behavior ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="skill">Skill</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">Unique skill identifier.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Skill name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="campaign">Campaign</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">channel</td>
+      <td style="text-align: left">Channel type.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">type</td>
+      <td style="text-align: left">Engagement type.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorBehaviors</td>
+      <td style="text-align: left">List of visitor behaviors.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillId</td>
+      <td style="text-align: left">Engagement skill ID (in case a skill was defined for it).</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillName</td>
+      <td style="text-align: left">Engagement skill name (in case a skill was defined for it).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surveySkills</td>
+      <td style="text-align: left">Contains information about the goal.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isOffsiteEngagement</td>
+      <td style="text-align: left">Indication if it is offsite engagement.</td>
+      <td style="text-align: left">boolean</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">availabilityPolicy</td>
+      <td style="text-align: left">The engagement state is changed according to this policy.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interactionType</td>
+      <td style="text-align: left">The engagement target - chat or messaging.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">renderingType</td>
+      <td style="text-align: left">Determines the way the engagement will be showed.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="goal">Goal</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">Unique goal identifier.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">type</td>
+      <td style="text-align: left">Goal type.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">indicatorType</td>
+      <td style="text-align: left">Goal indicator type.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="impression">Impression</h3>
+
+<p>Information about impressions that the visitor was exposed to during their session.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique visitor session identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique visitor identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following table describes the information available in the impression data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">timestamp</td>
+      <td style="text-align: left">Time that the impression occurred.</td>
+      <td style="text-align: left">Long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementInstanceId</td>
+      <td style="text-align: left">User agent.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">impressionType</td>
+      <td style="text-align: left">Type of impression, can be one of the following: Show, Accept, Close, Timeout.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">Impression state, can be one of the following: content, chatonline, chatoffline.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagement</td>
+      <td style="text-align: left">Contains information about the engagement.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaign</td>
+      <td style="text-align: left">Contains information about the campaign.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">goal</td>
+      <td style="text-align: left">Contains information about the goal.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="goalachieved">GoalAchieved</h3>
+
+<p>Information about the goals that were achieved during the visitor session.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique visitor session identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique visitor identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following table describes the information available in the goal achieved data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">Unique ID for achieved goal.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timestamp</td>
+      <td style="text-align: left">Time when goal was achieved.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignGoalId</td>
+      <td style="text-align: left">Campaign goal ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignGoalRevision</td>
+      <td style="text-align: left">Revision of campaign goal ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignGoalType</td>
+      <td style="text-align: left">Goal type.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">goalMetaData</td>
+      <td style="text-align: left">Contains goal metadata, can be one of the following:  UrlGoalMetadata, PurchaseMetadata, ReduceAbandonmentGoalMetadata, LeadMetadata, ServiceActivityMetadata.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="urlgoalmetadata">UrlGoalMetadata</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">url</td>
+      <td style="text-align: left">Unique ID for goal achieved event.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="purchasemetadata">PurchaseMetadata</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total purchase.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">orderId</td>
+      <td style="text-align: left">Purchase order ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cartStatus</td>
+      <td style="text-align: left">Cart status information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="reduceabandonmentgoalmetadata">ReduceAbandonmentGoalMetadata</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">numberOfPages</td>
+      <td style="text-align: left">Number of pages viewed.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="increaseinteractiongoalmetadata">IncreaseInteractionGoalMetadata</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">engagement</td>
+      <td style="text-align: left">Contains engagement information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaign</td>
+      <td style="text-align: left">Contains campaign information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="leadmetadata">LeadMetaData</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">topic</td>
+      <td style="text-align: left">Lead topic.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">leadId</td>
+      <td style="text-align: left">Unique identifier of the lead in your system.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">value</td>
+      <td style="text-align: left">Lead value.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="serviceactivitymetadata">ServiceActivityMetaData</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">topic</td>
+      <td style="text-align: left">Topic of service activity.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">Status of service activity.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Category of service activity.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serviceId</td>
+      <td style="text-align: left">Unique service identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="engagement-attributes">Engagement Attributes</h3>
+
+<p>Engagement attributes are standardized attributes defined by LivePerson that enable our customers to get more specific information about their visitors and pass it on via LiveEngage.</p>
+
+<p><strong>Header</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">visitId</td>
+      <td style="text-align: left">Unique visitor session identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Unique visitor identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Context ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Here is a description of the data structure of the existing engagement attributes in the system:</p>
+
+<h4 id="purchase">Purchase</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total amount of purchase.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">orderId</td>
+      <td style="text-align: left">Purchase order ID.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cart</td>
+      <td style="text-align: left">Contains cart information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="cart">cart</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total cart value.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numItems</td>
+      <td style="text-align: left">Number of items in cart.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">products</td>
+      <td style="text-align: left">List of products (productContainer).</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="productcontainer">productContainer</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">quantity</td>
+      <td style="text-align: left">Number of products.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">product</td>
+      <td style="text-align: left">Contains product information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="product">product</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Product name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Product category.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sku</td>
+      <td style="text-align: left">Unique product ID identifier in consumer database.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">price</td>
+      <td style="text-align: left">Product price.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="lead">Lead</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">topic</td>
+      <td style="text-align: left">Lead topic.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">leadId</td>
+      <td style="text-align: left">Unique system lead identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">value</td>
+      <td style="text-align: left">Lead value.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="customer-info">Customer Info</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">isAuthenticated</td>
+      <td style="text-align: left">Indication whether the customer was authenticated (default is null).</td>
+      <td style="text-align: left">boolean</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">authenticatedConversationId</td>
+      <td style="text-align: left">The identifier of the conversation that the authenticated customer took part in.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerStatus</td>
+      <td style="text-align: left">Customer status.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerType</td>
+      <td style="text-align: left">Customer type.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">balance</td>
+      <td style="text-align: left">Customer balance.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerId</td>
+      <td style="text-align: left">Unique identifier of the customer.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">socialId</td>
+      <td style="text-align: left">The unique identifier of the user in the social network.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">imei</td>
+      <td style="text-align: left">The user’s phone (used as identifier for a telco company).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userName</td>
+      <td style="text-align: left">User nickname or display name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">companySize</td>
+      <td style="text-align: left">Business targeting for B2B.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accountName</td>
+      <td style="text-align: left">The account name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">role</td>
+      <td style="text-align: left">User role in the organization.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastPaymentDate</td>
+      <td style="text-align: left">User’s last payment date (in YMDDate format).</td>
+      <td style="text-align: left">Date</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">registrationDate</td>
+      <td style="text-align: left">User’s registration date (in YMDDate format).</td>
+      <td style="text-align: left">Date</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="ymddate">YMDDate</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">year</td>
+      <td style="text-align: left">Year representation.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">month</td>
+      <td style="text-align: left">Month representation.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">day</td>
+      <td style="text-align: left">Day representation.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="personal-info">Personal Info</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">isAuthenticated</td>
+      <td style="text-align: left">Indication whether the customer was authenticated (default is null).</td>
+      <td style="text-align: left">boolean</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">authenticatedConversationId</td>
+      <td style="text-align: left">The identifier of the conversation that the authenticated customer took part in.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Customer name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surname</td>
+      <td style="text-align: left">Customer surname.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">gender</td>
+      <td style="text-align: left">Customer gender.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">company</td>
+      <td style="text-align: left">Customer company.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerAge</td>
+      <td style="text-align: left">Customer age.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contacts</td>
+      <td style="text-align: left">List of contacts.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="customerage">customerAge</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">customerAgeInYears</td>
+      <td style="text-align: left">Customer age (in years).</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerYearOfBirth</td>
+      <td style="text-align: left">Customer year of birth.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerMonthOfBirth</td>
+      <td style="text-align: left">Customer month of birth.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CustomerDateOfBirth</td>
+      <td style="text-align: left">Customer date of birth.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="contact">Contact</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">email</td>
+      <td style="text-align: left">Contact email.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">phone</td>
+      <td style="text-align: left">Contact phone number.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="cartstatus">CartStatus</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: left">Total cart value.</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numItems</td>
+      <td style="text-align: left">Number of items in cart.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">products</td>
+      <td style="text-align: left">List of products.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="productcontainer-1">ProductContainer</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">quantity</td>
+      <td style="text-align: left">Number of products.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">product</td>
+      <td style="text-align: left">Contains product information.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="product-1">product</h4>
+
+<p>See above for <a href="#product">Product</a> parameters.</p>
+
+<h4 id="viewedproduct">ViewedProduct</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">products</td>
+      <td style="text-align: left">List of viewed products.</td>
+      <td style="text-align: left">Product container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="product-2">Product</h4>
+
+<p>See above for <a href="#product">Product</a> parameters.</p>
+
+<h4 id="serviceactivity">ServiceActivity</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">topic</td>
+      <td style="text-align: left">Topic of service activity.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">status</td>
+      <td style="text-align: left">Status of service activity.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">category</td>
+      <td style="text-align: left">Category of service activity.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serviceId</td>
+      <td style="text-align: left">Service unique identifier.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="visitorerror">VisitorError</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">Error context ID (from the customer).</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">message</td>
+      <td style="text-align: left">Error message.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">code</td>
+      <td style="text-align: left">Error code.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">level</td>
+      <td style="text-align: left">Error severity level.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">resolved</td>
+      <td style="text-align: left">Indication whether the error was resolved.</td>
+      <td style="text-align: left">boolean</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="marketingcampaigninfo">MarketingCampaignInfo</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">OriginatingChannel</td>
+      <td style="text-align: left">Channel which originated the campaign.</td>
+      <td style="text-align: left">int</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">affiliate</td>
+      <td style="text-align: left">Affiliate.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">Unique identifier of the campaign.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

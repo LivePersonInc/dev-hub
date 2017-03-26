@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Methods | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Methods">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -660,7 +660,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-methods.html">Methods</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Methods</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,142 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>All methods except those marked with <code class="highlighter-rouge">*</code> accept a similar format of object as their input.<br />
+That object can contain a success method, an error method and a context in which to run those methods.<br />
+These are notification methods that will be run once the request to the server has completed. <br />
+The error method will run if the server did not respond or returned an error, the success method will run after a successful response.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>All requests should contain the specific data and structure outlined in detail in every method below.<br />
+If there is an error in the request data that prevents it from being sent, an immediate result will be passed to the caller with the details of the error.<br />
+Refer to the code samples for additional clarification.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>These methods do not make asynchronous calls, they reply immediately with the cached data, as a result no callback properties (success and error) can be passed.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>Generic Object Properties</strong></p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">success</td>
+      <td style="text-align: left">Function</td>
+      <td style="text-align: left">A method to run on completing a successful request.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">error</td>
+      <td style="text-align: left">Function</td>
+      <td style="text-align: left">A method to run on a failed request or returned server error.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">context</td>
+      <td style="text-align: left">Object</td>
+      <td style="text-align: left">The context in which to run these functions.</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>Methods</strong></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></td>
+      <td style="text-align: left">Returns the estimated wait time in seconds before a chat starts.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-getprechatsurvey.html">getPreChatSurvey</a></td>
+      <td style="text-align: left">Retrieves the Pre-chat survey according to the criteria passed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-getengagement.html">getEngagement(reqObj)</a></td>
+      <td style="text-align: left">Executes engagements eligibility and availability check.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-requestchat.html">startChat/requestChat</a></td>
+      <td style="text-align: left">Queues a chat request to the agents.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-addline.html">addLine</a></td>
+      <td style="text-align: left">Sends a chat line to the agent.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-setvisitortyping.html">setVisitorTyping</a></td>
+      <td style="text-align: left">Notifies the agent of the typing state of the visitor.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-setvisitorname.html">setVisitorName</a></td>
+      <td style="text-align: left">Updates the visitor’s name in the chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-endchat.html">endChat</a></td>
+      <td style="text-align: left">Notifies the agent that the visitor has ended the chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-requesttranscript.html">requestTranscript</a></td>
+      <td style="text-align: left">Sends a copy of the chat transcript to an email address at the end of the chat session.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-getexitsurvey.html">getExitSurvey</a></td>
+      <td style="text-align: left">Displays the exit survey after the chat has ended if one was configured for the account.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-submitexitsurvey.html">submitExitSurvey</a></td>
+      <td style="text-align: left">Submits the Exit survey results to the server.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-getofflinesurvey.html">getOfflineSurvey</a></td>
+      <td style="text-align: left">Retrieves the Offline survey to be displayed to the visitor.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="consumer-experience-javascript-chat-submitofflinesurvey.html">submitOfflineSurvey</a></td>
+      <td style="text-align: left">Used to submit the Offline survey.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getstate.html">getState</a></td>
+      <td style="text-align: left">Returns the current chat state string according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getagentloginname.html">getAgentLoginName</a></td>
+      <td style="text-align: left">Returns the agent’s name string according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getvisitorname.html">getVisitorName</a></td>
+      <td style="text-align: left">Returns the visitor’s name string according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getagentid.html">getAgentId</a></td>
+      <td style="text-align: left">Returns the agent ID string according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getrtsessionid.html">getRtSessionId</a></td>
+      <td style="text-align: left">Returns the chat rtSessionId string according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getsessionkey.html">getSessionKey</a></td>
+      <td style="text-align: left">Returns the chat session key string according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code><a href="consumer-experience-javascript-chat-getagenttyping.html">getAgentTyping</a></td>
+      <td style="text-align: left">Returns the current agent typing boolean state according to the latest events received.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">*</code>disposeVisitor</td>
+      <td style="text-align: left">Clears the chat session from memory, so on refresh it will not be automatically resumed. Will trigger onVisitorDisposed event.</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

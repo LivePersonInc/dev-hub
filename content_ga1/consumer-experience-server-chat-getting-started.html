@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Getting Started | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Getting Started">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -903,7 +903,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-server-chat-getting-started.html">Getting Started</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Getting Started</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,32 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="overview">Overview</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>This document describes the Server Chat API (REST).</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>Notes</strong>:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<ul>
+  <li><em>From the time a chat is requested, the server checks for chat activity. If a chatting visitor is not active (does not call any Chat API) for a certain amount of time, the chat is ended by the server after a pre-set timeout.</em></li>
+  <li><em>When using the Server Chat API with mobile and Windows 8 applications, visitor session will time out after a period of 40 seconds. This is the default behavior on LivePerson servers.</em></li>
+  <li><em>Any call to the chat functionality resets the inactivity time.</em></li>
+  <li><em>As a best practice, the Chat Events method should be called periodically as any chat functionality requires getting updates from the server.</em></li>
+  <li><em>Chat lines may have HTML fragments. If you cannot support HTML tags, you should remove them from your application.</em></li>
+</ul>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="getting-started-with-the-server-chat-api">Getting Started with the Server Chat API</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p>In order to use the Server Chat API, please follow the steps below:</p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<ol>
+  <li><strong>Retrieve your domain</strong>. Use the <a href="agent-domain-domain-api.html" target="_blank">LivePerson Domain API</a> to retrieve this information. With the service name =conversationVep</li>
+  <li><strong>Ensure that your have a LivePerson Application Key</strong>. To get an Application Key, contact your LivePerson representative.</li>
+</ol>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<h2 id="sample-postman-collection">Sample Postman Collection</h2>
+
+<p>For a sample postman collection for the Server Chat API, click <a href="consumer-experience-server-chat-sample.html">here</a>.</p>
 
 
     <div class="tags">

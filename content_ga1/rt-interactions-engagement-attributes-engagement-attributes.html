@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Engagement Attributes | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Engagement Attributes">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1734,7 +1734,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="rt-interactions-engagement-attributes-engagement-attributes.html">Engagement Attributes</a></li>
+                                                        <li class="active thirdlevel"><a href="rt-interactions-engagement-attributes-engagement-attributes.html">Engagement Attributes</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Engagement Attributes</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,202 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="request">Request</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">POST</td>
+      <td style="text-align: left">https://{LivePerson domain}/api/account/{account}/monitoring/visitors/{visitor}/visits/current/events</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>OAuth</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p>This API supports OAuth 1.0.</p>
+
+<p><strong>Headers</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Authorization</td>
+      <td style="text-align: left">Contains token string to allow request authorization</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Content-Type</td>
+      <td style="text-align: left">Set to “application/json” (encoded in UTF-8)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">x-http-method-override</td>
+      <td style="text-align: left">Set to “PUT”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Path Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Name</th>
+      <th style="text-align: center">Mandatory</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: center">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">account</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: left">LivePerson account ID</td>
+      <td style="text-align: center">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">visitor</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: left">LivePerson visitor ID</td>
+      <td style="text-align: center">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Note: The above parameters are passed by LivePerson to a page owned and hosted by the brand.</em></p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Mandatory</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left">API version</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sid</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left">LivePerson session ID</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Note: “sid” parameter is passed to by LivePerson to a page owned and hosted by the brand.</em></p>
+
+<p><strong>BODY/POST Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Engagement Attributes Array</td>
+      <td style="text-align: left">Array of Engagement Attribute. For more information about the available Engagement Attributes, refer to <a href="https://ce-sr.s3.amazonaws.com/CA/Campaigns/Engagement%20Attributes%20Overview.pdf" target="_blank">Engagement Attributes Overview document</a>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Request URL Example</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>https://lo.v.liveperson.net/api/account/1234/monitoring/visitors/xyz/visits/current/events?v=1&amp;sid=rty.uio
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Request BODY Example</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>[{
+       "type": "lead", //MANDATORY
+           "lead": {
+           "topic": "inquiry about upgrade and iPhone 6s pricing", //TOPIC OR NAME OF A SUBMITTED LEAD
+           "value": 200, //EVALUATED VALUE OF THE LEAD
+           "leadId": "xyz123" //LEAD IDENTIFIER OR TICKET ID
+       }
+},
+{
+       "type": "service", //MANDATORY
+       "service": {
+          "topic": "add authorized user to the account ", // SERVICE ACTIVITY TOPIC OR NAME
+          "status": 0, // STATUS ENUM
+          // 0-Complete, 1-In Progress, 2-Approved, 3-cancelled, 4-Not Approved,
+          // 5-Reviewed, 6-Missing Details, 7-Closed, 8-Removed, 9-Assigned, 
+          // 10-Waiting for Customer Response, 11-Waiting for Response, 12-Pending, 13-Resolved 
+          "category": "account maintenance", // SERVICE CATEGORY NAME
+          "serviceId": "service12" // SERVICE UNIQUE IDENTIFIER OR TICKET ID
+       }
+}]
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h2 id="response">Response</h2>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p><strong>Response Example</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> http status 200 ok and empty json 
+</code></pre>
+</div>
+
+<p><strong>Response Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Code</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">200</td>
+      <td style="text-align: left">OK; Operation performed successfully</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">400</td>
+      <td style="text-align: left">Bad Request; Problem with body or query parameters</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">401</td>
+      <td style="text-align: left">Unauthorized (no permissions)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">404</td>
+      <td style="text-align: left">Not Found</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">422</td>
+      <td style="text-align: left">Invalid Account ID</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">500</td>
+      <td style="text-align: left">Internal Server Error</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

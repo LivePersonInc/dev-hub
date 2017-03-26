@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Base Resource | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Base Resource">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2226,7 +2226,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-data-access-base-resource.html">Base Resource</a></li>
+                                                        <li class="active thirdlevel"><a href="data-data-access-base-resource.html">Base Resource</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Base Resource</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,125 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This is the base resource that retrieves the list of available Data Access Uniform Resource Identifiers (URIs) for an account. A dedicated URI is used as the access point to retrieve each of the four types of Data Access supported data listed above: agent activity, web session, engagement and survey.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="request">Request</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/data_access_le/account/{accountID}/le</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<h2 id="response">Response</h2>
+
+<p><strong>JSON Example</strong></p>
+
+<p>Request for account 28045150:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"le"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"@accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"28045150"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"link"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/28045150/le"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> 
+</span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/28045150/le/agentActivity"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agentActivity"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> 
+</span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/28045150/le/webSession"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webSession"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> 
+</span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/28045150/le/engagement"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"engagement"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/28045150/le/survey"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"survey"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"@href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://va-a.da.liveperson.net/data_access_le/account/28045150/le/schema"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"@rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"schema"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Elements in the Response</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">LivePerson account number.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">link</td>
+      <td style="text-align: left">Contains list of available URIs.</td>
+      <td style="text-align: left">container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agent Activity</td>
+      <td style="text-align: left">URI to retrieve agent activity data.</td>
+      <td style="text-align: left">link relationship</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">webSession</td>
+      <td style="text-align: left">URI to retrieve web session data.</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">link relationship</td>
+      <td style="text-align: left">engagement</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">URI to retrieve engagement data.</td>
+      <td style="text-align: left">link relationship</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">survey</td>
+      <td style="text-align: left">URI to retrieve survey data.</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">link relationship</td>
+      <td style="text-align: left">schema</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">URI to retrieve schema structure of the data (latest or for specific version).</td>
+      <td style="text-align: left">link relationship</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

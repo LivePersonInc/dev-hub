@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Engagement Events | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Engagement Events">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2504,7 +2504,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="lp-tag-engagement.html">Engagement Events</a></li>
+                                                        <li class="active thirdlevel"><a href="lp-tag-engagement.html">Engagement Events</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Engagement Events</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,340 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p>These are engagement-related events, including rendering, display and interactions with the engagement.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="start">START</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p>This event is triggered when the flow to display the engagement has started.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“START”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">contexts</td>
+      <td style="text-align: left">The engagement and page context ID (impression ID) in the current monitored session.</td>
+      <td style="text-align: left">Array of Objects</td>
+      <td style="text-align: left">Example: <br />[ <br /> {“EngagementContext”:{“id”: “1”}}, <br /> {“pageContext”:{“id”:”173828”}} <br /> ]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">The engagement’s campaign ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The engagement ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementRevision</td>
+      <td style="text-align: left">The engagement revision.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementType</td>
+      <td style="text-align: left">The engagement format.</td>
+      <td style="text-align: left">Numeric</td>
+      <td style="text-align: left">Available values: 0: “Peeling corner”, 1: “Overlay”, 2: “Toaster”, 3: “Slide-out”, 5: “Embedded”, 6: “Sticky”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">The engagement context ID (engagement impression ID) in the current monitored session.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">zoneId</td>
+      <td style="text-align: left">Internal. The engagement zone ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">The agent’s state</td>
+      <td style="text-align: left">Numeric</td>
+      <td style="text-align: left">Available values: 1 - online, 2 – offline, 4 - busy</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">confKey</td>
+      <td style="text-align: left">Internal. CampaignId + EngagementId + Revision.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">tglName</td>
+      <td style="text-align: left">Internal. The engagement format description.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">done</td>
+      <td style="text-align: left">If the configuration has finished loading.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementName</td>
+      <td style="text-align: left">The engagement name as defined in LiveEngage UI.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Example:</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="w">   </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"contexts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="nt">"EngagementContext"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="nt">"pageContext"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1738225948"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"campaignId"</span><span class="p">:</span><span class="w"> </span><span class="mi">210599710</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">campaign</span><span class="w"> </span><span class="err">Id</span><span class="w">
+        </span><span class="nt">"engagementId"</span><span class="p">:</span><span class="w"> </span><span class="mi">210600710</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">engagement</span><span class="w"> </span><span class="err">Id</span><span class="w">
+        </span><span class="nt">"engagementRevision"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">revision</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">going</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">show</span><span class="w">
+        </span><span class="nt">"engagementType"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">engagement</span><span class="w"> </span><span class="err">type</span><span class="w">
+        </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">context</span><span class="w"> </span><span class="err">(instance</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">memory</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">backend)</span><span class="w">
+        </span><span class="nt">"zoneId"</span><span class="p">:</span><span class="w"> </span><span class="mi">471288710</span><span class="p">,</span><span class="w"> </span><span class="err">//The</span><span class="w"> </span><span class="err">zone</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">on</span><span class="w">
+        </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="err">//The</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">agents</span><span class="w"> </span><span class="err">(online,</span><span class="w"> </span><span class="err">offline,</span><span class="w"> </span><span class="err">busy)</span><span class="w"> </span><span class="err">,</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">display</span><span class="w"> </span><span class="err">state</span><span class="w"> 
+        </span><span class="nt">"confKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"210599710_210600710_18"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tglName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"slider"</span><span class="w"> </span><span class="err">//The</span><span class="w"> </span><span class="err">taglet</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">needs</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">downloaded</span><span class="w">
+        </span><span class="s2">"done"</span><span class="err">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="err">//If</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">configuration</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">finished</span><span class="w"> </span><span class="err">loading</span><span class="w">
+        </span><span class="nt">"engagementName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Slide-out chat button"</span><span class="w"> </span><span class="err">//The</span><span class="w"> </span><span class="err">description</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">engagement</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="offer_display">OFFER_DISPLAY</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p>This event is triggered when the engagement has been rendered and is going to be displayed on the page.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“OFFER_DISPLAY”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<p>See <a href="#start">START</a> event.</p>
+
+<p><em>Example:</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"contexts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"EngagementContext"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">}},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"pageContext"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1738225948"</span><span class="p">}}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"campaignId"</span><span class="p">:</span><span class="w"> </span><span class="mi">248955910</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">campaign</span><span class="w"> </span><span class="err">Id</span><span class="w">
+    </span><span class="nt">"engagementId"</span><span class="p">:</span><span class="w"> </span><span class="mi">248956110</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">engagement</span><span class="w"> </span><span class="err">Id</span><span class="w">
+    </span><span class="nt">"engagementRevision"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">revision</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">going</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">show</span><span class="w">
+    </span><span class="nt">"engagementType"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">engagement</span><span class="w"> </span><span class="err">type</span><span class="w">
+    </span><span class="nt">"contextId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">context</span><span class="w"> </span><span class="err">(instance</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">memory</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">backend)</span><span class="w">
+    </span><span class="nt">"zoneId"</span><span class="p">:</span><span class="w"> </span><span class="mi">471288510</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">zone</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">on</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">agents</span><span class="w"> </span><span class="err">(online,</span><span class="w"> </span><span class="err">offline,</span><span class="w"> </span><span class="err">busy)</span><span class="w"> </span><span class="err">,</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">display</span><span class="w"> </span><span class="err">state</span><span class="w">
+    </span><span class="nt">"confKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"248955910_248956110_14"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"tglName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"overlay"</span><span class="p">,</span><span class="err">//The</span><span class="w"> </span><span class="err">taglet</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">was</span><span class="w"> </span><span class="err">downloaded</span><span class="w">
+    </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="err">//If</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">configuration</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">finished</span><span class="w"> </span><span class="err">loading</span><span class="w">
+    </span><span class="nt">"engagementName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mine"</span><span class="err">//The</span><span class="w"> </span><span class="err">description</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">engagement</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h2 id="offer_impression">OFFER_IMPRESSION</h2>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>This event is triggered when the engagement has been displayed on the page.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“OFFER_IMPRESSION”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<p>See <a href="#start">START</a> event.</p>
+
+<h3 id="offer_click">OFFER_CLICK</h3>
+
+<p>This event is triggered when the engagement has been displayed on the page.</p>
+
+<p><strong>Event information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“OFFER_CLICK”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="offer_timeout">OFFER_TIMEOUT</h2>
+
+<p>This event is triggered when an engagement duration has timed out.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“OFFER_TIMEOUT”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<p>See <a href="#start">START</a> event.</p>
+
+<h2 id="offer_declined">OFFER_DECLINED</h2>
+
+<p>This event is triggered when an engagement is closed by a user.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“OFFER_DECLINE”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<p>See <a href="#start">START</a> event.</p>
+
+<h2 id="offer_remove">OFFER_REMOVE</h2>
+
+<p>This event is triggered when an engagement is removed from the DOM (auto or user initiated).</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“OFFER_REMOVE”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“LP_OFFERS”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<p>See <a href="#start">START</a> event.</p>
+
 
 
     <div class="tags">

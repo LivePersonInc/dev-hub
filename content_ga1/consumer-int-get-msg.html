@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Get Messages | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Get Messages">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2571,7 +2571,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-get-msg.html">Get Messages</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Get Messages</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,123 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>In this tutorial we will demonstrate the mechanism that enables the consumer to get messages sent by the agent. These messages may be sent while the consumer is connected or offline.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="prerequisites">Prerequisites</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>At the end of the <a href="consumer-int-getting-started.html">Getting Started</a> tutorial, we created the <code class="highlighter-rouge">lp.env</code> file. In order to launch <code class="highlighter-rouge">lp-shell</code> with your previous settings, type the following:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>docker run --env-file lp.env -it lpinc/shell
+</code></pre>
+</div>
+<p>You should get a shell line.</p>
+
+<p>Make sure that you have closed any previous conversation sessions by clicking <code class="highlighter-rouge">Close conversation</code> in the Agent Workspace.</p>
+
+<h2 id="step-1---find-your-consumer-id">Step 1 - Find Your Consumer ID</h2>
+
+<p>When you get messages from the server, you must identify which messages were published by you, and which were published by the agent. To do so, you must know your <code class="highlighter-rouge">consumerId</code>. To find out your <code class="highlighter-rouge">consumerId</code>, refer to the content of the LP_JWT by base64-decoding the middle part of the JWT (between the two periods):</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$LP_JWT</span> | sed -e <span class="s1">'s/.*\.\(.*\)\..*/\1/'</span> | base64 --decode
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>You will now be able to see the content of the JWT:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"sub"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19f98cd2-63b9-42e4-bc0d-9222b86574e1"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"aud"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acc:qa57221676"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"iss"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://idp.liveperson.net"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"exp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1879957364</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"iat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1469717324</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">sub</code> property contains your <code class="highlighter-rouge">consumerId</code>.</p>
+
+<p><strong>Note</strong>: If you encounter issues when using the shell <code class="highlighter-rouge">base64</code> command, you can use online tools such as <a href="https://www.base64decode.org/">base64decode.org</a>.</p>
+
+<h2 id="step-2---create-a-conversation">Step 2 - Create a Conversation</h2>
+<p>Open the WebSocket connection using the following:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_JWT</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>Replace the <code class="highlighter-rouge">__LP_ACCOUNT__</code> with your account ID, and then send a request on the connection to create a new conversation with the following JSON object:</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cm.ConsumerRequestConversation"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In response, you will get the ID of the new conversation.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resp"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"reqId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"conversationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7507be78-60ef-4468-b3b1-baa47fbeea21"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cm.RequestConversationResponse"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Write down the <code class="highlighter-rouge">conversationId</code> from the response. We will need it in the next steps.</p>
+
+<h2 id="step-3---agent-sends-messages">Step 3 - Agent sends Messages</h2>
+<p>In this stage, switch to the Agent Workspace from Step 1, and accept the ring of the incoming request. Click the blinking <code class="highlighter-rouge">Accept</code> button.</p>
+
+<p><img src="img/ring.png" alt="agent-ring" /></p>
+
+<p>Type a few messages in the Agent Workspace.</p>
+
+<h2 id="step-4---subscribe-to-conversation-content">Step 4 - Subscribe to Conversation Content</h2>
+
+<p>In order to get existing or new messages from the agent side, the consumer should subscribe to the content of the conversation. Substitute the <code class="highlighter-rouge">__YOUR_CONVERSATION_ID__</code> with the the <code class="highlighter-rouge">consersationId</code> you got in the response in the previous step, and paste it into the opened WebSocket.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"22"</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"fromSeq"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"dialogId"</span><span class="p">:</span><span class="s2">"__YOUR_CONVERSATION_ID__"</span><span class="p">},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.SubscribeMessagingEvents"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+<p><strong>Note</strong>: you can use the message builder (<a href="consumer-int-msg-sub-events.html" target="_blank"><i class="fa fa-magic" aria-hidden="true"></i></a>) to build the above message.</p>
+
+<p>In response, you will get a subscription success message:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"resp"</span><span class="p">,</span><span class="nt">"reqId"</span><span class="p">:</span><span class="s2">"22"</span><span class="p">,</span><span class="nt">"code"</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">".ams.GenericSubscribeResponse"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>You will now get all the existing content of the conversation:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notification"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"changes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"sequence"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"originatorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"734d9867-40e3-52b9-a401-07e877676d64"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"serverTimestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1477840831162</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentEvent"</span><span class="p">,</span><span class="w">
+					</span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"message from the agent"</span><span class="p">,</span><span class="w">
+					</span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text/plain"</span><span class="w">
+				</span><span class="p">},</span><span class="w">
+				</span><span class="nt">"dialogId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"__YOUR_CONVERSATION_ID__"</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">]</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms.MessagingEventNotification"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>You will notice that you get all the messages that were published by you, or by the agent. In order to find which messages were published by you, refer to the <code class="highlighter-rouge">originatorPId</code> field. Messages that were published by you will have a value equal to the <code class="highlighter-rouge">consumerId</code> you found in Step 1, while messages from the agent will have a different <code class="highlighter-rouge">originatorId</code>.</p>
+
+<p>Now close the conversation from the Agent Workspace by clicking <code class="highlighter-rouge">Close conversation</code>.
+<img src="img/close.png" alt="close" /></p>
+
 
 
     <div class="tags">

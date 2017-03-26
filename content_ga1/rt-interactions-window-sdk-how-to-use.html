@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>How to use the SDK | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="How to use the SDK">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1860,7 +1860,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="rt-interactions-window-sdk-how-to-use.html">How to use the SDK</a></li>
+                                                        <li class="active thirdlevel"><a href="rt-interactions-window-sdk-how-to-use.html">How to use the SDK</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">How to use the SDK</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,141 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>All public properties and methods can be found in the namespace lpTag.LPWidgetSDK.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="public-properties">Public Properties</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">version</td>
+      <td style="text-align: left">The version of the service</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">The name of the service. (“LPWidgetSDK”)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">API</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<h3 id="examples">Examples</h3>
+
+<p><strong>API</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+      </span><span class="err">appName:</span><span class="w"> </span><span class="nt">"LivepersonWindowSDK"</span><span class="err">,</span><span class="w">
+      </span><span class="err">widgetName</span><span class="p">:</span><span class="w"> </span><span class="s2">"widgetName"</span><span class="p">,</span><span class="w">
+      </span><span class="err">events</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">CONVERSATION_INFO:</span><span class="w"> </span><span class="nt">"conversationInfo"</span><span class="err">,</span><span class="w">
+          </span><span class="err">MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="s2">"messages"</span><span class="p">,</span><span class="w">
+          </span><span class="err">PARTICIPANTS</span><span class="p">:</span><span class="w"> </span><span class="s2">"participants"</span><span class="p">,</span><span class="w">
+          </span><span class="err">UI_WINDOW</span><span class="p">:</span><span class="w"> </span><span class="s2">"uiWindow"</span><span class="p">,</span><span class="w">
+          </span><span class="err">UI_WIDGET</span><span class="p">:</span><span class="w"> </span><span class="s2">"uiWidget"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">commands</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">NOTIFICATION:</span><span class="w"> </span><span class="nt">"notification"</span><span class="err">,</span><span class="w">
+          </span><span class="err">DISPOSE</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispose"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">states</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">OFFLINE:</span><span class="w"> </span><span class="nt">"offline"</span><span class="err">,</span><span class="w">
+          </span><span class="err">PRE_CONVERSATION</span><span class="p">:</span><span class="w"> </span><span class="s2">"preConversation"</span><span class="p">,</span><span class="w">
+          </span><span class="err">PENDING</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+          </span><span class="err">ACCEPTED</span><span class="p">:</span><span class="w"> </span><span class="s2">"accepted"</span><span class="p">,</span><span class="w">
+          </span><span class="err">INTERACTIVE</span><span class="p">:</span><span class="w"> </span><span class="s2">"interactive"</span><span class="p">,</span><span class="w">
+          </span><span class="err">POST_CONVERSATION</span><span class="p">:</span><span class="w"> </span><span class="s2">"postConversation"</span><span class="p">,</span><span class="w">
+          </span><span class="err">CONVERSATION_ENDED</span><span class="p">:</span><span class="w"> </span><span class="s2">"ended"</span><span class="p">,</span><span class="w">
+          </span><span class="err">ERROR</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="err">;</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="public-methods">Public Methods</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">init (opts &lt;optional&gt;)</code></td>
+      <td style="text-align: left">The method used to initialize events binding with  object.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">notify(data &lt;optional&gt; ), callback &lt;optional&gt;)</code></td>
+      <td style="text-align: left">This function used to send a notification to the engagement window. It can contain data and callback for error handling. <br /> Note: Future versions will support data enrichment in notifications.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong><code class="highlighter-rouge">bind(event, callback, context &lt;optional&gt;)</code></strong></td>
+      <td style="text-align: left">Bind event data to callback function with optional context. In the case that no context is configured, default context would be the window context. <br /> Event: lpTag.LPWidgetSDK.API.events</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">unbind(event, callback,context&lt;optional&gt;)</code></td>
+      <td style="text-align: left">Unbind event handling. <br /> Note: Whichever specifications were configured for’ bind’ must be identical in ‘unbind’.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dispose (callback)</td>
+      <td style="text-align: left">This function is used to dispose\remove the widget from the visitor window.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">getQuery(key &lt;optional&gt;)</code></td>
+      <td style="text-align: left">Utility function for getting query parameter values. In case of empty input (ie: key is undefined), object results are returned without filtering parameters. * “widgetName” and  ”accountId” Query parameters are passed for every iframe url.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="examples-1">Examples</h3>
+
+<p><strong><code class="highlighter-rouge">init (opts &lt;optional&gt;)</code></strong></p>
+
+<p>Opts object configuration:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">bind:</span><span class="w"> </span><span class="err">{</span><span class="w">
+      </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">func:</span><span class="w"> </span><span class="err">callback,</span><span class="w"> </span><span class="err">context:</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong><code class="highlighter-rouge">notify(data &lt;optional&gt; ), callback &lt;optional&gt;)</code></strong></p>
+
+<p>Callback example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function notificationCallback(err) {
+  if (err) {
+    console.log("Error on sending notification from widget");
+  }
+}
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>dispose (callback)</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<p>Callback example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function notificationCallback(err) {
+  if (err) {
+    console.log("Error on disposing widget from ");
+  }
+}
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>A complete list of public properties and methods can be found in the namespace lpTag.LPWidgetSDK.</p>
 
 
     <div class="tags">

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Publish Images | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Publish Images">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Publish Images</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,112 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>In this tutorial we will publish images to a conversation.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>See <a href="consumer-int-get-msg.html#prerequisites">Prerequisites</a>.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="step-1---enable-image-sharing">Step 1 - Enable Image Sharing</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p>In order to publish images in your account, you should first enable the feature. Insert your account admin username and password and type the following:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_USER</span><span class="o">=</span>__AGENT_USERNAME__
+<span class="nv">LP_PASS</span><span class="o">=</span>__AGENT_PASSWORD__
+<span class="nv">LP_BEARER</span><span class="o">=</span><span class="sb">`</span>curl -c cookies -X POST -H <span class="s2">"Content-Type: application/json"</span> -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Cache-Control: no-cache"</span> -d <span class="s1">'{"username": "'</span><span class="nv">$LP_USER</span><span class="s1">'","password":"'</span><span class="nv">$LP_PASS</span><span class="s1">'"}'</span> <span class="s2">"https://</span><span class="nv">$LP_AGENTVEP</span><span class="s2">/api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/login?v=1.1"</span> | jq -r .bearer<span class="sb">`</span>
+./set_site_property.sh <span class="nv">$LP_BEARER</span> <span class="nb">true </span>messaging.file.sharing.enabled
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>Now download an example image file to your shell:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wget http://www.liveperson.com/sites/default/files/LP_LOGO_1.png
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>We will further publish this image to the messaging service.</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<h2 id="step-2---create-a-conversation">Step 2 - Create a Conversation</h2>
+
+<p>Open a connection to the messaging service.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_JWT</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
+</code></pre>
+</div>
+
+<p>Then ask to create a new conversation:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cm.ConsumerRequestConversation"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In response, you will get a conversation ID that will be used in the next steps.</p>
+
+<h2 id="step-3---upload-an-image">Step 3 - Upload an image</h2>
+
+<p>Now, ask the service to create an upload URL.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"3"</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"fileSize"</span><span class="p">:</span><span class="mi">1000</span><span class="p">,</span><span class="nt">"fileType"</span><span class="p">:</span><span class="s2">"PNG"</span><span class="p">},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.GenerateURLForUploadFile"</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In response you will get the following message:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"resp"</span><span class="p">,</span><span class="nt">"reqId"</span><span class="p">:</span><span class="s2">"3"</span><span class="p">,</span><span class="nt">"code"</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"relativePath"</span><span class="p">:</span><span class="s2">"/v1/AUTH_async-images/qa57221676/8a66a22f-81ee-4447-b92f-78e9c3ecc819.PNG"</span><span class="p">,</span><span class="nt">"queryParams"</span><span class="p">:{</span><span class="nt">"temp_url_sig"</span><span class="p">:</span><span class="s2">"6f52625b7f148325071c2518c714109134acd7a3"</span><span class="p">,</span><span class="nt">"temp_url_expires"</span><span class="p">:</span><span class="s2">"1474973420"</span><span class="p">}},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.BaseGenerateURLResponse"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>We will extract the <code class="highlighter-rouge">relativePath</code>, <code class="highlighter-rouge">temp_url_sig</code> and <code class="highlighter-rouge">temp_url_expires</code> from this response, and use this value in the upload call. Close the WebSocket connection using <code class="highlighter-rouge">Ctrl+C</code> and type the following commands with the values you extracted from the previous response.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_REL_PATH</span><span class="o">=</span>__relativePath__
+<span class="nv">LP_TUS</span><span class="o">=</span>__temp_url_sig__
+<span class="nv">LP_TUE</span><span class="o">=</span>___temp_url_expires__
+curl -i <span class="s2">"https://</span><span class="k">${</span><span class="nv">LP_SWIFT</span><span class="k">}</span><span class="nv">$LP_REL_PATH</span><span class="s2">?temp_url_sig=</span><span class="nv">$LP_TUS</span><span class="s2">&amp;temp_url_expires=</span><span class="nv">$LP_TUE</span><span class="s2">"</span> --upload-file LP_LOGO_1.png
+</code></pre>
+</div>
+
+<p>This call should upload the image file you have on your disk to LivePerson object storage.</p>
+
+<h2 id="step-4---publish-the-conversation">Step 4 - Publish the Conversation</h2>
+
+<p>Reestablish the connection using:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_JWT</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
+</code></pre>
+</div>
+
+<p>Then publish the image with the <code class="highlighter-rouge">conversationId</code> from Step 2, and the <code class="highlighter-rouge">relativePath</code> from Step 3.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"22"</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"dialogId"</span><span class="p">:</span><span class="s2">"__CONVERSATION_ID__"</span><span class="p">,</span><span class="nt">"event"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ContentEvent"</span><span class="p">,</span><span class="nt">"message"</span><span class="p">:{</span><span class="nt">"caption"</span><span class="p">:</span><span class="s2">"LivePerson logo"</span><span class="p">,</span><span class="nt">"relativePath"</span><span class="p">:</span><span class="s2">"__relative_path__"</span><span class="p">,</span><span class="nt">"fileType"</span><span class="p">:</span><span class="s2">"PNG"</span><span class="p">,</span><span class="nt">"preview"</span><span class="p">:</span><span class="s2">"data:image/png;base64,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"</span><span class="p">},</span><span class="nt">"contentType"</span><span class="p">:</span><span class="s2">"hosted/file"</span><span class="p">}},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.PublishEvent"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>(Not Available yet in production)</strong>: Now log into the Agent Workspace, accept the open conversation, and you should see the image that has been published by the consumer.</p>
+
+<h2 id="step-5---download-the-image-from-the-conversation">Step 5 - Download the image from the Conversation</h2>
+
+<p>In order to download an image that was published to the conversation, follow these steps.</p>
+
+<p>Paste the following message to the open connection using the <code class="highlighter-rouge">relative_path</code> from Step 4:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"33"</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"relativePath"</span><span class="p">:</span><span class="s2">"__relative_path__"</span><span class="p">},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.GenerateURLForDownloadFile"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In response, you will get the URL details:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"resp"</span><span class="p">,</span><span class="nt">"reqId"</span><span class="p">:</span><span class="s2">"3"</span><span class="p">,</span><span class="nt">"code"</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"relativePath"</span><span class="p">:</span><span class="s2">"/v1/AUTH_async-images/qa57221676/8a66a22f-81ee-4447-b92f-78e9c3ecc819.PNG"</span><span class="p">,</span><span class="nt">"queryParams"</span><span class="p">:{</span><span class="nt">"temp_url_sig"</span><span class="p">:</span><span class="s2">"6f52625b7f148325071c2518c714109134acd7a3"</span><span class="p">,</span><span class="nt">"temp_url_expires"</span><span class="p">:</span><span class="s2">"1474973420"</span><span class="p">}},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ms.BaseGenerateURLResponse"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>We will extract the <code class="highlighter-rouge">relativePath</code>, <code class="highlighter-rouge">temp_url_sig</code> and <code class="highlighter-rouge">temp_url_expires</code> from this response and use this value in the upload call. Close the WebSocket connection using <code class="highlighter-rouge">Ctrl+c</code> and type the following commands with the values you extracted from the previous response.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_REL_PATH</span><span class="o">=</span>__relativePath__
+<span class="nv">LP_TUS</span><span class="o">=</span>__temp_url_sig__
+<span class="nv">LP_TUE</span><span class="o">=</span>___temp_url_expires__
+curl -i <span class="s2">"https://</span><span class="k">${</span><span class="nv">LP_SWIFT</span><span class="k">}</span><span class="nv">$LP_REL_PATH</span><span class="s2">?temp_url_sig=</span><span class="nv">$LP_TUS</span><span class="s2">&amp;temp_url_expires=</span><span class="nv">$LP_TUE</span><span class="s2">"</span> --output my.png
+</code></pre>
+</div>
+
 
 
     <div class="tags">

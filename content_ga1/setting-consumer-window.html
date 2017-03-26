@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Setting Consumer Window | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Setting Consumer Window">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Setting Consumer Window</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,57 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p>Another option to use the consumer web messaging window.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="step-1---configure-the-authentication-connector">Step 1 - Configure the Authentication Connector</h2>
+<p>Login to LE and choose the Campaigns -&gt; Data Sources -&gt; Authentication Server -&gt; Configure.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p><img src="img/messaging-agent-api/campaigns.png" alt="campaigns" />
+<img src="img/datasources.png" alt="datasources" /></p>
+
+<p>In the connector configuration screen set the following fields:</p>
+
+<ul>
+  <li>Choose from the dropdown <code class="highlighter-rouge">oAuth 2.0 authentication (implicit)</code></li>
+  <li><strong>Authentication Endpoint</strong> : <code class="highlighter-rouge">https://dummy.com</code></li>
+  <li>In the <code class="highlighter-rouge">JWT Public Key</code> type: <code class="highlighter-rouge">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB</code></li>
+  <li>In the <code class="highlighter-rouge">JS Method Name</code> type: <code class="highlighter-rouge">LPJsMethodName</code></li>
+  <li>Click <code class="highlighter-rouge">Save</code></li>
+</ul>
+
+<p><img src="img/connector.png" alt="connector" /></p>
+
+<h2 id="step-2---define-messaging-engagment">Step 2 - Define Messaging Engagment</h2>
+
+<p>Change the default campaign to authenticated messaging.</p>
+
+<p>Move to the campaigns area:</p>
+
+<p><img src="img/agent_campaign.png" alt="agent_campaign" /></p>
+
+<p>Edit the default engagment:</p>
+
+<p><img src="img/edit_campaign.png" alt="edit_campaign" /></p>
+
+<p>Change the settings of the engagment to <code class="highlighter-rouge">Authenticated Visitors Only</code> and <code class="highlighter-rouge">Messaging</code>:</p>
+
+<p><img src="img/campaign_settings.png" alt="capmaign_settings" /></p>
+
+<p>Open <a href="assets/html/sitechoose.html">consumer test page</a>
+enter your site id and the following JWT:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIrOTcyLTMtNTU1NS01NTUiLCJpc3MiOiJodHRwczovL2lkcC5saXZlcGVyc29uLm5ldCIsImF1ZCI6ImFjYzpxYTU3MjIxNjc2IiwiZXhwIjoxNTM0OTcxOTMwLCJpYXQiOjE0NzE4OTk5NDIsIm5hbWUiOiJFaXRhbiJ9.Fh0sG-iu-VMZRFRbUNK0kEzb7Y1BXtQHOKaHL2y40y_c4mBvmQDCOYNWJ1ZEeayTNuLboYx6L8xEoC5xZIFnVv2N4a36BBU88fNuhe9Em2b5qNdVbdBtIJQoBY5ep5O2geAaCVA7A7oS8ysWVGn9CV4btH_D5sU2jGr3ml8yfJA
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>and click submit.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p>Click the “Live Chat” button:
+<img src="img/consumer_page.png" alt="consumer-page" /></p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>The conversation window will be shown
+<img src="img/consumer_window.png" alt="capmaign_settings" /></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

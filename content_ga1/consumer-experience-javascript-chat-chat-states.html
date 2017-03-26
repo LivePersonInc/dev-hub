@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Chat States | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Chat States">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -642,7 +642,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-chat-states.html">Chat States</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Chat States</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,66 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This is the list of chat states that are published throughout the lifetime of the chat.<br />
+All chat states are published on the event listeners triggers or you can retrieve the current state by calling the <code class="highlighter-rouge">getState</code> method.<br />
+Some of the chat states are also published on separate listeners to which you can bind.<br />
+The states are there to help indicate the state of the chat API. <br />
+The enumeration for the states are exposed via <code class="highlighter-rouge">lpTag.taglets.ChatOverRestAPI.prototype.chatStates</code>.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
-
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">State</th>
+      <th style="text-align: left">ENUM</th>
+      <th style="text-align: left">Listener/s to bind</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">resume</td>
+      <td style="text-align: left">RESUMING</td>
+      <td style="text-align: left">onLoad - appears as a state property <br /> onState - regular state event</td>
+      <td style="text-align: left">Chat instance is trying to resume a chat session. This occurs automatically if you create an instance of a chat already in progress.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">initialised</td>
+      <td style="text-align: left">INITIALISED</td>
+      <td style="text-align: left">onState - regular state event</td>
+      <td style="text-align: left">Chat basic functionality exists.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">uninitialised</td>
+      <td style="text-align: left">UNINITIALISED</td>
+      <td style="text-align: left">onLoad - appears as a state property</td>
+      <td style="text-align: left">Created a new chat object that does not yet have a state or any functionality.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">waiting</td>
+      <td style="text-align: left">WAITING</td>
+      <td style="text-align: left">onState - regular state event</td>
+      <td style="text-align: left">The visitor is queued and waiting for chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chatting</td>
+      <td style="text-align: left">CHATTING</td>
+      <td style="text-align: left">onStart - chat started event <br /> onState - regular state event</td>
+      <td style="text-align: left">Agent has accepted the chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ended</td>
+      <td style="text-align: left">ENDED</td>
+      <td style="text-align: left">onStop - chat stopped event <br /> onState - regular state event</td>
+      <td style="text-align: left">Chat session has ended.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">notfound</td>
+      <td style="text-align: left">NOTFOUND</td>
+      <td style="text-align: left">onState - regular state event.</td>
+      <td style="text-align: left">An attempt to resume chat has failed. <br /> The chat was not found on the server. <br /> There is no way to request this chat’s data via the API. <br /> For a new chat use requestChat again.</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

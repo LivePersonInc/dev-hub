@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Overview | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Overview">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2174,7 +2174,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="messaging-agent-sdk-overview.html">Overview</a></li>
+                                                        <li class="active thirdlevel"><a href="messaging-agent-sdk-overview.html">Overview</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Overview</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,66 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>The Messaging Agent SDK (Node.JS) was built in order to help developers and our partners quickly integrate a messaging bot into the LiveEngage framework, enabling the bot to handle consumer conversations, escalate to a human when needed, and programmatically perform all agent actions.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>To access the Messaging Agent SDK, <a href="https://github.com/LivePersonInc/node-agent-sdk" target="_blank">click here</a>.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p>Here are a few sample bot integrations, which demonstrates some of the use cases that can be achieved with the SDK:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><strong>1. Greeting Bot Example</strong></p>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>This example demonstrates running a System Message type bot, which subscribes to all of the incoming conversation, and sends the first welcome message.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<p><a href="https://github.com/LivePersonInc/node-agent-sdk#running-the-sample-app" target="_blank">Click here</a> to review the manager bot example on Github.</p>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>2. Agent Bot Example</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>This example demonstrates running ​a ​bot using the major API calls.</p>
+
+<p>Use the agent bot example when you are looking to review and develop with the various available API calls, such as:</p>
+
+<ul>
+  <li>getClock</li>
+  <li>agentRequestConversation</li>
+  <li>subscribeExConversations</li>
+  <li>unsubscribeExConversations</li>
+  <li>updateConversationField</li>
+  <li>publishEvent</li>
+  <li>queryMessages</li>
+  <li>updateRingState</li>
+  <li>subscribeRoutingTasks</li>
+  <li>updateRoutingTaskSubscription</li>
+  <li>getUserProfile</li>
+  <li>setAgentState</li>
+  <li>subscribeAgentsState</li>
+</ul>
+
+<p><a href="https://github.com/LivePersonInc/node-agent-sdk/tree/master/examples/agent-bot" target="_blank">Click here</a> to review the full code repository on Github.</p>
+
+<p>You can also watch this demo video, which will guide you on how to run this example bot:
+<a href="https://www.youtube.com/embed/7PVj6nhjG5o" target="_blank">https://www.youtube.com/embed/7PVj6nhjG5o</a></p>
+
+<p><strong>3. Bots Cluster Example</strong></p>
+
+<p>This example demonstrates running a bot on a ​horizontal scalable cluster. It can be used for a few use cases:</p>
+
+<ul>
+  <li>
+    <p>Bot Resiliency - If one node crashes, one ​of the other ​clusters ​will reconnect the bot.</p>
+  </li>
+  <li>
+    <p>Multiple Bots - The bots will be spread across the cluster’s nodes. If one node fails the other will share its bots. If a new node is added to the cluster it will take some of the bots from other nodes.</p>
+  </li>
+</ul>
+
+<p><a href="https://github.com/LivePersonInc/node-agent-sdk/tree/master/examples/cluster" target="_blank">Click here</a> to review the full code repository on Github.​</p>
+
+<p>You can also watch the demo video which will guide you through this example bot:
+<a href="https://www.youtube.com/embed/4FgZa87sDho" target="_blank">https://www.youtube.com/embed/4FgZa87sDho</a></p>
+
+<p>As well as a code review video:
+<a href="https://www.youtube.com/embed/QZiNzkWgPWk" target="_blank">https://www.youtube.com/embed/QZiNzkWgPWk</a></p>
+
 
 
     <div class="tags">

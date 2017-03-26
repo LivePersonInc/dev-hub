@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Current Queue State | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Current Queue State">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2436,7 +2436,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-operational-realtime-current-queue-state.html">Current Queue State</a></li>
+                                                        <li class="active thirdlevel"><a href="data-operational-realtime-current-queue-state.html">Current Queue State</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Current Queue State</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,186 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Retrieves the current queue state related metrics at the skill level:
+•	Current queue size
+•	Current available slots</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<h2 id="request">Request</h2>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/operations/api/account/{accountID}/queuestate?skillIds=&lt;skillIDs&gt;&amp;v=&lt;version&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Query Parameters</strong></p>
+
+<p>You can request queue state data using the following parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">Version of API, for example, v=1.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillIds</td>
+      <td style="text-align: left">When provided, metrics on the response will be grouped by the requested skills. When not provided, the default will be ‘skillIds=all’, and metrics on the response will be calculated by all skills with queue state data. You can provide one or more skill IDs. <br /> Example: skillIds=4,15,3 . To retrieve all skills active for the time period use skillIds=all (same as default if not provided).</td>
+      <td style="text-align: left">numeric, comma separated</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<p><strong>JSON Example</strong></p>
+
+<p>Request by all skills</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="nt">"skills"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"1"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"2"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">14</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"3"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">15</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"4"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">27</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">20</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"totals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">49</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">54</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>Request by skills=1,2</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="nt">"skills"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"1"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"2"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">14</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"totals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">16</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">19</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">Request</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">skills=</span><span class="mi">1</span><span class="err">,</span><span class="mi">100</span><span class="w"> </span><span class="err">(skill</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">no</span><span class="w"> </span><span class="err">queue</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">data)</span><span class="w">
+</span><span class="p">{</span><span class="w">  
+    </span><span class="nt">"skills"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"1"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"100"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"totals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>Elements in the Response</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">skills</td>
+      <td style="text-align: left">An object that represent the current queue state per skills. Each entry represents a skill id and its corresponding current queue size and available slots values.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">totals</td>
+      <td style="text-align: left">An object that represents the total values of all queue sizes and available slots listed under ‘skills’. Note that in any case that for a certain skill there is no queue state data (hence a -1 value), it will not be aggregated to totals, meaning only valid (non -1) skill queue state values are summed up.</td>
+      <td style="text-align: left">Element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currentAvailableSlots</td>
+      <td style="text-align: left">The current queue number of available slots. <br /> Note: If the agent concurrency set to ‘Unlimited’, the number of current available slots for the associated skill will always be 1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currentQueueSize</td>
+      <td style="text-align: left">The current queue size</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Optional Response Status Codes</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">200 OK</td>
+      <td style="text-align: left">Successfully retrieved the data</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">400 Bad Request</td>
+      <td style="text-align: left">Problem with body or query parameters</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">401 Unauthorized</td>
+      <td style="text-align: left">401 Unauthorized Bad Authentication (invalid site or agent)</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

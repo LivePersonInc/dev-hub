@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>getEstimatedWaitTime | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="getEstimatedWaitTime">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -666,7 +666,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-getestimatedwaittime.html">getEstimatedWaitTime</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">getEstimatedWaitTime</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,81 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This method returns the estimated wait time in seconds before a chat starts.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>A few special cases are described below:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Value</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">0</td>
+      <td style="text-align: left">At least one agent is available to chat immediately (the agent is online and has not exceeded his/her maximum number of chats).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-1</td>
+      <td style="text-align: left">No agents are online and/or the chat service is unavailable.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-2</td>
+      <td style="text-align: left">Chat service is available, however, there is not enough data to predict the estimated wait time.</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<h2 id="request">Request</h2>
+
+<p><strong>Possible properties on the request object</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Value</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">skill</td>
+      <td style="text-align: left">The required skill for the chat</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">serviceQueue</td>
+      <td style="text-align: left">The queue type from which an agent is required.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Sample request</strong></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">failedRequest</span> <span class="o">=</span> <span class="nx">myChat</span><span class="p">.</span><span class="nx">getEstimatedWaitTime</span><span class="p">({</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="s2">"PCRepair"</span><span class="p">,</span> <span class="c1">//The skill we want</span>
+    <span class="na">success</span><span class="p">:</span> <span class="nx">repair</span><span class="p">.</span><span class="nx">gotData</span><span class="p">,</span> <span class="c1">//A callback function on success</span>
+    <span class="na">error</span><span class="p">:</span> <span class="nx">repair</span><span class="p">.</span><span class="nx">dataFailed</span><span class="p">,</span> <span class="c1">//A callback function on error</span>
+    <span class="na">context</span><span class="p">:</span> <span class="nx">repair</span> <span class="c1">//The execution context for our callbacks</span>
+<span class="p">});</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">failedRequest</span> <span class="o">&amp;&amp;</span> <span class="nx">failedRequest</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">failedRequest</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre>
 </div>
+<h2 id="response">Response</h2>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Sample response</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nt">"estimatedWaitTime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">

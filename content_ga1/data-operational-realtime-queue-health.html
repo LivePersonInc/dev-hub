@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Queue Health | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Queue Health">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2418,7 +2418,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-operational-realtime-queue-health.html">Queue Health</a></li>
+                                                        <li class="active thirdlevel"><a href="data-operational-realtime-queue-health.html">Queue Health</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Queue Health</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,669 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>Retrieves queue-related metrics at the account or skill level.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><em>Note: Queue Health is calculated using bucket-based aggregation techniques, where events are collected into 5 minute buckets. For this reason, events may be included that took place outside of the requested time frame.</em></p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><strong>Example</strong>: If the time now is 13:29 and the time frame is 7 minutes, the API will use 2 buckets: 13:25 and 13:30. In other words, in practice the time of the data is not 13:22-13:29, but 13:20-13:29.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<h2 id="request">Request</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GET</td>
+      <td style="text-align: left"><code class="highlighter-rouge">https://&lt;domain&gt;/operations/api/account/{accountID}/queuehealth?timeframe=&lt;timeframe in minutes&gt;&amp;skillIds=&lt;skillIDs&gt;&amp;interval=&lt;interval size in minutes&gt;&amp;v=&lt;version&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>URL Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+      <th style="text-align: left">Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">timeframe</td>
+      <td style="text-align: left">The time range (in minutes) in which the data can be filtered. Where end time = current time, and start time = end time - timeframe. The maximum timeframe value is 1440 minutes (24 hours).</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">v</td>
+      <td style="text-align: left">Version of API, for example, v=1.</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">required</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skillIds</td>
+      <td style="text-align: left">When provided, metrics on the response will be grouped by the requested skills. When not provided, metrics on the response will be calculated at the account level. You can provide one or more skillIDs. <br /> Example: skillIds=4,153. To retrieve all skills active for the time period, use skillIds=all.</td>
+      <td style="text-align: left">numeric, comma separated</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">interval</td>
+      <td style="text-align: left">Interval size in minutes. When provided, the returned data will be aggregated by intervals of the requested size. The interval has to be smaller or equal to the time frame and also a divisor of the time frame. <br /> Example: <br /> timeframe=60&amp;interval=30 (correct) <br /> timeframe=60&amp;interval=61 (bad request) <br /> timeframe=60&amp;interval=31 (bad request)</td>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">optional</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<p><strong>JSON Example</strong></p>
+
+<p>Request by skillIds=199,200 (no interval)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"199"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.4</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">1111</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">68</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">72</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueState"</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">84</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">216</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"200"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">6666</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">42</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueState"</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">42</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">175</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.4</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">8888</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">92</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">35.125</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">47</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.63</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">92</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">47</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">259</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">46</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">281</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">8</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>Request by skillIds=11,21,269364510, interval=360, timeframe=720</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="nt">"metricsByIntervals"</span><span class="p">:[</span><span class="w">  
+        </span><span class="p">{</span><span class="w">  
+            </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="mi">1465286700000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"metricsData"</span><span class="p">:{</span><span class="w">  
+                </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.010390574264774098</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">40540</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">3.7610167919101958</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10779</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10779</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">112</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.0033572068039391225</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">51655</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.780550581915846</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">8936</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">8936</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.023550191345304682</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">53645</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.263958394661957</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10191</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10191</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">240</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">145840</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">29906</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">29906</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">382</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">  
+            </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="mi">1465308300000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"metricsData"</span><span class="p">:{</span><span class="w">  
+                </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">220</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.239413988657845</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">15740</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">1.4877126654064272</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10580</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">28</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10580</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">2533</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">25</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">52</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.036370384115791424</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">113009</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">10.485154945258861</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10778</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10778</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.17</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">392</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">5</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">471</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.07260261106414953</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">57671</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.416643185873955</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">10647</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">10647</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">26</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">773</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">18</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">743</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">41</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">186420</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">32005</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">31</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">32005</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">3698</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">48</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">  
+            </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="mi">1465329900000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"metricsData"</span><span class="p">:{</span><span class="w">  
+                </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">198</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">5073</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">396</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">46</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">134</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">38</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">424</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">365</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">396</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">424</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">26</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.07</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">14</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+                        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">1777</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">594</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">38</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">47</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+                    </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">264</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">7215</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">1089</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">297</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">1321</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">60</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">297</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">73</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">99</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"skillsMetrics"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"11"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">132</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">5299</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.12326405070370025</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">56379</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">2.6274116879485505</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">21458</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">397</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">76</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">21458</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">83</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">2645</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">64</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"21"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">215</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">419</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.021299147024680765</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">35</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">165060</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">8.330893857568263</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">19813</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">429</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">19813</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.09</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">422</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">20</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"269364510"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">2257</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.053111716100683</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">111910</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.345082867650571</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">20937</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">20937</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">34</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.03</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">1112</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">66</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"metricsTotals"</span><span class="p">:{</span><span class="w">  
+        </span><span class="nt">"avgTimeToAbandon"</span><span class="p">:</span><span class="mi">189</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"totalTimeToAnswer"</span><span class="p">:</span><span class="mi">7975</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageQueueSize"</span><span class="p">:</span><span class="mf">0.06717785493827161</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxAvailableSlots"</span><span class="p">:</span><span class="mi">82</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsSum"</span><span class="p">:</span><span class="mi">333349</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonedEng"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"averageAvailableSlots"</span><span class="p">:</span><span class="mf">5.3586194701646095</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"maxQueueSize"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"availableSlotsCount"</span><span class="p">:</span><span class="mi">62208</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"totalTimeToAbandon"</span><span class="p">:</span><span class="mi">1326</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"enteredQEng"</span><span class="p">:</span><span class="mi">94</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentAvailableSlots"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentQueueSize"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"minAvailableSlots"</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeCount"</span><span class="p">:</span><span class="mi">62208</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"avgTimeToAnswer"</span><span class="p">:</span><span class="mi">53</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"abandonmentRate"</span><span class="p">:</span><span class="mf">0.04</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"queueSizeSum"</span><span class="p">:</span><span class="mi">4179</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"connectedEng"</span><span class="p">:</span><span class="mi">150</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>Elements in the Response</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">skillsMetrics</td>
+      <td style="text-align: left">When skillIDs are provided: An array of skills with their metrics. <br /> When interval size is provided: The response will have the skillsMetrics element in each interval representing the data for the related interval. <br /> There will also be a skillsMetrics element at the end of the response, representing the data of the whole requested time frame (totals of all intervals). <br />If there is no data for a specific skill, it will not be included in the array. <br /> If there is no data for any of the skills, this member will have an empty element as value.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">metricsTotals</td>
+      <td style="text-align: left">When skillIDs are provided: The total metrics for all requested skills. <br /> When skillIDs are not provided: The site metrics. <br /> When interval is provided: Total metrics for all requested intervals.<br /> If skill/sID/s are requested and there is no data for any of them, this element will still include all of the metrics with value zero. <br /> Note: Totals may not add up due to rounding differences.</td>
+      <td style="text-align: left">element</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skill id</td>
+      <td style="text-align: left">When skillIDs value(/s) provided: The skill ID.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">timestamp</td>
+      <td style="text-align: left">When interval size is provided in the request, the response will be aggregated by intervals. The timestamp is the UTC timestamp in milliseconds representing the end time of the interval. <br /> Example : Interval size: 30 min. Interval start and end time: 26/03/2014 07:30:00 - 26/03/2014 08:00:00. Timestamp: 1395820800000. <br /> Intervals are rounded up to 5 minutes. Consequently: The latest interval time stamp will be rounded up. <br /> Example: Now: 08:07. Last interval end time: 8:10. <br /> The earliest interval will include only the remainder of the requested time frame, and will contain only 5 minutes of data. <br /> Example: Now: 8:07. Request parameters: timeframe=20 and interval=10 (20 minutes in 10 minute intervals). Response from and to time: 7:45 - 8:07 –&gt; 22 minutes. <br /> Note: See Queue Health for further information about time frame rounding. <br /> Response intervals: 8:00 - 8:10 (10 minutes. actual 7 minutes because now is 8:07). 7:50 - 8:00 (10 minutes). 7:45 - 7:50 (5 minutes).</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">totalTimeToAnswer</td>
+      <td style="text-align: left">The total time, in seconds, that the visitors spent in the queue before being connected to an agent.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">enteredQEng</td>
+      <td style="text-align: left">The number of visitors that entered the queue.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">avgTimeToAnswer</td>
+      <td style="text-align: left">The average time, in seconds, that a visitor spent in the queue before being connected to an agent. <br /> Calculation: totalTimeToAnswer / connectedEng.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">abandonmentRate</td>
+      <td style="text-align: left">The number of visitors that abandoned the queue out of the total visitors that started an engagement. <br /> Calculation: abandonedEng / (abandonedEng + connectedEng).</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">abandonedEng</td>
+      <td style="text-align: left">The number of visitors that abandoned the queue before being connected to an agent.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">connectedEng</td>
+      <td style="text-align: left">The number of visitors that were connected to an agent.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">totalTimeToAbandon</td>
+      <td style="text-align: left">Total time visitors spend in queue before abandon.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">avgTimeToAbandon</td>
+      <td style="text-align: left">The average time visitors spend in queue before abandon. <br /> Calculation: totalTimeToAbandon / abandonedEng.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxQueueSize</td>
+      <td style="text-align: left">The maximum queue size within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minQueueSize</td>
+      <td style="text-align: left">The minimum queue size within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">averageQueueSize</td>
+      <td style="text-align: left">The average queue size within the given time frame (rounded). Default value if no such data exists is -1. Calculated as queueSizeSum / queueSizeCount</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxAvailableSlots</td>
+      <td style="text-align: left">The maximum available slots within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maxAvailableSlots</td>
+      <td style="text-align: left">The maximum available slots within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minAvailableSlots</td>
+      <td style="text-align: left">The minimum available slots within the given time frame. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">averageAvailableSlots</td>
+      <td style="text-align: left">The average available slots within the given time frame (rounded). Default value if no such data exists is -1. Calculated as availableSlotsSum / availableSlotsCount</td>
+      <td style="text-align: left">double</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currentQueueState</td>
+      <td style="text-align: left">The current queue size. Default value if no such data exists is -1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">currentAvailableSlots</td>
+      <td style="text-align: left">The current available slots. Default value if no such data exists is -1. <br /> Note: If the agent concurrency set to ‘Unlimited’, the number of current available slots for the associated skill will always be 1.</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">queueSizeSum</td>
+      <td style="text-align: left">Sum of all queue sizes received (queue size sum is calculated as sum of all [queue size] * [counter column value])</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">queueSizeCount</td>
+      <td style="text-align: left">Total number of queue size measures made</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">availableSlotsSum</td>
+      <td style="text-align: left">Sum of all available slots received (queue size sum is calculated as sum of all [queue size] * [counter column value])</td>
+      <td style="text-align: left">long</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">availableSlotsCount</td>
+      <td style="text-align: left">Total number of available slots measures made</td>
+      <td style="text-align: left">long</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

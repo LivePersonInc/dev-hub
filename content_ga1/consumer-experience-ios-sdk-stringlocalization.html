@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>String Localization | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="String Localization">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1249,7 +1249,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-ios-sdk-stringlocalization.html">String localization in SDK</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-ios-sdk-stringlocalization.html">String localization in SDK</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">String Localization</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,73 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>The SDK contains language folders for each language supported. For a list of supported languages, see <a href="https://ce-sr.s3.amazonaws.com/CA/Admin/Sys%20req/System%20requirements.pdf" target="_blank">LiveEngage System Requirements and Language Support</a>. Each folder contains LPLocalizable.strings file, where all strings are located for a specific language.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>The example below contains four language folders:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li>en.lproj: strings in English. Used in case the host app/device language is not supported by us</li>
+  <li>fr.lproj: strings in French</li>
+  <li>pt.lproj: strings in Portuguese</li>
+  <li>pt-PT.lproj: strings in Portuguese (Portugal)</li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p>The SDK allows you to override the string localization of any supported language in LiveEngage.</p>
+
+<p>To apply a custom localization files with your own strings, create LPLocalizable.strings files for relevant languages inside your app, which will include the keys you would like to override.</p>
+
+<p><strong>Example: Overriding the SDK string of ‘send’ in English:</strong></p>
+
+<ol>
+  <li>Create in your app a new localization Base file called LPLocalizable.strings which will include your supported language: ‘New file…’ -&gt; ‘Strings file’ -&gt; ‘Create’</li>
+  <li>Add new key: “send” = “<ANY NEW="" VALUE="">”;</ANY></li>
+  <li>Mark this LPLocalizable.strings file as localized: Tap on LPLocalizable.strings file -&gt; Open the file inspector -&gt; Go to ‘Localization’ section -&gt; Tap ‘Localize…’</li>
+</ol>
+
+<p><strong>Adding a new supported language</strong></p>
+
+<ul>
+  <li>Open project settings</li>
+  <li>Info tab</li>
+  <li>Under Localizations, press ‘+’ sign</li>
+  <li>Choose the new language you would like to support.</li>
+</ul>
+
+<p><strong>Attaching a Strings file to existing supported languages:</strong></p>
+
+<ul>
+  <li>Choose the desired strings file</li>
+  <li>Open the file inspector</li>
+  <li>Under localizations, choose the relevant languages.</li>
+</ul>
+
+<p>Your ‘send’ string implementation will override the localization in English in the SDK.</p>
+
+<p><strong>To print all localized keys with a default English value in the SDK:</strong></p>
+
+<p>Call the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.printAllLocalizedKeys()
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>To get or print all localized supported languages in the SDK:</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<p>Call the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.printSupportedLanguages()
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>To get all supported languages by key-value (key is locale key and value is language description):</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>Call the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LPMessagingSDK.instance.getAllSupportedLanguages()
+</code></pre>
+</div>
+
+<p><em>Note: The SDK uses native iOS control for the Copy/Paste menu. The language of the menu control is defined by the current device language if the host app is localized for this language. If the host app does not have this language, the last menu control language will be used.</em></p>
 
 
     <div class="tags">

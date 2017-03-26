@@ -4,8 +4,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<meta name="keywords" content=" oauth2.0 jwt token">
+<title>Authentication | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Authentication">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2589,7 +2589,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-authentication.html">Authentication</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Authentication</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,97 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p>In this tutorial you will use the APIs with the authenticated identity of the consumer using a <a href="https://tools.ietf.org/html/rfc7519">JSON Web Token (JWT)</a>.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>See <a href="`consumer-int-get-msg.html#prerequisites">Prerequisites</a>.
+In order to work with authentication, your account must be provisioned by an LPA (LivePerson Administrator) according to <a href="consumer-int-account-provision.html">these instructions</a>.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<h2 id="step-1---configure-the-authentication-connector">Step 1 - Configure the Authentication Connector</h2>
+<p>Log into LiveEngage and navigate to Campaigns &gt; Data Sources &gt; Authentication Server &gt; Configure.</p>
+
+<p><img src="img/messaging-consumer-api/campaigns.png" alt="campaigns" />
+<img src="img/datasources.png" alt="datasources" /></p>
+
+<p>In the connector configuration screen, set the following fields:</p>
+
+<ul>
+  <li>Choose from the dropdown <code class="highlighter-rouge">oAuth 2.0 authentication (implicit)</code>.</li>
+  <li><strong>Authentication Endpoint</strong> : <code class="highlighter-rouge">https://dummy.com</code>.</li>
+  <li>In the <code class="highlighter-rouge">JWT Public Key</code>, type: <code class="highlighter-rouge">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB</code>.</li>
+  <li>In the <code class="highlighter-rouge">JS Method Name</code>, type: <code class="highlighter-rouge">LPJsMethodName</code></li>
+  <li>Click <code class="highlighter-rouge">Save</code>.</li>
+</ul>
+
+<p><img src="img/connector.png" alt="connector" /></p>
+
+<h2 id="step-2---create-an-authenticated-token">Step 2 - Create an Authenticated Token</h2>
+
+<p>In order to create an authenticated token, you should supply a JWT with the identity of the user signed by your identity provider. For this tutorial you can use the JWT below. Its signature can be validated using the public key we configured in the previous step. To create your own external JWT, see <a href="#further-testing">Further Testing</a>.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_EXT_JWT</span><span class="o">=</span>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIrOTcyLTMtNTU1NS01NTUiLCJpc3MiOiJodHRwczovL2lkcC5saXZlcGVyc29uLm5ldCIsImF1ZCI6ImFjYzpxYTU3MjIxNjc2IiwiZXhwIjoxNTM0OTcxOTMwLCJpYXQiOjE0NzE4OTk5NDIsIm5hbWUiOiJFaXRhbiJ9.Fh0sG-iu-VMZRFRbUNK0kEzb7Y1BXtQHOKaHL2y40y_c4mBvmQDCOYNWJ1ZEeayTNuLboYx6L8xEoC5xZIFnVv2N4a36BBU88fNuhe9Em2b5qNdVbdBtIJQoBY5ep5O2geAaCVA7A7oS8ysWVGn9CV4btH_D5sU2jGr3ml8yfJA
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>We will now ask to create a token based on this authenticated identity:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> https://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
 </code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>This will request to create an authenticated identity based on the external identity. The command then extracts the <code class="highlighter-rouge">JWT</code> from the response and sets it as a variable called <code class="highlighter-rouge">LP_AUTH_JWT</code> in your shell. We will use it in our next steps.</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>To check the value inside the <code class="highlighter-rouge">LP_AUTH_JWT</code>, type the following:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">&gt; </span><span class="nb">echo</span> <span class="nv">$LP_AUTH_JWT</span>
+eyJraWQiOiIwMDAwMSIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2MTBjZDc3YWY4NDM2NDM2OGQzNDgyNmFiNDlmMWI4YWM5Nzg2MzhlNmE2OGY3OTEyNGQzNzM4NGUzZWQ0YTc2IiwiYXVkIjoiYWNjOnFhNTcyMjE2NzYiLCJpc3MiOiJodHRwczpcL1wvaWRwLmxpdmVwZXJzb24ubmV0IiwibHAuZXh0Ijp7InN1YiI6Iis5NzItMy01NTU1LTU1NSIsImlzcyI6Imh0dHBzOlwvXC9pZHAubGl2ZXBlcnNvbi5uZXQiLCJscF9zZGVzIjoiZTJmNzk1OGJiNjU3ZGFjOGEyY2NiMGE1OGNiNGRkYjQ1ZGZiYmZmMzg0MzM1ZGJkYmMwMGNmNWM2YmFlZmNlMjQ5YWI3NDQ4YTQxMmIxZmQyNWYyMmU0YjY0YmZjYTEyMDQyMzFjZGE4NDI2ZGFmOGY3ZDYzZjk5NTM2ODA5YzNlZGZhOWVkMDQ2YmMxMjgyMDNkMTZmZTU3ZGNmNDcwYWVlYWE1NDQwZjYzMmVjZmY5MjY2YjFmOGVhYzI0NjA4In0sImV4cCI6MTUzNDk3MTkzMCwiaWF0IjoxNDcxODk5OTQyfQ.it83vkbhAZqSE-H6c87WnU38Cxh-K_uxsTkWvKRBbSxSQYrlK0Hi267OE4EGhr0CIsf8bRbaiwa3gQEYGY43alRWQiGZ1zR30okxFVUjQVvaWGjzF-aB5FEjWFBdbWsyZ28xR1i971ydB4-iMYgMWDvG8KkB9rFaY-gsoK5LXE0
+</code></pre>
+</div>
+
+<h2 id="step-3---create-an-authenticated-conversation">Step 3 - Create an Authenticated Conversation</h2>
+<p>We will now be able to open a WebSocket connection. This time we will use the authenticated identity encoded in the <code class="highlighter-rouge">LP_AUTH_JWT</code>:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_AUTH_JWT</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
+</code></pre>
+</div>
+
+<p>Using this connection, send a request to create a new conversation:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cm.ConsumerRequestConversation"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Open the Agent Workspace and click the <code class="highlighter-rouge">Accept</code> button. The conversation will be opened, and in the consumer info section you will  see authenticated information such as the consumer’s phone number:
+<img src="img/consumer_info.png" alt="" /></p>
+
+<p>Close the conversation.</p>
+
+<h2 id="further-testing">Further Testing</h2>
+<p>You can try changing the external JWT properties using a JWT encoder, for example (<a href="http://jwt.io">jwt.io</a>). Use the <code class="highlighter-rouge">RS256</code> algorithm with the following keys:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB
+-----END PUBLIC KEY-----  
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>-----BEGIN RSA PRIVATE KEY-----
+MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQABAoGAD+onAtVye4ic7VR7V50DF9bOnwRwNXrARcDhq9LWNRrRGElESYYTQ6EbatXS3MCyjjX2eMhu/aF5YhXBwkppwxg+EOmXeh+MzL7Zh284OuPbkglAaGhV9bb6/5CpuGb1esyPbYW+Ty2PC0GSZfIXkXs76jXAu9TOBvD0ybc2YlkCQQDywg2R/7t3Q2OE2+yo382CLJdrlSLVROWKwb4tb2PjhY4XAwV8d1vy0RenxTB+K5Mu57uVSTHtrMK0GAtFr833AkEA6avx20OHo61Yela/4k5kQDtjEf1N0LfI+BcWZtxsS3jDM3i1Hp0KSu5rsCPb8acJo5RO26gGVrfAsDcIXKC+bQJAZZ2XIpsitLyPpuiMOvBbzPavd4gY6Z8KWrfYzJoI/Q9FuBo6rKwl4BFoToD7WIUS+hpkagwWiz+6zLoX1dbOZwJACmH5fSSjAkLRi54PKJ8TFUeOP15h9sQzydI8zJU+upvDEKZsZc/UhT/SySDOxQ4G/523Y0sz/OZtSWcol/UMgQJALesy++GdvoIDLfJX5GBQpuFgFenRiRDabxrE9MNUZ2aPFaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==
+-----END RSA PRIVATE KEY-----  
+</code></pre>
+</div>
+
+<p>In the payload, put something similar to the below:</p>
+
+<pre><code class="language-JSON">{
+  "sub": "+972-3-5555-555",
+  "iss": "https://idp.liveperson.net",
+  "aud": "acc:qa57221676",
+  "exp": 1534971930,
+  "iat": 1471899942,
+  "name": "Eitan"
+}
+</code></pre>
+
 
 
     <div class="tags">

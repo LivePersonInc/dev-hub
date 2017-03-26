@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Appendix | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Appendix">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2352,7 +2352,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="data-messaging-interactions-appendix.html">Appendix</a></li>
+                                                        <li class="active thirdlevel"><a href="data-messaging-interactions-appendix.html">Appendix</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Appendix</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,167 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <h2 id="engagement-attributes">Engagement Attributes</h2>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p>Engagement Attributes allow a brand to communicate events, for example, purchases, visitor login, shopping cart backout etc., from the webpage into LiveEngage. This section describes the data retrieved in the response body. All engagement attribute values are of unlimited length (up to 50K chars).</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<h3 id="customerinfo">customerInfo</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerStatus</td>
+      <td style="text-align: left">Customer status- will be matched against customer status entity name. Case insensitive.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerType</td>
+      <td style="text-align: left">Customer type - will be matched against customer type entity name. Case insensitive.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">balance</td>
+      <td style="text-align: left">The current balance of the customer.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerId</td>
+      <td style="text-align: left">The customer ID.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">socialId</td>
+      <td style="text-align: left">The social ID of your choice: Facebook, Twitter etc.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">imei</td>
+      <td style="text-align: left">Unique phone identifier.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userName</td>
+      <td style="text-align: left">Nickname or username of a consumer.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accountName</td>
+      <td style="text-align: left">Name of the company or account.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">role</td>
+      <td style="text-align: left">Role title of the consumer within their organization.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastPaymentDate</td>
+      <td style="text-align: left">The customer’s last payment date. This consists of 3 integer fields: Year, month, and day.</td>
+      <td style="text-align: left">json : { “year”: 2011, “month”: 3, “day”: 21}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">registrationDate</td>
+      <td style="text-align: left">The customer’s registration date. This consists of 3 integer fields: Year, month, and day.</td>
+      <td style="text-align: left">json : { “year”: 2011, “month”: 3, “day”: 21}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">companySize</td>
+      <td style="text-align: left">The company size.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">accountName</td>
+      <td style="text-align: left">A nickname for the account for B2B like the salesforce account name.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">storeZipCode</td>
+      <td style="text-align: left">The zip code of the store.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">storeNumber</td>
+      <td style="text-align: left">The number of the store.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">loginStatus</td>
+      <td style="text-align: left">Login status.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h3 id="personalinfo">personalInfo</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type/Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">serverTimeStamp</td>
+      <td style="text-align: left">Event time stamp.</td>
+      <td style="text-align: left">long – epoch time in milliseconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">name</td>
+      <td style="text-align: left">Personal name.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">surname</td>
+      <td style="text-align: left">Surname.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">gender</td>
+      <td style="text-align: left">Visitor’s gender.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">company</td>
+      <td style="text-align: left">Visitor’s company.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">customerAge</td>
+      <td style="text-align: left">Year of birth. For calculating age.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">email</td>
+      <td style="text-align: left">Visitor email.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">phone</td>
+      <td style="text-align: left">Visitor phone number.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">language</td>
+      <td style="text-align: left">Visitor language.</td>
+      <td style="text-align: left">alphanumeric</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <div class="tags">

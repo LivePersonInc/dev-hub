@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>getEngagementInfo | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="getEngagementInfo">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -1815,7 +1815,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="trigger-getinfo.html">getEngagementInfo</a></li>
+                                                        <li class="active thirdlevel"><a href="trigger-getinfo.html">getEngagementInfo</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">getEngagementInfo</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,150 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This method receives an engagement ID and returns the engagement information if it exists on the page, or an empty object if it does not.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><strong>Syntax</strong></p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><code class="highlighter-rouge">lpTag.taglets.rendererStub.getEngagementInfo(engagementId);</code></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p><strong>Parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The ID of the engagement to get information about.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Example</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if(lpTag &amp;&amp; lpTag.taglets &amp;&amp; lpTag.taglets.rendererStub){
+   var info =   
+        lpTag.taglets.rendererStub.getEngagementInfo(12356454);
+}
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p><strong>Return value</strong></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p>The method returns a JSON with the engagement information.</p>
+
+<p><em>Example</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="err">campaignId:1547868510</span><span class="w">
+</span><span class="err">confKey:</span><span class="nt">"1547868510_1547904110_21"</span><span class="w">
+</span><span class="err">contextId</span><span class="p">:</span><span class="s2">"1"</span><span class="w">
+</span><span class="err">contexts:</span><span class="w"> </span><span class="p">[</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="err">EngagementContext:</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="err">Id:</span><span class="nt">"1"</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="err">}</span><span class="p">,</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="err">pageContext:</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="err">id:</span><span class="nt">"2203783087"</span><span class="err">}</span><span class="w"> </span><span class="err">}</span><span class="w">
+</span><span class="p">],</span><span class="w">
+</span><span class="err">conversationType</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+</span><span class="err">engagementId</span><span class="p">:</span><span class="w"> </span><span class="mi">1547904110</span><span class="p">,</span><span class="w">
+</span><span class="err">engagementName</span><span class="p">:</span><span class="w"> </span><span class="s2">"Engagement 1"</span><span class="p">,</span><span class="w">
+</span><span class="err">engagementRevision</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w">
+</span><span class="err">engagementType</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="err">instantiated</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+</span><span class="err">renderingType</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+</span><span class="err">state</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="err">tglName</span><span class="p">:</span><span class="w"> </span><span class="s2">"toaster"</span><span class="p">,</span><span class="w">
+</span><span class="err">zoneId</span><span class="p">:</span><span class="w"> </span><span class="mi">1346149610</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p><strong>Elements in the response</strong></p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type / Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">The engagement’s campaign ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">confKey</td>
+      <td style="text-align: left">Internal. CampaignId + EngagementId + Revision.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contextId</td>
+      <td style="text-align: left">The engagement context ID (engagement impression ID) in the current monitored session.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">contexts</td>
+      <td style="text-align: left">The engagement and page context ID (impression ID) in the current monitored session.  <br /> Example: <br /> <code class="highlighter-rouge">[</code> <br /> <code class="highlighter-rouge"><span class="p">{</span><span class="nt">"EngagementContext"</span><span class="p">:{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">}}</span><span class="err">,</span></code> <br /> <code class="highlighter-rouge"><span class="p">{</span><span class="nt">"pageContext"</span><span class="p">:{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"173828"</span><span class="p">}}</span></code> <br /> <code class="highlighter-rouge">]</code></td>
+      <td style="text-align: left">array of Objects</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationType</td>
+      <td style="text-align: left">An enum representing the conversation type to be initiated (0 - Chat, 1 - Messaging).</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The engagement ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementName</td>
+      <td style="text-align: left">The engagement name.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementRevision</td>
+      <td style="text-align: left">The engagement revision.</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementType</td>
+      <td style="text-align: left">The engagement format. Available values: 0: “Peeling corner”, 1: “Overlay”, 2: “Toaster”, 3: “Slide-out”, 5: “Embedded”, 6: “Sticky”</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">instantiated</td>
+      <td style="text-align: left">Internal.</td>
+      <td style="text-align: left">Boolean</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">renderingType</td>
+      <td style="text-align: left">Internal.</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">The engagement state (defined by the availability of agents within the skill group)*. Available values: 1 - online, 2 - offline</td>
+      <td style="text-align: left">numeric</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">tglName</td>
+      <td style="text-align: left">Internal. The engagement format description.</td>
+      <td style="text-align: left">string</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">zoneId</td>
+      <td style="text-align: left">Internal. The engagement zone ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+    </tr>
+  </tbody>
+</table>
+
 
 
     <div class="tags">

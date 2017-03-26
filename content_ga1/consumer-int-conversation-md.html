@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Conversation Metadata | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Conversation Metadata">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2577,7 +2577,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-int-conversation-md.html">Conversation Metadata</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Conversation Metadata</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,127 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p>This API exposes another mechanism to enable the client to get conversation metadata. The metadata includes the following:</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<ul>
+  <li>Status - Whether the conversation is open or closed.</li>
+  <li>Participants - Whether there are any other participants in the conversation (agents, managers).</li>
+</ul>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
+<p>In order to get the metadata for the existing conversations, the client should subscribe itself to the conversation metadata stream. Upon any change, the client will get a notification about the updated conversation. Using this mechanism, the client is aware of changes done by the agent (close, join, transfer, and more). For clients that do not keep state such as browsers, this mechanism can be helpful for retrieving the current state after connection resstablishment.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<p>See <a href="consumer-int-get-msg.html#prerequisites">Prerequisites</a>.</p>
+
+<h2 id="step-1---subscribe">Step 1 - Subscribe</h2>
+
+<p>Open the WebSocket connection using:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wscat -k 60 -H <span class="s2">"Authorization:jwt </span><span class="nv">$LP_JWT</span><span class="s2">"</span> -c <span class="s2">"wss://</span><span class="nv">$LP_ASYNCMESSAGINGENT</span><span class="s2">/ws_api/account/</span><span class="nv">$LP_ACCOUNT</span><span class="s2">/messaging/consumer?v=3"</span>
 </code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<p>Send a request on the connection to subscribe yourself to the conversation list:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"33"</span><span class="p">,</span><span class="nt">"body"</span><span class="p">:{</span><span class="nt">"minLastUpdatedTime"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"convState"</span><span class="p">:[</span><span class="s2">"OPEN"</span><span class="p">,</span><span class="s2">"CLOSE"</span><span class="p">]},</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cqm.SubscribeExConversations"</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<p>You will firstly get a response with the new subscription ID:</p>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resp"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"reqId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"subscriptionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a06020c-ef69-4bb4-ab72-934d032d106a"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cqm.SubscribeExConversationsResponse"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>You will also get some other messages. Ignore these for now.</p>
+
+<h2 id="step-2---create-a-new-conversation">Step 2 - Create a new Conversation</h2>
+
+<p>In order to test the subscription, we will create a new conversation using:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"req"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cm.ConsumerRequestConversation"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In addition to the response for the request, you will get a notification with the details of the conversation:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notification"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"subscriptionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c879a0e8-73fd-405c-9363-8ad6e0218fa9"</span><span class="p">,</span><span class="w">
+		</span><span class="nt">"changes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UPSERT"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nt">"convId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b2622de-26b7-4e05-a7f2-5c2d50b3502f"</span><span class="p">,</span><span class="w">
+					</span><span class="nt">"conversationDetails"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+						</span><span class="nt">"participantsPId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+							</span><span class="nt">"CONSUMER"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"72fca421-d1a2-459c-a420-6c5b1f3e75b0"</span><span class="w"> </span><span class="p">]</span><span class="w">
+						</span><span class="p">},</span><span class="w">
+						</span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OPEN"</span><span class="p">,</span><span class="w">
+						</span><span class="nt">"startTs"</span><span class="p">:</span><span class="w"> </span><span class="mi">1477840809953</span><span class="p">,</span><span class="w">
+						</span><span class="nt">"ttr"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+							</span><span class="nt">"ttrType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PRIORITIZED"</span><span class="p">,</span><span class="w">
+							</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="w">
+						</span><span class="p">}</span><span class="w">
+					</span><span class="p">},</span><span class="w">
+					</span><span class="nt">"lastUpdateTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1477840967209</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">]</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cqm.ExConversationChangeNotification"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="step-3---agent-accepts-the-conversation">Step 3 - Agent accepts the Conversation</h2>
+
+<p>Now switch to the Agent Workspace and click <code class="highlighter-rouge">Accept</code> to take the conversation. Switch again to the consumer shell. You should see that another notification is displayed. Notice that the <code class="highlighter-rouge">participantsPId</code> property also contains the ID of the <code class="highlighter-rouge">assigned agent</code>. This notifies the consumer that an agent has joined the conversation:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notification"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"subscriptionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c879a0e8-73fd-405c-9363-8ad6e0218fa9"</span><span class="p">,</span><span class="w">
+		</span><span class="nt">"changes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UPSERT"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nt">"convId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b2622de-26b7-4e05-a7f2-5c2d50b3502f"</span><span class="p">,</span><span class="w">
+					</span><span class="nt">"conversationDetails"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+						</span><span class="nt">"participantsPId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+							</span><span class="nt">"CONSUMER"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"72fca421-d1a2-459c-a420-6c5b1f3e75b0"</span><span class="w"> </span><span class="p">],</span><span class="w">
+							</span><span class="nt">"ASSIGNED_AGENT"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">	</span><span class="s2">"734d9867-40e3-52b9-a401-07e877676d64"</span><span class="w"> </span><span class="p">]</span><span class="w">
+						</span><span class="p">},</span><span class="w">
+						</span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OPEN"</span><span class="p">,</span><span class="w">
+						</span><span class="nt">"startTs"</span><span class="p">:</span><span class="w"> </span><span class="mi">1477840809953</span><span class="p">,</span><span class="w">
+						</span><span class="nt">"ttr"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+							</span><span class="nt">"ttrType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PRIORITIZED"</span><span class="p">,</span><span class="w">
+							</span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="w">
+						</span><span class="p">}</span><span class="w">
+					</span><span class="p">},</span><span class="w">
+					</span><span class="nt">"lastUpdateTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1477840967209</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">]</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cqm.ExConversationChangeNotification"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Now close the conversation in the Agent Workspace and switch again to the consumer shell. You will see a notification with the <code class="highlighter-rouge">state</code> property set to <code class="highlighter-rouge">CLOSE</code>.</p>
+
+<p>Any change in the conversation fields will cause the service to send a notification containing the updated conversation state. The stream will cover all the conversations of the consumer, both opened and closed. Closed conversations will be removed from the stream after a reasonable period of time.</p>
+
 
 
     <div class="tags">

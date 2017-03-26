@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>Engagement Window Events | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Engagement Window Events">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -2510,7 +2510,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="lp-tag-engagement-window.html">Engagement Window Events</a></li>
+                                                        <li class="active thirdlevel"><a href="lp-tag-engagement-window.html">Engagement Window Events</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">Engagement Window Events</h1>
 </div>
 
 <script>
@@ -2809,24 +2809,321 @@ $('#toc').on('click', 'a', function() {
 
     
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+  <p>These are engagement window related events, including rendering, display and interactions with the engagement.</p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<p><em>Note: These events will only be triggered for embedded mode windows.</em></p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<h2 id="state">state</h2>
+
+<p>This event triggers when the chat state is changed.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“state”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“lpUnifiedWindow”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">The chat state.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Available states: “resume”, “initialised”, “uninitialised”, “preChat”, “postChat”, “offline”, “waiting”, “chatting”, “interactive”, “ended”, “Notfound”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Example:</em></p>
+
+<p><code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="nt">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"chatting"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="err">//The</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">chat</span><span class="w"> </span><span class="err">state</span></code></p>
+
+<h2 id="conversationinfo">conversationInfo</h2>
+
+<p>This event triggers when the conversation data was changed, for example the conversation state.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“conversationInfo”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“lpUnifiedWindow”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">agentName</td>
+      <td style="text-align: left">The agent name to which the visitor is connected.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentId</td>
+      <td style="text-align: left">The agent ID to which the visitor is connected.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">conversationId</td>
+      <td style="text-align: left">The conversation ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left">For messaging</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">The chat state.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">Available states: “resume”, “initialised”, “uninitialised”, “waiting”, “chatting”, “ended”, “Notfound”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">monitoringSessionId</td>
+      <td style="text-align: left">Session ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">Visitor ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">skill</td>
+      <td style="text-align: left">The conversation skill.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The engagement ID that was clicked to open the chat.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">campaignId</td>
+      <td style="text-align: left">The engagement’s campaign ID.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">language</td>
+      <td style="text-align: left">The conversation language.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">An <a href="http://openid.net/specs/openid-connect-core-1_0.html#ISO639-1">ISO 639-1 Alpha-2</a> language code in lowercase and an <a href="http://openid.net/specs/openid-connect-core-1_0.html#ISO3166-1">ISO 3166-1 Alpha-2</a> country code in uppercase, separated by a dash. For example, en-US or fr-CA.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">engagementName</td>
+      <td style="text-align: left">The engagement name as defined in LiveEngage UI.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Example:</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"agentName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"agentId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"conversationId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4294973105</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chatting"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"monitoringSessionId"</span><span class="p">:</span><span class="w">       
+</span><span class="s2">"WIoWBRC_RL6pkcK5fL-3-g.5bb46ddd7ae63b731b5eeb10189b15bc97226af0"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UYxShcOtSEWq0oSsuMCrOQ"</span><span class="p">,</span><span class="w"> 
+   </span><span class="nt">"skill"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MySkill"</span><span class="p">,</span><span class="w"> 
+   </span><span class="nt">"engagementId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346152510</span><span class="p">,</span><span class="w"> 
+   </span><span class="nt">"campaignId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346152410</span><span class="p">,</span><span class="w"> 
+   </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w"> 
+   </span><span class="nt">"engagementName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky chat button"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
+<h2 id="engagementdata">engagementData</h2>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p>This event triggers when the state changes to “chatting” to show the engagement info.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“engagementData”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“lpUnifiedWindow”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Event Properties</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Type</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">engagementId</td>
+      <td style="text-align: left">The engagement ID that was clicked to open the chat.</td>
+      <td style="text-align: left">ALPHA_NUMERIC</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">The chat state (“chatting”).</td>
+      <td style="text-align: left">string</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Example:</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"engagementId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1213313213</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chatting"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
+<h2 id="maximized">maximized</h2>
 
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
+<p>This event triggers when the chat window is in maximized view.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“maximized”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“lpUnifiedWindow”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="minimized">minimized</h2>
+
+<p>This event triggers when the chat window is in minimized view.</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“minimized”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“lpUnifiedWindow”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="windowclosed">windowClosed</h2>
+
+<p>This event triggers when the chat window is closed (disposed and removed from the DOM).</p>
+
+<p><strong>Event Information</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">eventName</td>
+      <td style="text-align: left">“windowClosed”</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">appName</td>
+      <td style="text-align: left">“lpUnifiedWindow”</td>
+    </tr>
+  </tbody>
+</table>
+
 
 
     <div class="tags">

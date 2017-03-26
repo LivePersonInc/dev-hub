@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content=" ">
-<title>Authentication API Reference | LivePerson Technical Documentation</title>
+<title>onInfo | LivePerson Technical Documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 
@@ -122,7 +122,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Authentication API Reference">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="onInfo">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -858,7 +858,7 @@
                                             
                                                 
                                                     
-                                                        <li class="thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
+                                                        <li class="active thirdlevel"><a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a></li>
                                                     
                                                 
                                             
@@ -2758,7 +2758,7 @@
     <!-- Content Column -->
     <div class="col-md-9">
         <div class="post-header">
-   <h1 class="post-title-main">Authentication API Reference</h1>
+   <h1 class="post-title-main">onInfo</h1>
 </div>
 
 <script>
@@ -2779,27 +2779,6 @@
    
 
     
-    
-<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
-<script>
-$( document ).ready(function() {
-  // Handler for .ready() called.
-
-$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2' });
-
-/* this offset helps account for the space taken up by the floating toolbar. */
-$('#toc').on('click', 'a', function() {
-  var target = $(this.getAttribute('href'))
-    , scroll_target = target.offset().top
-
-  $(window).scrollTop(scroll_target - 10);
-  return false
-})
-  
-});
-</script>
-
-<div id="toc"></div>
 
     
 
@@ -2807,26 +2786,115 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    
+  <p>This is published when there is a change in the chat information.</p>
 
-  <h2 id="consumer-token-creation">Consumer Token Creation</h2>
+<p><strong>Object Properties</strong></p>
 
-<h3 id="unauthenticated-consumer-token">Unauthenticated Consumer Token</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">typing</td>
+      <td style="text-align: left">The visitor tying state.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorName</td>
+      <td style="text-align: left">The visitor name.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentName</td>
+      <td style="text-align: left">The agent name.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rtSessionId</td>
+      <td style="text-align: left">The chat session identifier.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">intialised</td>
+      <td style="text-align: left">Chat initialization state.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left">Depends on the <a href="consumer-experience-javascript-chat-oninit.html">onInit</a> event having been triggered.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentTyping</td>
+      <td style="text-align: left">The agent typing state.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chatInProgress</td>
+      <td style="text-align: left">If a chat is currently in progress.</td>
+      <td style="text-align: left">Boolean</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">visitorId</td>
+      <td style="text-align: left">The visitor identifier.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">This should be passed in from monitoring on the chat request and also between chats if you re-start a new chat.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">agentId</td>
+      <td style="text-align: left">The agent identifier for this site.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chatSessionKey</td>
+      <td style="text-align: left">The chat session key.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lastUpdate</td>
+      <td style="text-align: left">The last time the chat was updated.</td>
+      <td style="text-align: left">date</td>
+      <td style="text-align: left">The <a href="consumer-experience-javascript-chat-oninfo.html">onInfo</a> state event will not be triggered if this is the only change since the last onInfo event.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">state</td>
+      <td style="text-align: left">The current chat state.</td>
+      <td style="text-align: left">string</td>
+      <td style="text-align: left">This is the same information that returns on chat request response for information on the info fields.</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/signup | jq -r .jwt<span class="sb">`</span>
-</code></pre>
+<p><strong>Sample Response</strong></p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"typing"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"visitorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"you"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"agentName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rtSessionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123123123</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"initialised"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"agentTyping"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"chatInProgress"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123123123213</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"agentId"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"chatSessionKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"H123123123123123-123123123123123123132123"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"chatState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chatting"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"lastUpdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-05-23T20:00:11.513-04:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chatting"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
-
-<h3 id="authenticated-consumer-token">Authenticated Consumer Token</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">LP_AUTH_JWT</span><span class="o">=</span><span class="sb">`</span>curl -X POST -H <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"authCode" : "'</span><span class="nv">$LP_EXT_JWT</span><span class="s1">'"}'</span> http://<span class="nv">$LP_IDP</span>/api/account/<span class="nv">$LP_ACCOUNT</span>/authenticate | jq -r .jwt<span class="sb">`</span>
-</code></pre>
-</div>
-
-<p>Where <code class="highlighter-rouge">LP_EXT_JWT</code> is a JWT (in case of implicit flow) or code (in case of code flow) issued by the customer services.</p>
-
-<h2 id="brand-consumer-backend-token">Brand Consumer Backend Token</h2>
-<p>TBD</p>
 
 
     <div class="tags">
